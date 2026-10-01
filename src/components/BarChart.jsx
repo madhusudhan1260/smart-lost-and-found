@@ -4,7 +4,7 @@
 export default function BarChart({ data, colorFor, emptyText = 'No data yet' }) {
   if (data.length === 0) return <p className="muted">{emptyText}</p>;
 
-  const maxCount = Math.max(...data.map((entry) => entry.count)); // spread into Math.max
+  const maxCount = Math.max(1, ...data.map((entry) => entry.count || 0));
 
   return (
     <ul className="bar-chart">
