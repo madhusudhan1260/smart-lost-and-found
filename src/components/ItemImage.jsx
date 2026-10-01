@@ -1,3 +1,10 @@
+// File: src/components/ItemImage.jsx
+// Purpose: Shows the item photo, or a coloured category icon when there is none.
+// Used by: components/ClaimCard.jsx, components/ClaimReview.jsx, components/ItemCard.jsx,
+//          components/MatchCard.jsx, components/MatchPairList.jsx, pages/ClaimItem.jsx,
+//          pages/DossDashboard.jsx, pages/ItemDetails.jsx, pages/ResolvedItems.jsx,
+//          pages/SmartMatch.jsx
+
 import { CATEGORY_META } from '../data/constants';
 import { cx, getItemIcon } from '../utils/helpers';
 import Icon from './Icon';
