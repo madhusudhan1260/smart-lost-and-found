@@ -7,6 +7,26 @@ A React.js + JavaScript microproject (3rd-year B.Tech CSE) that manages the **co
 
 ---
 
+## Contents
+
+- [⚡ Quick demo (5 minutes)](#quick-demo-5-minutes)
+- [1. Problem statement](#1-problem-statement)
+- [2. Objective](#2-objective)
+- [3. Features](#3-features)
+- [4. Student workflow](#4-student-workflow)
+- [5. DOSS workflow](#5-doss-workflow)
+- [6. Technology stack](#6-technology-stack)
+- [7. Architecture](#7-architecture)
+- [8. Folder structure](#8-folder-structure)
+- [9. Smart Match algorithm (`src/utils/matching.js`)](#9-smart-match-algorithm-srcutilsmatchingjs)
+- [10. Data flow example: "Accept claim"](#10-data-flow-example-accept-claim)
+- [11. localStorage](#11-localstorage)
+- [12. JavaScript & React concepts](#12-javascript--react-concepts)
+- [13. Installation & running](#13-installation--running)
+- [14. Limitations](#14-limitations)
+- [15. Future improvements](#15-future-improvements)
+- [16. Viva questions](#16-viva-questions)
+
 ## ⚡ Quick demo (5 minutes)
 
 The sample data is set up so you can show the whole workflow straight away:
