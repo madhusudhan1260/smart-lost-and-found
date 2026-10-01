@@ -1,3 +1,7 @@
+// File: src/pages/ClaimReview.jsx
+// Purpose: Page /doss/claims/:claimId – accept, reject, collect, resolve (DOSS mode).
+// Used by: App.jsx
+
 import { useCallback, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
