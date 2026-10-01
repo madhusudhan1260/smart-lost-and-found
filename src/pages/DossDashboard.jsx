@@ -1,3 +1,7 @@
+// File: src/pages/DossDashboard.jsx
+// Purpose: DOSS dashboard: statistics, pending claims, collection and charts.
+// Used by: App.jsx
+
 import { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
