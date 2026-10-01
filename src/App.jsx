@@ -1,3 +1,7 @@
+// File: src/App.jsx
+// Purpose: Root layout: navbar, footer and every route of the app.
+// Used by: main.jsx
+
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useMode } from './context/ModeContext';
 import Navbar from './components/Navbar';
