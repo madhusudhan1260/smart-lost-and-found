@@ -47,6 +47,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
+
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -59,7 +68,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <ul className={cx('navbar__links', menuOpen && 'is-open')}>
+        <ul id="navbar-nav-links" className={cx('navbar__links', menuOpen && 'is-open')}>
           {links.map(({ to, label, icon, end, badge }) => (
             <li key={to}>
               <NavLink to={to} end={end} onClick={closeMenu} className={({ isActive }) => cx('nav-link', isActive && 'is-active')}>
@@ -84,8 +93,9 @@ export default function Navbar() {
             type="button"
             className="icon-btn navbar__menu-btn"
             onClick={() => setMenuOpen((open) => !open)}
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={menuOpen}
+            aria-controls="navbar-nav-links"
           >
             <Icon name={menuOpen ? 'close' : 'menu'} />
           </button>
