@@ -7,15 +7,16 @@ import { getMatchLevel } from '../utils/matching';
 
 // Circular percentage indicator drawn with a CSS conic-gradient
 export default function ScoreRing({ score, size = 'md' }) {
-  const { tone } = getMatchLevel(score);
+  const safeScore = Math.max(0, Math.min(100, Math.round(Number(score) || 0)));
+  const { tone } = getMatchLevel(safeScore);
   return (
     <div
       className={`score-ring score-ring--${tone} score-ring--${size}`}
-      style={{ '--score': score }}
+      style={{ '--score': safeScore }}
       role="img"
-      aria-label={`${score} percent match`}
+      aria-label={`${safeScore} percent match`}
     >
-      <span>{score}<small>%</small></span>
+      <span>{safeScore}<small>%</small></span>
     </div>
   );
 }
