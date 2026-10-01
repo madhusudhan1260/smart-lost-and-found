@@ -1,3 +1,5 @@
+// File: src/utils/validation.js
+// Used by: components/ClaimForm.jsx, components/ImageUploader.jsx, components/ItemForm.jsx
 // Form validation for the report forms and the claim form.
 import { daysBetween, formatDate, isFutureDate, toISODate } from './dateUtils';
 
