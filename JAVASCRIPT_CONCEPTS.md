@@ -315,3 +315,24 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 | `requestAnimationFrame` | count-up numbers in `components/StatCard.jsx` |
 | FileReader + Canvas API | `utils/imageUtils.js` |
 | Event listeners + cleanup | scroll (`Navbar.jsx`), keydown (`SearchBar.jsx`, `Modal.jsx`) |
+
+---
+
+## Testing Strategy & Pure Functions
+
+### 45. Pure Functions & Deterministic Unit Testing
+- **Files:** `src/utils/matching.js`, `src/utils/validation.js`, `src/utils/dateUtils.js`, `src/utils/helpers.js`, `src/utils/statistics.js`
+- **Why:** The codebase isolates business logic into pure JavaScript functions with zero DOM or React dependencies. A pure function always produces the same output for identical inputs and causes no side effects.
+- **Key Testable Modules:**
+  1. **Matching Logic (`utils/matching.js`):**
+     - `calculateMatchScore(lostItem, foundItem)`: Verify weighted calculation sums to $\le 100$, clamp score ranges $[0, 100]$, and test nearby location bonuses.
+     - `compareColors(color1, color2)`: Verify multi-word color sets (e.g. `'black and blue'` matches `'blue'`).
+  2. **Form Validation (`utils/validation.js`):**
+     - `validateField(name, value)`: Test email format, campus roll number pattern (`USN` / letters + digits), and mandatory string length limits.
+     - `validateClaimField(name, value)`: Test proof validation and answer requirements.
+  3. **Date Utilities (`utils/dateUtils.js`):**
+     - `parseLocalDate(dateString)`: Verify parsing of ISO date strings without UTC day-shift bugs.
+     - `formatTime(dateString)`: Test 12-hour AM/PM formatting and single-digit minute padding (`:05`).
+  4. **Helper Utilities (`utils/helpers.js`):**
+     - `generateId(prefix, existingIds)`: Verify non-collision uniqueness and random entropy.
+     - `pluralize(count, singular, plural)`: Verify edge cases for 0 count and custom plural forms.
