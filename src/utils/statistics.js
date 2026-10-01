@@ -1,3 +1,5 @@
+// File: src/utils/statistics.js
+// Used by: pages/DossDashboard.jsx, pages/Home.jsx, pages/StudentDashboard.jsx
 // Dashboard statistics calculated with filter(), map(), reduce() and sort().
 import { STATUS, DEFAULT_MATCH_THRESHOLD } from '../data/constants';
 import { daysAgoISO, parseLocalDate } from './dateUtils';
