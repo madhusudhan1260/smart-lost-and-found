@@ -7,8 +7,10 @@
 
 export function readFromStorage(key, fallback = null, storage = window.localStorage) {
   try {
+    if (!storage || typeof storage.getItem !== 'function') return fallback;
     const raw = storage.getItem(key);
-    return raw === null ? fallback : JSON.parse(raw);
+    if (raw === null || raw === undefined || raw === 'undefined') return fallback;
+    return JSON.parse(raw);
   } catch (error) {
     console.error(`Could not read "${key}" from storage:`, error);
     return fallback;
