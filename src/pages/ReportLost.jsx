@@ -1,3 +1,7 @@
+// File: src/pages/ReportLost.jsx
+// Purpose: Page /report-lost – report a lost item (Student mode).
+// Used by: App.jsx
+
 import ReportLayout from '../components/ReportLayout';
 import ModeGate from '../components/ModeGate';
 import useDocumentTitle from '../hooks/useDocumentTitle';
