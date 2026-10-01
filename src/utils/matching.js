@@ -64,10 +64,13 @@ function compareColors(colorA = '', colorB = '') {
   return wordsA.some((word) => wordsB.includes(word)) ? 0.5 : 0;
 }
 
-function compareLocations(locationA, locationB) {
-  if (locationA === locationB) return 1;
-  const nearby = NEARBY_LOCATIONS[locationA] ?? [];
-  return nearby.includes(locationB) ? 0.5 : 0;
+function compareLocations(locationA = '', locationB = '') {
+  const locA = String(locationA ?? '').trim();
+  const locB = String(locationB ?? '').trim();
+  if (!locA || !locB) return 0;
+  if (locA.toLowerCase() === locB.toLowerCase()) return 1;
+  const nearby = NEARBY_LOCATIONS[locA] ?? [];
+  return nearby.some((place) => place.toLowerCase() === locB.toLowerCase()) ? 0.5 : 0;
 }
 
 // The closer the dates, the higher the score.
