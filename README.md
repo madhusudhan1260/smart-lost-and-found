@@ -375,6 +375,14 @@ The icons and font are bundled, so the app works **without internet** once `npm 
 - **Node version mismatch:** Ensure `node -v` prints `v18.0.0` or higher. Use `nvm use 18` or `nvm use 20` if installed.
 - **Build cache clean:** If changes are not reflected, run `rm -rf node_modules/.vite dist` and restart with `npm run dev`.
 
+### Contributing & Development Guidelines
+
+1. **Pure ES6+ JavaScript:** All app and business logic is written in plain JavaScript with modern ES6+ features (destructuring, arrow functions, async/await).
+2. **Modular Architecture:** Keep business rules in `src/utils/` as standalone pure functions without React dependencies.
+3. **No Heavy UI Libraries:** UI styling relies on hand-crafted Google-inspired CSS tokens in `src/index.css`.
+4. **Conventional Commits:** Prefix all commit messages with conventional types (`docs:`, `fix:`, `feat:`, `refactor:`, `test:`, `a11y:`, `perf:`).
+5. **Quality Verification:** Always run `npm run lint` and `npm run build` to confirm zero errors and successful production build before submitting changes.
+
 ## 14. Limitations
 
 - **No real authentication.** The Student / DOSS switch is only a demo of two roles, and anyone can switch.
