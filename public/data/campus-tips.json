@@ -1,8 +1,30 @@
 [
-  { "icon": "join_inner", "text": "Check Smart Match right after reporting – a matching found item may already be listed." },
-  { "icon": "lock", "text": "Keep one unique detail private. DOSS uses it to confirm you are the real owner." },
-  { "icon": "photo_camera", "text": "Adding a photo makes your report much easier to recognise." },
-  { "icon": "shield_person", "text": "Valuable items can be handed over at the DOSS Office, Administration Block." },
-  { "icon": "badge", "text": "Bring your student ID when collecting an item from DOSS." },
-  { "icon": "schedule", "text": "Report quickly – most items are matched within 48 hours." }
+  {
+    "icon": "join_inner",
+    "text": "Check Smart Match right after reporting – a matching found item may already be listed."
+  },
+  {
+    "icon": "lock",
+    "text": "Keep one unique detail private. DOSS uses it to confirm you are the real owner."
+  },
+  {
+    "icon": "photo_camera",
+    "text": "Adding a photo makes your report much easier to recognise."
+  },
+  {
+    "icon": "shield_person",
+    "text": "Valuable items can be handed over at the DOSS Office, Administration Block."
+  },
+  {
+    "icon": "badge",
+    "text": "Bring your student ID when collecting an item from DOSS."
+  },
+  {
+    "icon": "schedule",
+    "text": "Report quickly – most items are matched within 48 hours."
+  },
+  {
+    "icon": "fact_check",
+    "text": "DOSS checks every claim – describe a detail that only the real owner would know."
+  }
 ]
