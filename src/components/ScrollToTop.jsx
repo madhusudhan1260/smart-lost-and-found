@@ -1,3 +1,7 @@
+// File: src/components/ScrollToTop.jsx
+// Purpose: Scrolls back to the top whenever the route changes.
+// Used by: App.jsx
+
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
