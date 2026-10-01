@@ -81,8 +81,9 @@ export function formatDateTime(isoString) {
 
 // "14:30" → "2:30 PM"
 export function formatTime(timeString) {
-  if (!timeString) return '';
+  if (!timeString || typeof timeString !== 'string' || !timeString.includes(':')) return '';
   const [hours, minutes] = timeString.split(':').map(Number);
+  if (isNaN(hours) || isNaN(minutes)) return '';
   const period = hours >= 12 ? 'PM' : 'AM';
   const hour12 = hours % 12 || 12;
   return `${hour12}:${String(minutes).padStart(2, '0')} ${period}`;
