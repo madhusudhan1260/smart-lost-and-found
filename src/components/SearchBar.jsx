@@ -32,6 +32,7 @@ export default function SearchBar({ value, onChange, onSubmit, placeholder = 'Se
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
+        onKeyDown={(event) => event.key === 'Escape' && onChange('')} // Esc clears the search
         placeholder={placeholder}
         autoComplete="off"
       />
