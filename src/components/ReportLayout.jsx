@@ -1,3 +1,7 @@
+// File: src/components/ReportLayout.jsx
+// Purpose: Page layout around the report form (tabs + tips sidebar).
+// Used by: pages/ReportFound.jsx, pages/ReportLost.jsx
+
 import { NavLink } from 'react-router-dom';
 import PageHeader from './PageHeader';
 import ItemForm from './ItemForm';
