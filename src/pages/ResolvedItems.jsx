@@ -1,3 +1,7 @@
+// File: src/pages/ResolvedItems.jsx
+// Purpose: Page /resolved – collected and resolved cases.
+// Used by: App.jsx
+
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
