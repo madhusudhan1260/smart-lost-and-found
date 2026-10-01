@@ -151,3 +151,18 @@ Components use the custom hooks `useItems()`, `useMode()` and `useNotification()
 
 ### Strict Mode
 `<StrictMode>` in `main.jsx` helps catch side-effect bugs during development.
+
+---
+
+### Unidirectional Data Flow & State Architecture
+1. **Single Source of Truth:**
+   - Global application state (`items`, `claims`, `myClaims`) resides in `ItemContext`.
+   - Pages and components consume state through the custom hook `useItems()`.
+2. **Immutable Updates:**
+   - State transformations always create new references:
+     - Adding records: `setItems((prev) => [newItem, ...prev])`
+     - Status updates: `setClaims((prev) => prev.map((c) => (c.id === id ? updated : c)))`
+   - Prevents stale closures and unintended component re-render side effects.
+3. **Simulated Service Layer:**
+   - `services/itemService.js` mimics an asynchronous REST API with simulated network delay (`NETWORK_DELAY_MS`).
+   - UI components interact strictly through async actions, making future migration to a real backend (Node/Express or serverless) a drop-in replacement without altering UI components.
