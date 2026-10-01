@@ -1,3 +1,7 @@
+// File: src/components/CollectionInstructions.jsx
+// Purpose: Steps a student follows to collect an item from the DOSS office.
+// Used by: components/ClaimCard.jsx
+
 import { DOSS_OFFICE } from '../data/constants';
 import Icon from './Icon';
 
