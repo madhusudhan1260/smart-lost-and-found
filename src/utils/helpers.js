@@ -1,3 +1,10 @@
+// File: src/utils/helpers.js
+// Used by: components/ClaimTimeline.jsx, components/Icon.jsx, components/ImageUploader.jsx,
+//          components/ItemForm.jsx, components/ItemImage.jsx, components/ItemsBrowser.jsx,
+//          components/MatchCard.jsx, components/ModeSwitcher.jsx, components/Navbar.jsx,
+//          components/ReportLayout.jsx, context/ItemContext.jsx, pages/DossClaims.jsx,
+//          pages/Home.jsx, pages/ItemDetails.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
+//          services/itemService.js
 // General-purpose helper functions.
 import { CATEGORY_META, NAME_ICONS } from '../data/constants';
 
