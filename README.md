@@ -251,6 +251,15 @@ lost_and_found/
 | Date | 10 | ≤1 day → 1, ≤3 → 0.7, ≤7 → 0.4, ≤14 → 0.2; found long *before* it was lost → 0 |
 | Description | 10 | keyword similarity of the descriptions |
 
+#### Match Score Levels
+
+| Score Range | Classification | Tone | Notes |
+|---|---|---|---|
+| `75% – 100%` | **Strong match** | Green / High | High confidence across category, name, location, and date |
+| `50% – 74%` | **Good match** | Yellow / Medium | Shares multiple key attributes with minor variances |
+| `35% – 49%` | **Possible match** | Blue / Low | Minimum default display threshold (`DEFAULT_MATCH_THRESHOLD`) |
+| `< 35%` | Hidden by default | Neutral | Accessible via the minimum-score slider set to 0% |
+
 **Keyword similarity:**
 
 1. `extractKeywords()` lower-cases the text, removes punctuation with `/[^a-z0-9\s]/g`, splits on spaces, drops stop-words and removes duplicates with `new Set`.
