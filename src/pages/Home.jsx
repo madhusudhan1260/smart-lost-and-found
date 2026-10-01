@@ -37,7 +37,7 @@ function RecentSection({ title, icon, type, items, loading }) {
           {items.map((item, index) => <ItemCard key={item.id} item={item} index={index} />)}
         </div>
       ) : (
-        <EmptyState title={`No ${type} items found.`} />
+        <EmptyState title={type === 'found' ? 'No found items reported yet.' : 'No lost items reported yet.'} />
       )}
     </section>
   );
