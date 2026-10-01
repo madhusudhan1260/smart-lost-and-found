@@ -1,3 +1,7 @@
+// File: src/components/ItemForm.jsx
+// Purpose: Report Lost / Report Found form with validation and auto-saved draft.
+// Used by: components/ReportLayout.jsx
+
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
