@@ -115,7 +115,7 @@ export function validateClaimField(name, value = '', { foundDate } = {}) {
 
     case 'rollNumber':
       if (!text) return 'Roll number / USN is required';
-      return PATTERNS.rollNumber.test(text) ? '' : 'Use 6–12 letters and digits, e.g. 22CSE045';
+      return PATTERNS.rollNumber.test(text.replace(/[\s\-_/]/g, '')) ? '' : 'Use 6–12 letters and digits, e.g. 22CSE045';
 
     case 'contact':
       return validateContact(text);
