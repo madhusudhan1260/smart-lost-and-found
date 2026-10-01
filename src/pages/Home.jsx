@@ -112,7 +112,7 @@ export default function Home() {
           <StatCard label="Lost Items" value={itemStats.lost} icon="search" tone="blue" to="/lost" />
           <StatCard label="Found Items" value={itemStats.found} icon="inventory_2" tone="green" to="/found" />
           <StatCard label="Claims Pending" value={claimStats.pending} icon="hourglass_top" tone="yellow"
-            to={isDoss ? '/doss/claims' : undefined} />
+            to={isDoss ? '/doss/claims' : '/my-claims'} />
           <StatCard label="Resolved Items" value={itemStats.resolved} icon="task_alt" tone="red" to="/resolved" />
         </section>
 
