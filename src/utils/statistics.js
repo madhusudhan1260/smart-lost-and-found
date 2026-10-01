@@ -71,7 +71,12 @@ export function getRecentItems(items, limit = 5) {
     .slice(0, limit);
 }
 
-export const getPercentage = (part, total) => (total === 0 ? 0 : Math.round((part / total) * 100));
+export const getPercentage = (part = 0, total = 0) => {
+  const p = Number(part) || 0;
+  const t = Number(total) || 0;
+  if (t <= 0 || p <= 0) return 0;
+  return Math.min(100, Math.round((p / t) * 100));
+};
 
 // Reports per day for the last `days` days (for the trend chart)
 export function getDailyCounts(items, days = 7) {
