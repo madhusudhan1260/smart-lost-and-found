@@ -1,8 +1,14 @@
 {
-  "name": "lost_and_found",
+  "name": "smart-lost-and-found",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Smart Lost & Found \u2013 College Campus Lost & Found Management System (React + JavaScript)",
+  "author": "madhusudhan1260",
+  "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
