@@ -1,3 +1,7 @@
+// File: src/pages/StudentDashboard.jsx
+// Purpose: Student dashboard: my claims, possible matches and campus stats.
+// Used by: App.jsx
+
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
