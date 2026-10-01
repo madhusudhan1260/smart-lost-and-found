@@ -1,3 +1,11 @@
+// File: src/utils/dateUtils.js
+// Used by: components/ClaimCard.jsx, components/ClaimForm.jsx, components/ClaimReview.jsx,
+//          components/ClaimTimeline.jsx, components/ItemCard.jsx, components/ItemForm.jsx,
+//          components/MatchCard.jsx, data/initialClaims.js, data/initialItems.js,
+//          pages/ClaimItem.jsx, pages/ClaimReview.jsx, pages/DossDashboard.jsx,
+//          pages/ItemDetails.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
+//          utils/claimUtils.js, utils/matching.js, utils/searchUtils.js, utils/statistics.js,
+//          utils/validation.js
 // Small helpers built on the JavaScript Date object.
 // Dates are stored as "YYYY-MM-DD" strings, so we always parse them as LOCAL dates
 // (new Date("2026-09-20") would be treated as UTC and can shift by a day in India).
