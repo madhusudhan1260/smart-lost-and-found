@@ -5,17 +5,27 @@
 //          pages/DossDashboard.jsx, pages/ItemDetails.jsx, pages/ResolvedItems.jsx,
 //          pages/SmartMatch.jsx
 
+import { useState } from 'react';
 import { CATEGORY_META } from '../data/constants';
 import { cx, getItemIcon } from '../utils/helpers';
 import Icon from './Icon';
 
 // Shows the uploaded photo, or a soft coloured tile with an icon when there is none
-export default function ItemImage({ item, className }) {
-  const { image, name, category } = item;
+export default function ItemImage({ item = {}, className }) {
+  const [imgError, setImgError] = useState(false);
+  const { image, name = 'Item', category = 'Other' } = item ?? {};
   const color = CATEGORY_META[category]?.color ?? '#5F6368';
 
-  if (image) {
-    return <img src={image} alt={`Photo of ${name}`} className={cx('item-image', className)} loading="lazy" />;
+  if (image && !imgError) {
+    return (
+      <img
+        src={image}
+        alt={`Photo of ${name}`}
+        className={cx('item-image', className)}
+        loading="lazy"
+        onError={() => setImgError(true)}
+      />
+    );
   }
 
   return (
@@ -25,7 +35,7 @@ export default function ItemImage({ item, className }) {
       role="img"
       aria-label={`${category} icon for ${name}`}
     >
-      <Icon name={getItemIcon(item)} />
+      <Icon name={getItemIcon(item ?? {})} />
     </div>
   );
 }
