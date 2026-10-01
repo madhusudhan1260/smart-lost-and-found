@@ -30,15 +30,23 @@ export const wasAccepted = (claim) => Boolean(claim.acceptedAt);
  * Returns { checks: [...], score: 0-100, level: {label, tone} }
  */
 export function verifyClaim(claim, foundItem, lostItem = null) {
+  if (!claim || !foundItem) {
+    return {
+      checks: [],
+      score: 0,
+      level: { label: 'Weak evidence', tone: 'red' },
+    };
+  }
+
   const privateText = [foundItem?.privateDetails, lostItem?.privateDetails].filter(Boolean).join(' ');
-  const claimWords = extractKeywords(`${claim.uniqueFeature} ${claim.additionalProof ?? ''}`);
+  const claimWords = extractKeywords(`${claim.uniqueFeature ?? ''} ${claim.additionalProof ?? ''}`);
   const privateWords = extractKeywords(privateText);
   const sharedWords = getCommonKeywords(claimWords, privateWords);
   const featureRatio = keywordSimilarity(claimWords, privateWords);
 
   const nearby = NEARBY_LOCATIONS[claim.lostLocation] ?? [];
-  const sameLocation = claim.lostLocation === foundItem.location;
-  const dateGap = daysBetween(claim.lostDate, foundItem.date); // positive → found after loss
+  const sameLocation = Boolean(claim.lostLocation && foundItem.location && claim.lostLocation === foundItem.location);
+  const dateGap = (claim.lostDate && foundItem.date) ? daysBetween(claim.lostDate, foundItem.date) : 999; // positive → found after loss
 
   const checks = [
     {
@@ -53,7 +61,7 @@ export function verifyClaim(claim, foundItem, lostItem = null) {
       label: 'Location is consistent',
       weight: 20,
       ratio: sameLocation ? 1 : nearby.includes(foundItem.location) ? 0.5 : 0,
-      detail: `Lost at ${claim.lostLocation} · found at ${foundItem.location}`,
+      detail: `Lost at ${claim.lostLocation || 'unknown'} · found at ${foundItem.location || 'unknown'}`,
     },
     {
       label: 'Dates are consistent',
