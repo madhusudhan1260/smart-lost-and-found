@@ -26,7 +26,20 @@ export default function ClaimCard({ claim, view = 'student', index = 0 }) {
   const item = getItemById(claim.itemId);
   const isAccepted = claim.status === STATUS.CLAIM_ACCEPTED;
 
-  if (!item) return null; // the report may have been deleted
+  if (!item) {
+    return (
+      <article className="claim-card card" style={{ '--delay': `${index * 60}ms` }}>
+        <div className="claim-card__head">
+          <div className="claim-card__info">
+            <p className="muted">Claim <code>{claim.id}</code> · submitted {formatDateTime(claim.createdAt)}</p>
+            <h3>Report unavailable</h3>
+            <p className="muted">The original item report has been removed or archived.</p>
+          </div>
+          <StatusBadge status={claim.status} />
+        </div>
+      </article>
+    );
+  }
 
   if (view === 'doss') {
     return (
