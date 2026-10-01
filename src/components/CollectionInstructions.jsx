@@ -11,14 +11,14 @@ export default function CollectionInstructions({ claimId }) {
     { icon: 'location_on', text: `Go to the ${DOSS_OFFICE.place}.` },
     { icon: 'schedule', text: `Office hours: ${DOSS_OFFICE.hours}.` },
     { icon: 'badge', text: 'Bring your student ID card for verification.' },
-    { icon: 'tag', text: `Quote your claim ID ${claimId}.` },
+    { icon: 'tag', text: claimId ? `Quote your claim ID ${claimId}.` : 'Quote your claim ID.' },
     { icon: 'draw', text: 'Sign the handover register when you receive the item.' },
   ];
 
   return (
     <ol className="instructions">
-      {steps.map(({ icon, text }) => (
-        <li key={icon}><Icon name={icon} /> {text}</li>
+      {steps.map(({ icon, text }, index) => (
+        <li key={`${icon}-${index}`}><Icon name={icon} /> {text}</li>
       ))}
       <li className="muted"><Icon name="call" /> Questions? Call {DOSS_OFFICE.phone}</li>
     </ol>
