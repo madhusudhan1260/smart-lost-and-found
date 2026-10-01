@@ -1,3 +1,7 @@
+// File: src/pages/MyClaims.jsx
+// Purpose: Page /my-claims – the student's claims and their status.
+// Used by: App.jsx
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
