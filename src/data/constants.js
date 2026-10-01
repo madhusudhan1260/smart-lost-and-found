@@ -50,6 +50,13 @@ export const NAME_ICONS = [
   { pattern: /calculator/i, icon: 'calculate' },
   { pattern: /pen ?drive|usb|flash drive/i, icon: 'usb' },
   { pattern: /spectacle|glasses|specs/i, icon: 'eyeglasses' },
+  { pattern: /keychain|key ring/i, icon: 'vpn_key' },
+  { pattern: /id card|smart card|usn card|college id/i, icon: 'badge' },
+  { pattern: /smartwatch|fitness band|fitbit/i, icon: 'watch' },
+  { pattern: /notebook|textbook|register|diary/i, icon: 'menu_book' },
+  { pattern: /backpack|tote bag|duffle/i, icon: 'backpack' },
+  { pattern: /purse|pouch/i, icon: 'account_balance_wallet' },
+  { pattern: /helmet/i, icon: 'two_wheeler' },
 ];
 
 export const LOCATIONS = [
