@@ -8,9 +8,15 @@ import Icon from './Icon';
 
 // Animates a number from 0 up to `target` (the "count-up" effect)
 function useCountUp(target, duration = 800) {
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
   const [value, setValue] = useState(0);
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
     let frameId;
     const start = performance.now();
 
@@ -23,9 +29,9 @@ function useCountUp(target, duration = 800) {
 
     frameId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frameId);
-  }, [target, duration]);
+  }, [target, duration, prefersReducedMotion]);
 
-  return value;
+  return prefersReducedMotion ? target : value;
 }
 
 // tone: blue | red | yellow | green | grey
