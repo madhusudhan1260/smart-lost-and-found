@@ -1,3 +1,8 @@
+// File: src/hooks/useLocalStorage.js
+// Purpose: Custom hook: useState that is also saved in local/sessionStorage.
+// Used by: components/ItemForm.jsx, components/ItemsBrowser.jsx, context/ItemContext.jsx,
+//          context/ModeContext.jsx
+
 import { useCallback, useRef, useState } from 'react';
 import { readFromStorage, removeFromStorage, writeToStorage } from '../utils/storage';
 
