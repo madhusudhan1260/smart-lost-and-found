@@ -1,3 +1,5 @@
+// File: src/components/FormField.jsx
+// Used by: components/ClaimForm.jsx, components/ItemForm.jsx
 // Label + input + helper text + error message, so every form field looks the same.
 // The actual <input>/<select>/<textarea> is passed in as `children`.
 export default function FormField({ id, label, required = false, hint, error, full = false, children }) {
