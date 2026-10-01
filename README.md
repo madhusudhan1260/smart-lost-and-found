@@ -85,6 +85,16 @@ Build a working web application where:
 | **Smart Match** | 0–100 score, "✓ Same category / ✓ Same colour…" factors, sorted highest first, minimum-score slider. |
 | **UX** | Google-inspired design, toasts (snackbars), confirmation modals, loading & empty states, responsive layout, keyboard support (`/` to search, `Esc` closes dialogs). |
 
+### Keyboard Shortcuts & Accessibility
+
+| Key / Shortcut | Context | Action |
+|---|---|---|
+| `/` | Anywhere (when not inside an input) | Immediately focuses the main search bar |
+| `Escape` | Inside search bar | Clears search query and restores full list |
+| `Escape` | Inside any confirmation modal | Closes the modal dialog safely |
+| `Tab` / `Shift+Tab` | Modals and forms | Accessible logical tab order and focus trapping |
+| Skip link | Top of document | Allows keyboard/screen-reader users to skip straight to `#main` content |
+
 ## 4. Student workflow
 
 ```
