@@ -1,3 +1,7 @@
+// File: src/hooks/useDebounce.js
+// Purpose: Custom hook: delays a value until the user stops typing.
+// Used by: components/ItemsBrowser.jsx, pages/DossClaims.jsx
+
 import { useEffect, useState } from 'react';
 
 /**
