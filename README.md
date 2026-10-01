@@ -316,12 +316,12 @@ npm run dev
 
 Open the URL Vite prints (usually <http://localhost:5173>).
 
-| Command | Does |
-|---|---|
-| `npm run dev` | development server with hot reload |
-| `npm run build` | production build into `dist/` |
-| `npm run preview` | serve the production build |
-| `npm run lint` | run oxlint |
+| Command | Purpose | Output / Notes |
+|---|---|---|
+| `npm run dev` | Start local Vite development server with HMR | Spawns local dev server at `http://localhost:5173` |
+| `npm run build` | Compile and bundle production assets | Generates optimized minified assets into `dist/` |
+| `npm run preview` | Locally preview the generated production build | Verifies production behavior before deployment |
+| `npm run lint` | Fast static analysis using oxlint | Checks hooks rules, component exports, and unused variables |
 
 The icons and font are bundled, so the app works **without internet** once `npm install` is done.
 
