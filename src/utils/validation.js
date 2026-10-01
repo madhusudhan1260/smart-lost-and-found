@@ -24,9 +24,10 @@ const minLength = (text, length, label) =>
   text.length < length ? `${label} is too short (${text.length}/${length} characters)` : '';
 
 function validateContact(text) {
-  if (!text) return 'Contact information is required';
-  const isEmail = PATTERNS.email.test(text);
-  const isPhone = PATTERNS.phone.test(text.replace(/[\s-]/g, ''));
+  const str = String(text ?? '').trim();
+  if (!str) return 'Contact information is required';
+  const isEmail = PATTERNS.email.test(str);
+  const isPhone = PATTERNS.phone.test(str.replace(/[\s\-()]/g, ''));
   return isEmail || isPhone ? '' : 'Enter a valid email or 10-digit mobile number';
 }
 
