@@ -1,3 +1,7 @@
+// File: src/pages/NotFound.jsx
+// Purpose: Page shown for any unknown URL (404).
+// Used by: App.jsx
+
 import { Link } from 'react-router-dom';
 import EmptyState from '../components/EmptyState';
 import useDocumentTitle from '../hooks/useDocumentTitle';
