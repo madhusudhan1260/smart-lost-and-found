@@ -1,3 +1,7 @@
+// File: src/pages/ClaimItem.jsx
+// Purpose: Page /items/:id/claim – item summary + claim form (Student mode).
+// Used by: App.jsx
+
 import { Link, useParams } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
 import useDocumentTitle from '../hooks/useDocumentTitle';
