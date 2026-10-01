@@ -3,6 +3,14 @@
   "private": true,
   "version": "1.0.0",
   "description": "Smart Lost & Found \u2013 College Campus Lost & Found Management System (React + JavaScript)",
+  "keywords": [
+    "react",
+    "vite",
+    "javascript",
+    "lost-and-found",
+    "college-project",
+    "localstorage"
+  ],
   "author": "madhusudhan1260",
   "license": "MIT",
   "type": "module",
