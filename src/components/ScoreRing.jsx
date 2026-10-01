@@ -13,7 +13,11 @@ export default function ScoreRing({ score, size = 'md' }) {
     <div
       className={`score-ring score-ring--${tone} score-ring--${size}`}
       style={{ '--score': safeScore }}
-      role="img"
+      role="meter"
+      aria-valuenow={safeScore}
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuetext={`${safeScore}% match`}
       aria-label={`${safeScore} percent match`}
     >
       <span>{safeScore}<small>%</small></span>
