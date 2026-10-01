@@ -287,10 +287,11 @@ localStorage stores **strings only**, so all data goes through `JSON.stringify()
 | `lf_v2_draft_lost` / `_found` | `ItemForm` via `useLocalStorage` | unsaved form (removed after submit) |
 | `lf_v2_filters_lost` / `_found` | `ItemsBrowser` via `useLocalStorage(…, 'session')` | search / filter / sort, in **sessionStorage** |
 
-- **First visit:** the service finds no data and **seeds** the sample items and claims.
-- **Refresh:** everything is read back, so no data is lost.
-- **Start over:** use **DOSS dashboard → Reset demo data**.
-- Images are resized to ≤640px before saving, because localStorage only holds about 5 MB.
+- **First visit:** the service finds no data and **seeds** the sample items (25 initial records) and claims (7 initial records).
+- **Refresh:** everything is read back directly from localStorage, preserving all live edits and submitted claims.
+- **Start over:** use **DOSS dashboard → Reset demo data** (`resetAllData()` in `itemService.js`), which purges user changes and reseeds original fixtures.
+- **Quota resilience:** Base64 images are compressed to ≤640px JPEG before persistence to prevent reaching the ~5 MB browser quota.
+- **Defensive parsing:** `readFromStorage()` and `writeToStorage()` gracefully handle `QuotaExceededError` and corrupted JSON strings by returning safe fallbacks.
 
 ## 12. JavaScript & React concepts
 
