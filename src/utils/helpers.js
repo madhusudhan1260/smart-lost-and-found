@@ -16,7 +16,8 @@ function createIdGenerator(prefix) {
   return function nextId() {
     counter += 1;
     const timePart = Date.now().toString(36).toUpperCase().slice(-5);
-    return `${prefix}-${timePart}${counter}`;
+    const randPart = Math.random().toString(36).substring(2, 4).toUpperCase();
+    return `${prefix}-${timePart}${counter}${randPart}`;
   };
 }
 
