@@ -1,3 +1,5 @@
+// File: src/utils/storage.js
+// Used by: hooks/useLocalStorage.js, services/itemService.js
 // Safe wrappers around localStorage / sessionStorage.
 // Storage only holds strings, so objects go through JSON.stringify / JSON.parse.
 // Every call is wrapped in try/catch because storage can throw
