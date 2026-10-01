@@ -4,6 +4,7 @@
 
 import { Link } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
+import { STATUS } from '../data/constants';
 import { canBeClaimed } from '../utils/claimUtils';
 import { formatDate } from '../utils/dateUtils';
 import ItemImage from './ItemImage';
@@ -42,7 +43,7 @@ export default function ItemCard({ item, index = 0 }) {
           <Link to={`/items/${id}/claim`} className="btn btn--tonal btn--sm">
             <Icon name="front_hand" /> This is my item
           </Link>
-        ) : type === 'lost' && status === 'LOST' ? (
+        ) : type === 'lost' && status === STATUS.LOST ? (
           <Link to={`/smart-match/${id}`} className="btn btn--text btn--sm">
             <Icon name="join_inner" /> Smart Match
           </Link>
