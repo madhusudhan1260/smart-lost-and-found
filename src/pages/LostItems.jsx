@@ -1,3 +1,7 @@
+// File: src/pages/LostItems.jsx
+// Purpose: Page /lost – list of all lost reports.
+// Used by: App.jsx
+
 import { Link } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
 import PageHeader from '../components/PageHeader';
