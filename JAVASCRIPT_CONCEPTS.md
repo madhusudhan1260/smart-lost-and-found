@@ -1,5 +1,7 @@
 # JavaScript Concepts — where and why each one is used
 
+[← Back to README](README.md) · [JavaScript concepts](JAVASCRIPT_CONCEPTS.md) · [React concepts](REACT_CONCEPTS.md)
+
 Each concept lists **1. File**, **2. Why it is used** and **3. an example from this project**. Paths are relative to `src/`. Functions are named so you can find them quickly with Ctrl/Cmd+F.
 
 > 💡 Most pure-JavaScript logic lives in `utils/` and `services/`. Those files do **not** import React, so you can explain them as plain JavaScript.
