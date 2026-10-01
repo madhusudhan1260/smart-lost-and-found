@@ -27,6 +27,8 @@ export default function Footer() {
         <nav className="footer__links" aria-label="Footer">
           <Link to="/lost">Lost items</Link>
           <Link to="/found">Found items</Link>
+          <Link to="/report-lost">Report lost</Link>
+          <Link to="/report-found">Report found</Link>
           <Link to="/smart-match">Smart Match</Link>
           <Link to="/resolved">Resolved cases</Link>
         </nav>
