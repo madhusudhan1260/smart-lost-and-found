@@ -130,6 +130,18 @@ Try it with the sample data: open **Found Items → Black iPhone → This is my 
 
 Items and claims each have their own status. `CLAIM_ACCEPTED` / `CLAIM_REJECTED` belong to a **claim**, and `READY_FOR_COLLECTION` belongs to an **item**.
 
+#### State Transition Matrix
+
+| Trigger / Action | Item Status Change | Claim Status Change | Notes |
+|---|---|---|---|
+| User reports lost item | `-> LOST` | N/A | Available for matching |
+| User reports found item | `-> FOUND` | N/A | Available for claim |
+| Student submits claim | `FOUND -> CLAIM_PENDING` | `-> CLAIM_PENDING` | Item locked from collection |
+| DOSS accepts claim | `CLAIM_PENDING -> READY_FOR_COLLECTION` | `CLAIM_PENDING -> CLAIM_ACCEPTED` | Competing claims set to `CLAIM_REJECTED` |
+| DOSS rejects claim | `CLAIM_PENDING -> FOUND` (or remains `CLAIM_PENDING` if other claims exist) | `CLAIM_PENDING -> CLAIM_REJECTED` | Requires review note |
+| Owner collects item | `READY_FOR_COLLECTION -> COLLECTED` | `CLAIM_ACCEPTED -> COLLECTED` | Student ID verified by DOSS staff |
+| DOSS closes case | `COLLECTED -> RESOLVED` | `COLLECTED -> RESOLVED` | Case archived into Resolved Cases |
+
 ## 6. Technology stack
 
 | Technology | Use |
