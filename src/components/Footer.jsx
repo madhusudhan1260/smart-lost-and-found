@@ -1,3 +1,7 @@
+// File: src/components/Footer.jsx
+// Purpose: Page footer with the DOSS office details and quick links.
+// Used by: App.jsx
+
 import { Link } from 'react-router-dom';
 import { DOSS_OFFICE } from '../data/constants';
 import logo from '../assets/logo.svg';
