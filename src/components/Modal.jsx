@@ -1,3 +1,8 @@
+// File: src/components/Modal.jsx
+// Purpose: Confirmation dialog (Escape / backdrop to close) rendered with a portal.
+// Used by: components/ClaimCard.jsx, pages/ClaimReview.jsx, pages/DossDashboard.jsx,
+//          pages/ItemDetails.jsx
+
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
