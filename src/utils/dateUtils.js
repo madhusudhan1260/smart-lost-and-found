@@ -39,7 +39,13 @@ export const isoHoursAgo = (hours) => new Date(Date.now() - hours * 60 * 60 * 10
 export const isoDaysAgo = (days) => isoHoursAgo(days * 24);
 
 export function parseLocalDate(dateString) {
-  const [year, month, day] = dateString.split('-').map(Number);
+  if (!dateString || typeof dateString !== 'string') return new Date();
+  const clean = dateString.split('T')[0];
+  const [year, month, day] = clean.split('-').map(Number);
+  if (!year || !month || !day) {
+    const fallback = new Date(dateString);
+    return isNaN(fallback.getTime()) ? new Date() : fallback;
+  }
   return new Date(year, month - 1, day);
 }
 
@@ -52,7 +58,9 @@ export const isFutureDate = (dateString) => daysBetween(toISODate(), dateString)
 
 export function formatDate(dateString) {
   if (!dateString) return '—';
-  return parseLocalDate(dateString).toLocaleDateString('en-IN', {
+  const d = parseLocalDate(dateString);
+  if (isNaN(d.getTime())) return '—';
+  return d.toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
