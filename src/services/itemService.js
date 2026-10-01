@@ -1,3 +1,5 @@
+// File: src/services/itemService.js
+// Used by: components/TipTicker.jsx, context/ItemContext.jsx
 // MOCK SERVICE LAYER
 // Pretends to be a backend API. The data really lives in localStorage, but every
 // function returns a Promise (after a small delay) just like a real HTTP call would.
