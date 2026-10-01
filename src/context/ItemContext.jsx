@@ -1,3 +1,11 @@
+// File: src/context/ItemContext.jsx
+// Purpose: Shared items + claims state and the whole claim workflow.
+// Used by: components/ClaimCard.jsx, components/ClaimForm.jsx, components/ItemForm.jsx,
+//          components/ItemsBrowser.jsx, components/Navbar.jsx, main.jsx, pages/ClaimItem.jsx,
+//          pages/ClaimReview.jsx, pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/Home.jsx,
+//          pages/ItemDetails.jsx, pages/MyClaims.jsx, pages/ResolvedItems.jsx,
+//          pages/SmartMatch.jsx, pages/StudentDashboard.jsx
+
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as itemService from '../services/itemService';
 import useLocalStorage from '../hooks/useLocalStorage';
