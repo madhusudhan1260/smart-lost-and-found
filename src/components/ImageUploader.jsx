@@ -29,7 +29,7 @@ export default function ImageUploader({ image, onChange, error, onError }) {
       onChange(dataUrl);
       onError('');
     } catch (err) {
-      onError(err.message);
+      onError(err?.message ?? 'Failed to process image');
     } finally {
       setProcessing(false);
       if (fileInputRef.current) fileInputRef.current.value = ''; // allow choosing the same file again
@@ -59,6 +59,7 @@ export default function ImageUploader({ image, onChange, error, onError }) {
         <label
           htmlFor="image"
           className={cx('dropzone', dragging && 'is-dragging', error && 'has-error')}
+          onDragEnter={(event) => { event.preventDefault(); setDragging(true); }}
           onDragOver={(event) => { event.preventDefault(); setDragging(true); }}
           onDragLeave={() => setDragging(false)}
           onDrop={handleDrop}
@@ -77,7 +78,7 @@ export default function ImageUploader({ image, onChange, error, onError }) {
         onChange={(event) => handleFile(event.target.files?.[0])}
         aria-describedby={error ? 'image-error' : undefined}
       />
-      {error && <p id="image-error" className="field-error">{error}</p>}
+      {error && <p id="image-error" className="field-error" role="alert" aria-live="polite">{error}</p>}
     </div>
   );
 }
