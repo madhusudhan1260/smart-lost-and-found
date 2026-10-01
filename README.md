@@ -190,6 +190,17 @@ utils/  → pure JavaScript used everywhere:
 - **Service** is the only file that touches storage for items and claims.
 - **Utils** contain the logic you explain in the viva. They do not import React, so each can be understood alone.
 
+### Privacy Boundary & Field Exposure
+
+| Field | Public Cards & Lists | Search Engine (`SEARCHABLE_FIELDS`) | Student Details View | DOSS Staff View |
+|---|---|---|---|---|
+| `name`, `category`, `color`, `location` | Yes | Yes | Yes | Yes |
+| `description` | Yes | Yes | Yes | Yes |
+| `contactName`, `contact` | No | No | Yes | Yes |
+| `privateDetails` | **Never** | **Never** | **Hidden** | **Visible for Verification** |
+| `claimantName`, `rollNumber` | No | No | Owner Only (My Claims) | Yes (DOSS Queue) |
+| `uniqueFeature` | No | No | Owner Only | Yes (Side-by-side Review) |
+
 ## 8. Folder structure
 
 ```
