@@ -91,7 +91,7 @@ export default function ItemsBrowser({ type }) {
       ) : visibleItems.length === 0 ? (
         <EmptyState
           icon={canClear ? 'search_off' : 'inbox'}
-          title={canClear ? 'No reports match your search' : `No ${type} items found.`}
+          title={canClear ? 'No reports match your search' : (type === 'found' ? 'No found items reported yet.' : 'No lost items reported yet.')}
           message={canClear ? 'Try a different keyword or clear the filters.' : 'Reports will appear here as soon as they are added.'}
         >
           {canClear && <button type="button" className="btn btn--outline" onClick={resetFilters}>Clear filters</button>}
