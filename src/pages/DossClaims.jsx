@@ -49,24 +49,40 @@ function DossClaimsContent() {
         <div className="claims-toolbar card">
           <div className="tabs" role="tablist" aria-label="Claim status">
             {TABS.map(({ key, label, test }) => (
-              <button key={key} type="button" role="tab" aria-selected={activeTab === key}
-                className={cx('tab', activeTab === key && 'is-active')} onClick={() => setActiveTab(key)}>
+              <button
+                key={key}
+                id={`claim-tab-${key}`}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === key}
+                aria-controls="claims-tabpanel"
+                className={cx('tab', activeTab === key && 'is-active')}
+                onClick={() => setActiveTab(key)}
+              >
                 {label} <span className="tab__count">{claims.filter(test).length}</span>
               </button>
             ))}
           </div>
-          <SearchBar id="claim-search" value={query} onChange={setQuery} placeholder="Search by name, roll number, contact or claim ID" />
+          <SearchBar
+            id="claim-search"
+            value={query}
+            onChange={setQuery}
+            placeholder="Search by name, roll number, contact or claim ID"
+            ariaLabel="Search claims"
+          />
         </div>
 
-        {loading ? (
-          <LoadingSpinner />
-        ) : visibleClaims.length === 0 ? (
-          <EmptyState icon="inbox" title={debouncedQuery ? 'No claims match your search' : tab.empty} />
-        ) : (
-          <div className="claim-rows card">
-            {visibleClaims.map((claim, index) => <ClaimCard key={claim.id} claim={claim} view="doss" index={index} />)}
-          </div>
-        )}
+        <div id="claims-tabpanel" role="tabpanel" aria-labelledby={`claim-tab-${tab.key}`}>
+          {loading ? (
+            <LoadingSpinner />
+          ) : visibleClaims.length === 0 ? (
+            <EmptyState icon="inbox" title={debouncedQuery ? 'No claims match your search' : tab.empty} />
+          ) : (
+            <div className="claim-rows card">
+              {visibleClaims.map((claim, index) => <ClaimCard key={claim.id} claim={claim} view="doss" index={index} />)}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
