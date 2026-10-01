@@ -1,3 +1,7 @@
+// File: src/components/ItemCard.jsx
+// Purpose: One lost/found report shown as a card in the lists.
+// Used by: components/ItemsBrowser.jsx, pages/Home.jsx
+
 import { Link } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
 import { canBeClaimed } from '../utils/claimUtils';
