@@ -128,13 +128,14 @@ export default function ClaimForm({ item }) {
       <fieldset className="form-section">
         <legend><Icon name="verified_user" /> Proof of ownership</legend>
         <div className="form-grid">
-          <FormField id="reason" label="Why do you believe this item belongs to you?" required full error={errors.reason}>
-            <textarea rows={3} placeholder="e.g. It is my phone – I lost it in the library on Monday afternoon." {...fieldProps('reason')} />
+          <FormField id="reason" label="Why do you believe this item belongs to you?" required full error={errors.reason}
+            hint={`Minimum 20 characters (${values.reason?.length ?? 0}/500)`}>
+            <textarea rows={3} maxLength={500} placeholder="e.g. It is my phone – I lost it in the library on Monday afternoon." {...fieldProps('reason')} />
           </FormField>
 
           <FormField id="uniqueFeature" label="Describe a unique feature that was NOT publicly mentioned" required full
-            error={errors.uniqueFeature}>
-            <textarea rows={3} placeholder="e.g. There are three small scratches on the bottom-right corner of the back case." {...fieldProps('uniqueFeature')} />
+            error={errors.uniqueFeature} hint={`Minimum 10 characters (${values.uniqueFeature?.length ?? 0}/300)`}>
+            <textarea rows={3} maxLength={300} placeholder="e.g. There are three small scratches on the bottom-right corner of the back case." {...fieldProps('uniqueFeature')} />
           </FormField>
           <div className="idea-chips form-field--full" aria-label="Ideas for verification details">
             {VERIFICATION_IDEAS.map((idea) => <span key={idea} className="chip"><Icon name="lightbulb" /> {idea}</span>)}
