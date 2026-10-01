@@ -32,7 +32,7 @@ export default function FilterPanel({ type, filters, onFilterChange, onClear, ca
     {
       name: 'status',
       label: 'Status',
-      options: withAllOption(STATUS_OPTIONS_BY_TYPE[type], 'All statuses', (status) => STATUS_META[status].label),
+      options: withAllOption(STATUS_OPTIONS_BY_TYPE[type] ?? [], 'All statuses', (status) => STATUS_META[status]?.label ?? status),
     },
     { name: 'sortBy', label: 'Sort by', options: SORT_OPTIONS },
   ];
@@ -44,7 +44,7 @@ export default function FilterPanel({ type, filters, onFilterChange, onClear, ca
           key={name}
           id={`${type}-${name}`}
           label={label}
-          value={filters[name]}
+          value={filters[name] ?? (name === 'sortBy' ? 'newest' : 'all')}
           options={options}
           onChange={(value) => onFilterChange(name, value)}
         />
