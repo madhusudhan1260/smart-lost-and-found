@@ -210,7 +210,8 @@ export function findMatches(sourceItem, allItems, minScore = DEFAULT_MATCH_THRES
       // Destructuring swap so the lost item is always the first argument
       const [lostItem, foundItem] = sourceItem.type === 'lost' ? [sourceItem, other] : [other, sourceItem];
       const factors = getMatchBreakdown(lostItem, foundItem);
-      return { item: other, score: sumPoints(factors), factors };
+      const score = Math.max(0, Math.min(100, sumPoints(factors)));
+      return { item: other, score, factors };
     })
     .filter((match) => match.score >= minScore)
     .sort((a, b) => b.score - a.score);
