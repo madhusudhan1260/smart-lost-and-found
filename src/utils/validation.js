@@ -143,7 +143,7 @@ export function validateClaimField(name, value = '', { foundDate } = {}) {
     }
 
     case 'additionalProof':
-      return text.length > 500 ? 'Additional proof must be under 500 characters' : '';
+      return text && text.length > 500 ? 'Additional proof must be under 500 characters' : '';
 
     default:
       return ''; // lostItemId is optional
