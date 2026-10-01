@@ -1,3 +1,7 @@
+// File: src/pages/ItemDetails.jsx
+// Purpose: Page /items/:id – full report details and actions.
+// Used by: App.jsx
+
 import { useCallback, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
