@@ -1,3 +1,10 @@
+// File: src/components/EmptyState.jsx
+// Purpose: Friendly message for empty lists, missing items and errors.
+// Used by: components/ItemsBrowser.jsx, components/ModeGate.jsx, pages/ClaimItem.jsx,
+//          pages/ClaimReview.jsx, pages/DossClaims.jsx, pages/Home.jsx, pages/ItemDetails.jsx,
+//          pages/MyClaims.jsx, pages/NotFound.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
+//          pages/StudentDashboard.jsx
+
 import Icon from './Icon';
 
 // Friendly message for "no results", "not found" and error situations
