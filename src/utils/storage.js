@@ -20,7 +20,11 @@ export function writeToStorage(key, value, storage = window.localStorage) {
     storage.setItem(key, JSON.stringify(value));
     return true;
   } catch (error) {
-    console.error(`Could not save "${key}" to storage:`, error);
+    if (error?.name === 'QuotaExceededError' || error?.code === 22) {
+      console.error(`Storage quota exceeded while writing "${key}". Free up space or clear old data.`);
+    } else {
+      console.error(`Could not save "${key}" to storage:`, error);
+    }
     return false;
   }
 }
