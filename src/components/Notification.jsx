@@ -1,3 +1,7 @@
+// File: src/components/Notification.jsx
+// Purpose: Toast (snackbar) messages shown at the bottom of the screen.
+// Used by: context/NotificationContext.jsx
+
 import Icon from './Icon';
 
 const ICONS = { success: 'check_circle', error: 'error', info: 'info' };
