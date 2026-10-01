@@ -59,8 +59,8 @@ export default function StudentDashboard() {
         <section className="stat-grid" aria-label="My claims">
           <StatCard label="Claims pending" value={myStats.pending} icon="hourglass_top" tone="yellow" to="/my-claims" />
           <StatCard label="Ready for collection" value={myStats.ready} icon="storefront" tone="blue" to="/my-claims" />
-          <StatCard label="Collected" value={myStats.collected} icon="handshake" tone="green" />
-          <StatCard label="Rejected" value={myStats.rejected} icon="block" tone="red" />
+          <StatCard label="Collected" value={myStats.collected} icon="handshake" tone="green" to="/my-claims" />
+          <StatCard label="Rejected" value={myStats.rejected} icon="block" tone="red" to="/my-claims" />
         </section>
 
         <div className="two-col section">
