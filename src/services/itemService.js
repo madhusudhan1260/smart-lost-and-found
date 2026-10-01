@@ -6,7 +6,7 @@
 // Later this file could be swapped for real fetch() calls without touching the UI.
 import initialItems from '../data/initialItems';
 import initialClaims from '../data/initialClaims';
-import { STORAGE_KEYS } from '../data/constants';
+import { STORAGE_KEYS, STATUS } from '../data/constants';
 import { readFromStorage, writeToStorage } from '../utils/storage';
 import { generateId } from '../utils/helpers';
 
@@ -60,7 +60,7 @@ export async function addItem(itemData) {
   const newItem = {
     ...itemData,
     id: generateId('item', items.map((item) => item.id)),
-    status: itemData.type === 'lost' ? 'LOST' : 'FOUND',
+    status: itemData.type === 'lost' ? STATUS.LOST : STATUS.FOUND,
     createdAt: new Date().toISOString(),
   };
 
@@ -97,7 +97,7 @@ export async function addClaim(claimData) {
   const newClaim = {
     ...claimData,
     id: generateId('claim', claims.map((claim) => claim.id)),
-    status: 'CLAIM_PENDING',
+    status: STATUS.CLAIM_PENDING,
     createdAt: new Date().toISOString(),
   };
 
