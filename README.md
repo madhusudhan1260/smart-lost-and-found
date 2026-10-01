@@ -302,7 +302,14 @@ localStorage stores **strings only**, so all data goes through `JSON.stringify()
 Requirements: **Node.js 18+** and npm.
 
 ```bash
-cd ~/Desktop/Work-Space/lost_and_found
+# Clone the repository
+git clone https://github.com/madhusudhan1260/smart-lost-and-found.git
+cd smart-lost-and-found
+
+# Verify Node.js version (Node 18+ required)
+node -v
+
+# Install dependencies and start the development server
 npm install
 npm run dev
 ```
