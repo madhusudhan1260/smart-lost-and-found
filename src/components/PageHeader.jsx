@@ -1,3 +1,10 @@
+// File: src/components/PageHeader.jsx
+// Purpose: Title area at the top of each page.
+// Used by: components/ReportLayout.jsx, pages/ClaimItem.jsx, pages/ClaimReview.jsx,
+//          pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/FoundItems.jsx,
+//          pages/LostItems.jsx, pages/MyClaims.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
+//          pages/StudentDashboard.jsx
+
 import Icon from './Icon';
 
 // Title area at the top of each page
