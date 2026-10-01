@@ -1,3 +1,8 @@
+// File: src/components/ModeGate.jsx
+// Purpose: Shows a page only in the right mode (Student or DOSS).
+// Used by: pages/ClaimItem.jsx, pages/ClaimReview.jsx, pages/DossClaims.jsx, pages/MyClaims.jsx,
+//          pages/ReportFound.jsx, pages/ReportLost.jsx
+
 import { useMode } from '../context/ModeContext';
 import { MODES } from '../data/constants';
 import EmptyState from './EmptyState';
