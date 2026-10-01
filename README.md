@@ -7,6 +7,26 @@ A React.js + JavaScript microproject (3rd-year B.Tech CSE) that manages the **co
 
 ---
 
+## ⚡ Quick demo (5 minutes)
+
+The sample data is set up so you can show the whole workflow straight away:
+
+| Step | Mode | Do this | You should see |
+|---|---|---|---|
+| 1 | Student | **Found Items → Black iPhone → This is my item** | The claim form |
+| 2 | Student | Unique feature: *"There are three small scratches on the bottom-right corner of the back case."* Link the lost report **iPhone 15**, then submit | **Claim pending** |
+| 3 | DOSS | **Dashboard → Pending claims → Black iPhone** | Claim Review with **Strong evidence** |
+| 4 | DOSS | **Accept claim** → confirm | **Ready for collection** |
+| 5 | Student | **My Claims** | "Claim accepted" + Collection instructions |
+| 6 | DOSS | **Mark as collected** → **Mark as resolved** | The case appears in **Resolved** |
+| 7 | Any | Refresh the page | Everything is still there (localStorage) |
+
+**Smart Match:** open **Smart Match → Leather Wallet** to see an 84% match with every factor explained.
+
+**Weak claim:** in DOSS mode, claim **CL-3003** (black wallet) shows **Weak evidence**. That is why it was rejected.
+
+To start over: **DOSS Dashboard → Reset demo data**.
+
 ## 1. Problem statement
 
 Students lose phones, ID cards, wallets, keys, laptops and books on campus every day. Today this is handled through WhatsApp groups and notice boards:
