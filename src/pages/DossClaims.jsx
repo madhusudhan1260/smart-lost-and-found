@@ -1,3 +1,7 @@
+// File: src/pages/DossClaims.jsx
+// Purpose: Page /doss/claims – all claims grouped in status tabs (DOSS mode).
+// Used by: App.jsx
+
 import { useMemo, useState } from 'react';
 import { useItems } from '../context/ItemContext';
 import useDebounce from '../hooks/useDebounce';
