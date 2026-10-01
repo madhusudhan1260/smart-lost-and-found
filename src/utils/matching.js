@@ -53,14 +53,14 @@ export function keywordSimilarity(wordsA, wordsB) {
 }
 
 function compareColors(colorA = '', colorB = '') {
-  const a = colorA.toLowerCase().trim();
-  const b = colorB.toLowerCase().trim();
+  const a = String(colorA ?? '').toLowerCase().trim();
+  const b = String(colorB ?? '').toLowerCase().trim();
   if (!a || !b) return 0;
   if (a === b) return 1;
 
-  // Partial match: "Dark Blue" vs "Blue"
-  const wordsA = a.split(/[\s/-]+/);
-  const wordsB = b.split(/[\s/-]+/);
+  // Partial match: "Dark Blue" vs "Blue", ignoring connectors like "and"
+  const wordsA = a.split(/[\s/-]+/).filter((word) => word.length >= 3 && !['and', 'the', 'with'].includes(word));
+  const wordsB = b.split(/[\s/-]+/).filter((word) => word.length >= 3 && !['and', 'the', 'with'].includes(word));
   return wordsA.some((word) => wordsB.includes(word)) ? 0.5 : 0;
 }
 
