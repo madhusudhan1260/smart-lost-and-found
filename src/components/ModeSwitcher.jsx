@@ -1,3 +1,7 @@
+// File: src/components/ModeSwitcher.jsx
+// Purpose: The [ STUDENT ] [ DOSS ] toggle in the top bar.
+// Used by: components/Navbar.jsx
+
 import { useNavigate } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
 import { useNotification } from '../context/NotificationContext';
