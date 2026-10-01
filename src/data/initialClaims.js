@@ -1,3 +1,5 @@
+// File: src/data/initialClaims.js
+// Used by: context/ItemContext.jsx, services/itemService.js
 // Sample ownership claims in different stages, so the DOSS dashboard
 // looks realistic the first time it is opened.
 import { daysAgoISO, isoDaysAgo, isoHoursAgo } from '../utils/dateUtils';
