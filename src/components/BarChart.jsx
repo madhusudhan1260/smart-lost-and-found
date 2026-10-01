@@ -1,3 +1,5 @@
+// File: src/components/BarChart.jsx
+// Used by: pages/DossDashboard.jsx, pages/StudentDashboard.jsx
 // A simple horizontal bar chart made only with HTML + CSS (no chart library)
 export default function BarChart({ data, colorFor, emptyText = 'No data yet' }) {
   if (data.length === 0) return <p className="muted">{emptyText}</p>;
