@@ -1,3 +1,7 @@
+// File: src/pages/SmartMatch.jsx
+// Purpose: Page /smart-match – pick a report and see its scored matches.
+// Used by: App.jsx
+
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
