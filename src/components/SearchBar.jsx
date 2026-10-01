@@ -6,7 +6,15 @@ import { useEffect, useRef } from 'react';
 import Icon from './Icon';
 
 // Controlled, Google-style search box. Press "/" anywhere on the page to focus it.
-export default function SearchBar({ value, onChange, onSubmit, placeholder = 'Search...', id = 'search', large = false }) {
+export default function SearchBar({
+  value,
+  onChange,
+  onSubmit,
+  placeholder = 'Search...',
+  id = 'search',
+  large = false,
+  ariaLabel = 'Search items',
+}) {
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -28,12 +36,13 @@ export default function SearchBar({ value, onChange, onSubmit, placeholder = 'Se
 
   return (
     <form className={`search-bar ${large ? 'search-bar--large' : ''}`} role="search" onSubmit={handleSubmit}>
-      <label htmlFor={id} className="sr-only">Search items</label>
+      <label htmlFor={id} className="sr-only">{ariaLabel}</label>
       <Icon name="search" className="search-bar__icon" />
       <input
         ref={inputRef}
         id={id}
         type="search"
+        aria-label={ariaLabel}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         onKeyDown={(event) => event.key === 'Escape' && onChange('')} // Esc clears the search
