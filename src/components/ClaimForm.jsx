@@ -109,7 +109,7 @@ export default function ClaimForm({ item }) {
 
   // ---------- FORM ----------
   return (
-    <form className="item-form card claim-form" onSubmit={handleSubmit} noValidate>
+    <form className="item-form card claim-form" onSubmit={handleSubmit} aria-busy={submitting} noValidate>
       <fieldset className="form-section">
         <legend><Icon name="person" /> About you</legend>
         <div className="form-grid form-grid--3">
