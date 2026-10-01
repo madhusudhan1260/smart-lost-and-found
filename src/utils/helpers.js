@@ -38,7 +38,17 @@ export function generateId(kind, existingIds = []) {
 // cx('card', isActive && 'card--active') → "card card--active"
 export const cx = (...classNames) => classNames.filter(Boolean).join(' ');
 
-export const pluralize = (count, word, plural = `${word}s`) => `${count} ${count === 1 ? word : plural}`;
+export const pluralize = (count, word, plural) => {
+  const num = Number(count) || 0;
+  const pluralForm =
+    plural ??
+    (word.endsWith('y') && !/[aeiou]y$/i.test(word)
+      ? `${word.slice(0, -1)}ies`
+      : /(?:s|sh|ch|x|z)$/i.test(word)
+        ? `${word}es`
+        : `${word}s`);
+  return `${num} ${num === 1 ? word : pluralForm}`;
+};
 
 // Pick an icon: a specific one if the name matches (laptop, bottle...), else the category icon
 export function getItemIcon({ name = '', category }) {
