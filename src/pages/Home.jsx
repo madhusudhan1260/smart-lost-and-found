@@ -1,3 +1,7 @@
+// File: src/pages/Home.jsx
+// Purpose: Page / – hero search, statistics, recent items, matches and claims.
+// Used by: App.jsx
+
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
