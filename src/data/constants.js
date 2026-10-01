@@ -1,3 +1,15 @@
+// File: src/data/constants.js
+// Used by: components/ClaimCard.jsx, components/ClaimForm.jsx,
+//          components/CollectionInstructions.jsx, components/FilterPanel.jsx,
+//          components/Footer.jsx, components/ItemForm.jsx, components/ItemImage.jsx,
+//          components/ItemsBrowser.jsx, components/ModeGate.jsx, components/ModeSwitcher.jsx,
+//          components/Navbar.jsx, components/StatusBadge.jsx, context/ItemContext.jsx,
+//          context/ModeContext.jsx, pages/ClaimItem.jsx, pages/ClaimReview.jsx,
+//          pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/Home.jsx, pages/ItemDetails.jsx,
+//          pages/MyClaims.jsx, pages/ReportFound.jsx, pages/ReportLost.jsx,
+//          pages/ResolvedItems.jsx, pages/SmartMatch.jsx, pages/StudentDashboard.jsx,
+//          services/itemService.js, utils/claimUtils.js, utils/helpers.js, utils/matching.js,
+//          utils/statistics.js
 // Shared constants used across the whole app.
 // Keeping them in one module means a category, location or status is only spelled once.
 
