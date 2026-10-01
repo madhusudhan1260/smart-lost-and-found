@@ -1,3 +1,7 @@
+// File: src/components/FilterPanel.jsx
+// Purpose: Category / location / date / status / sort dropdowns for the item lists.
+// Used by: components/ItemsBrowser.jsx
+
 import { CATEGORIES, DATE_RANGES, LOCATIONS, SORT_OPTIONS, STATUS_META, STATUS_OPTIONS_BY_TYPE } from '../data/constants';
 import Icon from './Icon';
 
