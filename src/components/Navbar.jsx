@@ -1,3 +1,7 @@
+// File: src/components/Navbar.jsx
+// Purpose: Top navigation bar; links change with the current mode.
+// Used by: App.jsx
+
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
