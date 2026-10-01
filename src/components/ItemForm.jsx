@@ -136,7 +136,7 @@ export default function ItemForm({ type }) {
   const descriptionLength = values.description?.length ?? 0;
 
   return (
-    <form className="item-form card" onSubmit={handleSubmit} noValidate>
+    <form className="item-form card" onSubmit={handleSubmit} aria-busy={submitting} noValidate>
       <fieldset className="form-section">
         <legend><Icon name="info" /> Item details</legend>
         <div className="form-grid">
