@@ -1,3 +1,5 @@
+// File: src/data/initialItems.js
+// Used by: services/itemService.js
 // 25 sample reports, loaded on the very first visit (when localStorage is empty).
 // Dates are calculated relative to TODAY so the demo always looks fresh.
 //
