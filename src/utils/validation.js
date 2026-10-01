@@ -119,10 +119,12 @@ export function validateClaimField(name, value = '', { foundDate } = {}) {
 
     case 'reason':
       if (!text) return 'Please explain why this item belongs to you';
+      if (text.length > 500) return 'Explanation must be under 500 characters';
       return minLength(text, 20, 'Explanation');
 
     case 'uniqueFeature':
       if (!text) return 'Describe a unique feature – this is how DOSS verifies ownership';
+      if (text.length > 300) return 'Unique feature must be under 300 characters';
       return minLength(text, 10, 'Unique feature');
 
     case 'lostLocation':
@@ -138,8 +140,11 @@ export function validateClaimField(name, value = '', { foundDate } = {}) {
       return '';
     }
 
+    case 'additionalProof':
+      return text.length > 500 ? 'Additional proof must be under 500 characters' : '';
+
     default:
-      return ''; // additionalProof, lostItemId are optional
+      return ''; // lostItemId is optional
   }
 }
 
