@@ -1,3 +1,10 @@
+// File: src/context/ModeContext.jsx
+// Purpose: Shared Student / DOSS mode (saved in localStorage).
+// Used by: App.jsx, components/ItemCard.jsx, components/ItemsBrowser.jsx,
+//          components/MatchCard.jsx, components/ModeGate.jsx, components/ModeSwitcher.jsx,
+//          components/Navbar.jsx, main.jsx, pages/FoundItems.jsx, pages/Home.jsx,
+//          pages/ItemDetails.jsx, pages/LostItems.jsx
+
 import { createContext, useContext, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { MODES, STORAGE_KEYS } from '../data/constants';
