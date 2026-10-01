@@ -1,3 +1,7 @@
+// File: src/pages/FoundItems.jsx
+// Purpose: Page /found – list of all found reports.
+// Used by: App.jsx
+
 import { Link } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
 import PageHeader from '../components/PageHeader';
