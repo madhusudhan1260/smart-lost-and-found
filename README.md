@@ -338,6 +338,13 @@ Open the URL Vite prints (usually <http://localhost:5173>).
 
 The icons and font are bundled, so the app works **without internet** once `npm install` is done.
 
+### Troubleshooting
+
+- **Port in use (`EADDRINUSE: 5173`):** Vite will automatically select the next available port (e.g., `5174`). You can force a specific port using `npx vite --port 3000`.
+- **Corrupted localStorage state:** Open Developer Tools (`F12`) → Application → Local Storage → Clear all entries, or click **Reset demo data** on the DOSS Dashboard.
+- **Node version mismatch:** Ensure `node -v` prints `v18.0.0` or higher. Use `nvm use 18` or `nvm use 20` if installed.
+- **Build cache clean:** If changes are not reflected, run `rm -rf node_modules/.vite dist` and restart with `npm run dev`.
+
 ## 14. Limitations
 
 - **No real authentication.** The Student / DOSS switch is only a demo of two roles, and anyone can switch.
