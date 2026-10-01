@@ -1,3 +1,7 @@
+// File: src/components/ClaimTimeline.jsx
+// Purpose: Progress tracker: Submitted → Accepted → Collected → Resolved.
+// Used by: components/ClaimCard.jsx
+
 import { getClaimTimeline } from '../utils/claimUtils';
 import { formatDateTime } from '../utils/dateUtils';
 import { cx } from '../utils/helpers';
