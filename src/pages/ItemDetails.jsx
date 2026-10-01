@@ -227,7 +227,7 @@ export default function ItemDetails() {
       <Modal
         isOpen={Boolean(modal)}
         title={modalText?.title}
-        confirmText={modalText?.title.replace('?', '')}
+        confirmText={modalText?.title ? modalText.title.replace('?', '') : 'Confirm'}
         tone={modalText?.tone}
         busy={busy}
         onConfirm={handleConfirm}
