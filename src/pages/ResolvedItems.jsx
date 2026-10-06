@@ -71,7 +71,7 @@ export default function ResolvedItems() {
           <StatCard label="% of found items returned" value={summary.returnRate} icon="percent" tone="red" />
         </section>
 
-        <div className="segmented">
+        <div className="segmented" role="toolbar" aria-label="Filter resolved cases by status">
           {FILTERS.map(({ key, label }) => (
             <button key={key} type="button" className={cx('segmented__item', filter === key && 'is-active')}
               onClick={() => setFilter(key)} aria-pressed={filter === key}>
@@ -88,7 +88,7 @@ export default function ResolvedItems() {
           </EmptyState>
         ) : (
           <div className="card table-wrap">
-            <table className="table table--stack">
+            <table className="table table--stack" aria-label="Resolved and collected items history">
               <thead>
                 <tr>
                   <th scope="col">Item</th>
@@ -103,7 +103,7 @@ export default function ResolvedItems() {
                 {closedItems.map((item) => (
                   <tr key={item.id}>
                     <td>
-                      <Link to={`/items/${item.id}`} className="table-item">
+                      <Link to={`/items/${item.id}`} className="table-item" aria-label={`View details for ${item.name}`}>
                         <ItemImage item={item} className="table-item__image" />
                         <span><strong>{item.name}</strong><small className="muted">{item.location}</small></span>
                       </Link>
