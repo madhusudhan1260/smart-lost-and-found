@@ -117,6 +117,11 @@ export default function ItemsBrowser({ type }) {
           message={canClear ? 'Try a different keyword or clear the filters.' : 'Reports will appear here as soon as they are added.'}
         >
           {canClear && <button type="button" className="btn btn--outline" onClick={resetFilters}>Clear filters</button>}
+          {debouncedSearch.trim() && (
+            <Link to={`/${type === 'lost' ? 'found' : 'lost'}?q=${encodeURIComponent(debouncedSearch.trim())}`} className="btn btn--text">
+              Search {type === 'lost' ? 'found' : 'lost'} items for “{debouncedSearch.trim()}”
+            </Link>
+          )}
           {isStudent && (
             <Link to={type === 'lost' ? '/report-lost' : '/report-found'} className="btn btn--primary">
               Report {type} item
