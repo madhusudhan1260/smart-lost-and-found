@@ -830,3 +830,11 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .shortcuts > div { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 12px; }
 .shortcuts dd { margin: 0; color: var(--text); }
 .shortcuts kbd, .footer kbd { display: inline-block; min-width: 28px; padding: 2px 8px; text-align: center; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 6px; background: var(--bg-2); font-size: 0.8rem; color: var(--text); }
+
+/* Countdown line showing when a toast will disappear */
+.toast { position: relative; overflow: hidden; }
+.toast__timer { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: currentColor; opacity: 0.35; transform-origin: left; animation: toastTimer var(--toast-duration, 3500ms) linear forwards; }
+.toast--success .toast__timer { color: #81c995; }
+.toast--error .toast__timer { color: #f28b82; }
+.toast--info .toast__timer { color: #8ab4f8; }
+@keyframes toastTimer { from { transform: scaleX(1); } to { transform: scaleX(0); } }

@@ -20,7 +20,7 @@ export function NotificationProvider({ children }) {
   const notify = useCallback(
     (message, type = 'success', duration = 3500) => {
       const id = `${Date.now()}-${Math.random()}`;
-      setNotifications((previous) => [...previous, { id, message, type }]);
+      setNotifications((previous) => [...previous, { id, message, type, duration }]);
       setTimeout(() => dismiss(id), duration); // auto-hide
     },
     [dismiss],
