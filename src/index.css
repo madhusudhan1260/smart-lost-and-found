@@ -882,3 +882,4 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
   .table--stack td[data-label]::before { content: attr(data-label); color: var(--text-2); font-size: 0.8rem; text-align: left; }
   .table--stack td:first-child { padding-bottom: 8px; }
 }
+.claims-toolbar__row { display: flex; align-items: center; gap: 10px; } .claims-toolbar__row .search-bar { flex: 1; } @media (max-width: 640px) { .claims-toolbar__row { flex-direction: column; align-items: stretch; } }

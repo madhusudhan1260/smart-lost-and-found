@@ -15,6 +15,7 @@ import ClaimCard from '../components/ClaimCard';
 import ModeGate from '../components/ModeGate';
 import EmptyState from '../components/EmptyState';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Icon from '../components/Icon';
 
 // Each tab is a name + a test function (array of objects holding callbacks)
 const TABS = [
@@ -30,6 +31,7 @@ function DossClaimsContent() {
   const { claims, loading } = useItems();
   const [activeTab, setActiveTab] = useState('pending');
   const [query, setQuery] = useState('');
+  const [newestFirst, setNewestFirst] = useState(true);
   const debouncedQuery = useDebounce(query, 300);
 
   const tab = TABS.find((entry) => entry.key === activeTab) ?? TABS[0];
@@ -37,8 +39,8 @@ function DossClaimsContent() {
   const visibleClaims = useMemo(
     () =>
       searchClaims(claims.filter(tab.test), debouncedQuery)
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-    [claims, tab, debouncedQuery],
+        .sort((a, b) => (new Date(b.createdAt) - new Date(a.createdAt)) * (newestFirst ? 1 : -1)),
+    [claims, tab, debouncedQuery, newestFirst],
   );
 
   return (
@@ -63,13 +65,18 @@ function DossClaimsContent() {
               </button>
             ))}
           </div>
-          <SearchBar
-            id="claim-search"
-            value={query}
-            onChange={setQuery}
-            placeholder="Search by name, roll number, contact or claim ID"
-            ariaLabel="Search claims"
-          />
+          <div className="claims-toolbar__row">
+            <SearchBar
+              id="claim-search"
+              value={query}
+              onChange={setQuery}
+              placeholder="Search by name, roll number, contact or claim ID"
+              ariaLabel="Search claims"
+            />
+            <button type="button" className="btn btn--outline btn--sm" onClick={() => setNewestFirst((value) => !value)}>
+              <Icon name="swap_vert" /> {newestFirst ? 'Newest first' : 'Oldest first'}
+            </button>
+          </div>
         </div>
 
         <div id="claims-tabpanel" role="tabpanel" aria-labelledby={`claim-tab-${tab.key}`}>
