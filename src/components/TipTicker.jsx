@@ -26,7 +26,11 @@ export default function TipTicker() {
   }, []);
 
   useEffect(() => {
-    if (tips.length < 2 || paused) return undefined;
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
+    if (tips.length < 2 || paused || prefersReducedMotion) return undefined;
     const intervalId = setInterval(() => {
       setIndex((current) => (current + 1) % tips.length);
     }, ROTATE_EVERY_MS);
