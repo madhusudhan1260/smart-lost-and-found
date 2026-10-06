@@ -1,7 +1,3 @@
-// File: src/main.jsx
-// Purpose: Entry point: mounts React with the Router and the three context providers.
-// Used by: index.html
-
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
