@@ -86,7 +86,9 @@ Components use the custom hooks `useItems()`, `useMode()` and `useNotification()
 | `useLocalStorage(key, initial, 'local' \| 'session')` → `[value, setValue, removeValue]` | read / write / update / remove persistent data |
 | `useDebounce(value, delay)` | debounced search |
 | `useFormState({ values, setValues, validateOne })` | shared form logic for the report form and the claim form |
-| `useDocumentTitle(title)` | browser tab title |
+| `useDocumentTitle(title)` | browser tab title, with the pending-claims count in DOSS mode |
+| `useRipple()` | Material ripple on every button (one document listener – event delegation) |
+| `useOnlineStatus()` | shows the offline banner using the browser's `online` / `offline` events |
 | `useItems()`, `useMode()`, `useNotification()` | context access |
 | `useCountUp(target)` (inside `StatCard.jsx`) | animated numbers |
 

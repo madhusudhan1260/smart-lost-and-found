@@ -293,7 +293,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 | Image errors | `components/ImageUploader.jsx` |
 
 ### 42. `setTimeout()`
-- **Files:** fake network delay (`itemService.js`), toast auto-hide (`NotificationContext.jsx`), debounce (`useDebounce.js`), redirect after a report (`ItemForm.jsx`)
+- **Files:** fake network delay (`itemService.js`), debounce (`useDebounce.js`), redirect after a report (`ItemForm.jsx`). Toasts now close when their countdown animation ends (`Notification.jsx → onAnimationEnd`), so hovering pauses them.
 
 ### 43. `setInterval()`
 - **File:** `components/TipTicker.jsx`
