@@ -20,6 +20,7 @@ export default function NotFound() {
     <div className="container page-body">
       <EmptyState icon="explore_off" title="404 – This page got lost too" message="The page you are looking for does not exist.">
         <Link to="/" className="btn btn--primary">Go home</Link>
+        <Link to="/found" className="btn btn--outline">Browse found items</Link>
       </EmptyState>
       <ul className="notfound-links" aria-label="Popular pages">
         {SUGGESTIONS.map(({ to, icon, label }) => (
