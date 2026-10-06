@@ -91,7 +91,10 @@ export function formatTime(timeString) {
 
 // "2026-09-22T10:00:00.000Z" → "2 days ago"
 export function timeAgo(isoString) {
-  const seconds = Math.floor((Date.now() - new Date(isoString).getTime()) / 1000);
+  if (!isoString) return '—';
+  const timestamp = new Date(isoString).getTime();
+  if (isNaN(timestamp)) return '—';
+  const seconds = Math.floor((Date.now() - timestamp) / 1000);
 
   for (const unit of TIME_UNITS) {
     const value = Math.floor(seconds / unit.seconds);
