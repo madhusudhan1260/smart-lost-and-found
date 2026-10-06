@@ -758,3 +758,4 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .navbar__inner { transition: height 0.25s var(--ease); }
 .navbar--scrolled .navbar__inner { height: 56px; }
 .navbar--scrolled .brand__logo { transform: scale(0.9); }
+@media (max-width: 1180px) { .navbar--scrolled .navbar__links { top: 56px; } }
