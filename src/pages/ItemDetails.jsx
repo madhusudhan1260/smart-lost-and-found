@@ -22,6 +22,7 @@ import EmptyState from '../components/EmptyState';
 import ScoreRing from '../components/ScoreRing';
 import Icon from '../components/Icon';
 import Breadcrumbs from '../components/Breadcrumbs';
+import Lightbox from '../components/Lightbox';
 
 // Which DOSS action is possible for the current status (switch on status)
 function getDossAction(item) {
@@ -46,6 +47,7 @@ export default function ItemDetails() {
 
   const [modal, setModal] = useState(null); // null | 'collect' | 'resolve' | 'delete'
   const [busy, setBusy] = useState(false);
+  const [photoOpen, setPhotoOpen] = useState(false);
 
   const item = getItemById(id);
   useDocumentTitle(item?.name ?? 'Item details');
@@ -142,8 +144,16 @@ export default function ItemDetails() {
 
       <div className="details__grid">
         <div className="details__media card">
-          <ItemImage item={item} className="details__image" />
+          {item.image ? (
+            <button type="button" className="details__zoom" onClick={() => setPhotoOpen(true)} aria-label="View photo full size">
+              <ItemImage item={item} className="details__image" />
+              <span className="details__zoom-hint"><Icon name="zoom_in" /> View full size</span>
+            </button>
+          ) : (
+            <ItemImage item={item} className="details__image" />
+          )}
         </div>
+        {photoOpen && <Lightbox src={item.image} alt={`Photo of ${name}`} onClose={() => setPhotoOpen(false)} />}
 
         <div className="details__info">
           <div className="details__badges">
