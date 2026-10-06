@@ -71,6 +71,20 @@ export default function ItemDetails() {
   const itemClaims = getClaimsForItem(id);
   const dossAction = getDossAction(item);
 
+  // Use the phone's share sheet when available, otherwise copy the link
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: name, text: `${type === 'lost' ? 'Lost' : 'Found'}: ${name} at ${location}`, url });
+      } catch {
+        // the user closed the share sheet – nothing to do
+      }
+      return;
+    }
+    notify(await copyToClipboard(url) ? 'Link copied – paste it anywhere to share' : 'Could not copy the link', 'info', 2500);
+  };
+
   // One async handler for all three confirm dialogs
   const handleConfirm = async () => {
     setBusy(true);
@@ -187,6 +201,9 @@ export default function ItemDetails() {
             <button type="button" className="btn btn--text"
               onClick={async () => notify(await copyToClipboard(id) ? `Report ID ${id} copied` : 'Could not copy – please copy it manually', 'info', 2500)}>
               <Icon name="content_copy" /> Copy ID
+            </button>
+            <button type="button" className="btn btn--text" onClick={handleShare}>
+              <Icon name="share" /> Share
             </button>
             {isDoss && dossAction && (
               <button type="button" className="btn btn--primary" onClick={() => setModal(dossAction.key)}>
