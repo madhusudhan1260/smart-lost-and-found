@@ -74,6 +74,7 @@ export default function Modal({
             className={`btn btn--${tone}`}
             onClick={onConfirm}
             disabled={busy || confirmDisabled}
+            aria-busy={busy}
           >
             {busy ? 'Please wait…' : confirmText}
           </button>
