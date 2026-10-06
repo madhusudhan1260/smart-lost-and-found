@@ -161,7 +161,10 @@ export function validateClaimForm(values, context) {
 }
 
 // every() → true only if no field has an error message
-export const isFormValid = (errors) => Object.values(errors).every((message) => !message);
+export const isFormValid = (errors) => {
+  if (!errors || typeof errors !== 'object') return true;
+  return Object.values(errors).every((message) => !message);
+};
 
 export function validateImageFile(file) {
   if (!file) return '';
