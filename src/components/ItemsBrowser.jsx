@@ -13,6 +13,7 @@ import { DEFAULT_FILTERS, applyFilters, hasActiveFilters } from '../utils/search
 import { pluralize } from '../utils/helpers';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
+import ActiveFilters from './ActiveFilters';
 import ItemCard from './ItemCard';
 import EmptyState from './EmptyState';
 import { SkeletonGrid } from './LoadingSpinner';
@@ -77,6 +78,8 @@ export default function ItemsBrowser({ type }) {
         />
         <FilterPanel type={type} filters={filters} onFilterChange={handleFilterChange} onClear={resetFilters} canClear={canClear} />
       </div>
+
+      <ActiveFilters filters={filters} onRemove={(name) => handleFilterChange(name, DEFAULT_FILTERS[name])} />
 
       <p className="browser__summary" aria-live="polite">
         {isSearching ? (
