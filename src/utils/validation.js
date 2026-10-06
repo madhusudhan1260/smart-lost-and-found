@@ -33,6 +33,8 @@ function validateContact(text) {
 
 function validatePastDate(text, label = 'Date') {
   if (!text) return `${label} is required`;
+  const parsed = new Date(text);
+  if (Number.isNaN(parsed.getTime())) return `${label} is not a valid date`;
   if (isFutureDate(text)) return `${label} cannot be in the future`;
   if (daysBetween(text, toISODate()) > 365) return `${label} must be within the last year`;
   return '';
