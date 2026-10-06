@@ -7,8 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
 import { useMode } from '../context/ModeContext';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import { STATUS } from '../data/constants';
-import { getClaimStats, getItemStats, getRecentItems, getTopMatchPairs } from '../utils/statistics';
+import { CATEGORIES, CATEGORY_META, STATUS } from '../data/constants';
+import { countBy, getClaimStats, getItemStats, getRecentItems, getTopMatchPairs } from '../utils/statistics';
 import { cx } from '../utils/helpers';
 import logo from '../assets/logo.svg';
 import SearchBar from '../components/SearchBar';
@@ -22,6 +22,29 @@ import MatchPairList from '../components/MatchPairList';
 import EmptyState from '../components/EmptyState';
 import Icon from '../components/Icon';
 import { SkeletonGrid } from '../components/LoadingSpinner';
+
+// Category tiles: how many found items are waiting in each category
+function CategoryTiles({ items }) {
+  const waiting = countBy(items.filter((item) => item.type === 'found' && item.status === STATUS.FOUND), 'category');
+
+  return (
+    <section className="section">
+      <div className="section__head">
+        <h2><Icon name="category" /> Browse found items by category</h2>
+      </div>
+      <div className="category-tiles">
+        {CATEGORIES.map((category, index) => (
+          <Link key={category} to={`/found?category=${encodeURIComponent(category)}`} className="category-tile"
+            style={{ '--accent': CATEGORY_META[category].color, '--delay': `${index * 30}ms` }}>
+            <Icon name={CATEGORY_META[category].icon} />
+            <span>{category}</span>
+            <small>{waiting[category] ?? 0} waiting</small>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function RecentSection({ title, icon, type, items, loading }) {
   return (
@@ -115,6 +138,8 @@ export default function Home() {
             to={isDoss ? '/doss/claims' : '/my-claims'} />
           <StatCard label="Resolved Items" value={itemStats.resolved} icon="task_alt" tone="red" to="/resolved" />
         </section>
+
+        <CategoryTiles items={items} />
 
         <RecentSection title="Recent Lost Items" icon="search" type="lost" items={recentLost} loading={loading} />
         <RecentSection title="Recent Found Items" icon="inventory_2" type="found" items={recentFound} loading={loading} />
