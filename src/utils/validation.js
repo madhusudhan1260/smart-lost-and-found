@@ -110,7 +110,7 @@ export function validateItemForm(values, type = 'lost') {
  * `foundDate` is the date the item was found – you cannot lose something after it was found.
  */
 export function validateClaimField(name, value = '', { foundDate } = {}) {
-  const text = typeof value === 'string' ? value.trim() : value;
+  const text = typeof value === 'string' ? value.trim() : (value != null ? String(value).trim() : '');
 
   switch (name) {
     case 'claimantName':
