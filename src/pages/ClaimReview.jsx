@@ -106,10 +106,20 @@ function ClaimReviewContent() {
             <>
               <p><Icon name="gavel" /> Compare the answers below, then decide.</p>
               <div className="action-bar__buttons">
-                <button type="button" className="btn btn--danger-outline" onClick={() => setModal('reject')}>
+                <button
+                  type="button"
+                  className="btn btn--danger-outline"
+                  onClick={() => setModal('reject')}
+                  aria-label={`Reject claim ${claim.id} from ${claim.claimantName}`}
+                >
                   <Icon name="close" /> Reject claim
                 </button>
-                <button type="button" className="btn btn--success" onClick={() => setModal('accept')}>
+                <button
+                  type="button"
+                  className="btn btn--success"
+                  onClick={() => setModal('accept')}
+                  aria-label={`Accept claim ${claim.id} from ${claim.claimantName}`}
+                >
                   <Icon name="check" /> Accept claim
                 </button>
               </div>
@@ -119,10 +129,20 @@ function ClaimReviewContent() {
             <>
               <p><Icon name="storefront" className="tone-text--blue" /> Accepted {formatDateTime(claim.acceptedAt)} · <strong>Ready for collection</strong></p>
               <div className="action-bar__buttons">
-                <button type="button" className="btn btn--outline" onClick={() => window.print()}>
+                <button
+                  type="button"
+                  className="btn btn--outline"
+                  onClick={() => window.print()}
+                  aria-label={`Print handover slip for claim ${claim.id}`}
+                >
                   <Icon name="print" /> Print handover slip
                 </button>
-                <button type="button" className="btn btn--primary" onClick={() => setModal('collect')}>
+                <button
+                  type="button"
+                  className="btn btn--primary"
+                  onClick={() => setModal('collect')}
+                  aria-label={`Mark ${foundItem.name} as collected`}
+                >
                   <Icon name="handshake" /> Mark as collected
                 </button>
               </div>
@@ -131,7 +151,12 @@ function ClaimReviewContent() {
           {claim.status === STATUS.COLLECTED && (
             <>
               <p><Icon name="handshake" className="tone-text--green" /> Collected {formatDateTime(claim.collectedAt)}</p>
-              <button type="button" className="btn btn--primary" onClick={() => setModal('resolve')}>
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() => setModal('resolve')}
+                aria-label={`Mark case for ${foundItem.name} as resolved`}
+              >
                 <Icon name="task_alt" /> Mark as resolved
               </button>
             </>
