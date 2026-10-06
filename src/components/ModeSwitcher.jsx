@@ -36,6 +36,7 @@ export default function ModeSwitcher({ onSwitch }) {
           type="button"
           role="radio"
           aria-checked={mode === value}
+          tabIndex={mode === value ? 0 : -1}
           className={cx('mode-switch__option', mode === value && 'is-active')}
           onClick={() => handleSwitch(value)}
         >
