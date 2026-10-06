@@ -17,17 +17,18 @@ const SEARCHABLE_FIELDS = ['name', 'category', 'location', 'description', 'color
 
 // HIGHER-ORDER FUNCTION + CLOSURE:
 // returns a new function that "remembers" the filters and tests one item at a time.
-export function createItemFilter({ search = '', category, location, dateRange, status }) {
+export function createItemFilter({ search = '', category, location, dateRange, status } = {}) {
   const searchWords = search.trim().toLowerCase().split(/\s+/).filter(Boolean);
 
   return (item) => {
+    if (!item) return false;
     const searchableText = SEARCHABLE_FIELDS.map((field) => item[field] ?? '').join(' ').toLowerCase();
 
     // every() → all typed words must appear somewhere in the item
     const matchesSearch = searchWords.every((word) => searchableText.includes(word));
-    const matchesCategory = category === 'all' || item.category === category;
-    const matchesLocation = location === 'all' || item.location === location;
-    const matchesStatus = status === 'all' || item.status === status;
+    const matchesCategory = !category || category === 'all' || item.category === category;
+    const matchesLocation = !location || location === 'all' || item.location === location;
+    const matchesStatus = !status || status === 'all' || item.status === status;
     const matchesDate = isInDateRange(item.date, dateRange);
 
     return matchesSearch && matchesCategory && matchesLocation && matchesStatus && matchesDate;
