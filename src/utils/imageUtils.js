@@ -5,6 +5,7 @@
 
 // Wrap the callback-based FileReader API in a Promise
 export function readFileAsDataURL(file) {
+  if (!file) return Promise.reject(new Error('No file provided to read'));
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
@@ -24,6 +25,10 @@ function loadImage(source) {
 
 // localStorage only holds ~5 MB, so shrink photos before saving them.
 export async function compressImage(file, maxSize = 640, quality = 0.8) {
+  if (!file) throw new Error('No image file provided for compression');
+  if (file.type && !file.type.startsWith('image/')) {
+    throw new Error('Selected file is not an image');
+  }
   const dataUrl = await readFileAsDataURL(file);
   const image = await loadImage(dataUrl);
 
