@@ -42,6 +42,11 @@ function WeightsPanel() {
         ))}
       </ul>
       <p className="muted small">Total = 100. Pure JavaScript – no AI or machine learning.</p>
+      <ul className="score-legend" aria-label="What the colours mean">
+        <li><span className="score-legend__dot score-legend__dot--high" /> 75%+ Strong match</li>
+        <li><span className="score-legend__dot score-legend__dot--medium" /> 50–74% Good match</li>
+        <li><span className="score-legend__dot score-legend__dot--low" /> below 50% Possible match</li>
+      </ul>
     </div>
   );
 }
