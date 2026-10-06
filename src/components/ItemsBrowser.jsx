@@ -35,13 +35,18 @@ export default function ItemsBrowser({ type }) {
   // Grid or list layout – remembered in localStorage
   const [view, setView] = useLocalStorage(STORAGE_KEYS.VIEW, 'grid');
 
-  // Coming from the Home page search box: /found?q=phone
+  // Coming from a link with filters in the URL, e.g. /found?q=phone or /found?category=Keys
   const queryFromUrl = searchParams.get('q');
+  const categoryFromUrl = searchParams.get('category');
   useEffect(() => {
-    if (queryFromUrl === null) return;
-    setFilters({ ...DEFAULT_FILTERS, search: queryFromUrl });
+    if (queryFromUrl === null && categoryFromUrl === null) return;
+    setFilters({
+      ...DEFAULT_FILTERS,
+      search: queryFromUrl ?? '',
+      category: categoryFromUrl ?? DEFAULT_FILTERS.category,
+    });
     setSearchParams({}, { replace: true });
-  }, [queryFromUrl, setFilters, setSearchParams]);
+  }, [queryFromUrl, categoryFromUrl, setFilters, setSearchParams]);
 
   // The search text is debounced; the dropdowns apply instantly
   const debouncedSearch = useDebounce(filters.search, 350);
@@ -86,7 +91,7 @@ export default function ItemsBrowser({ type }) {
       <ActiveFilters filters={filters} onRemove={(name) => handleFilterChange(name, DEFAULT_FILTERS[name])} />
 
       <div className="browser__summary-row">
-      <p className="browser__summary" aria-live="polite">
+        <p className="browser__summary" aria-live="polite">
           {isSearching ? (
             <span className="muted">Searching…</span>
           ) : (
