@@ -25,6 +25,9 @@ export function getItemStats(items) {
 }
 
 export function getClaimStats(claims) {
+  if (!Array.isArray(claims)) {
+    return { total: 0, pending: 0, accepted: 0, rejected: 0 };
+  }
   return claims.reduce(
     (stats, claim) => {
       stats.total += 1;
