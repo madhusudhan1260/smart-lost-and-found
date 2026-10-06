@@ -11,7 +11,7 @@ import { CATEGORY_META, STATUS } from '../data/constants';
 import {
   countBy, getDailyCounts, getDossStats, getPercentage, getRecentActivity, getTopMatchPairs, toSortedEntries,
 } from '../utils/statistics';
-import { formatDate, timeAgo } from '../utils/dateUtils';
+import { formatDate, isWithinHours, timeAgo } from '../utils/dateUtils';
 import PageHeader from '../components/PageHeader';
 import StatCard from '../components/StatCard';
 import DashboardCard from '../components/DashboardCard';
@@ -99,7 +99,7 @@ export default function DossDashboard() {
         <div className="two-col section">
           <DashboardCard title="Pending claims" icon="fact_check" action="All claims" actionTo="/doss/claims">
             {/* pendingClaims is sorted oldest first, so [0] has waited the longest */}
-            {pendingClaims.length > 0 && Date.now() - new Date(pendingClaims[0].createdAt) > 24 * 60 * 60 * 1000 && (
+            {pendingClaims.length > 0 && !isWithinHours(pendingClaims[0].createdAt, 24) && (
               <Link to={`/doss/claims/${pendingClaims[0].id}`} className="notice notice--yellow notice--link">
                 <Icon name="schedule" />
                 <p>

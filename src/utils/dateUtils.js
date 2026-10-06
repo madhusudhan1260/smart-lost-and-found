@@ -130,3 +130,8 @@ export function isInDateRange(dateString, range) {
       return true;
   }
 }
+
+// true when the timestamp is less than `hours` old ("New" badge, waiting-claim alert)
+export function isWithinHours(isoString, hours) {
+  return Date.now() - new Date(isoString).getTime() < hours * 60 * 60 * 1000;
+}

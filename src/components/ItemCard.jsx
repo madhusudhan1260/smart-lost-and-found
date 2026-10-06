@@ -9,7 +9,7 @@ import { useMode } from '../context/ModeContext';
 import { STATUS } from '../data/constants';
 import { canBeClaimed } from '../utils/claimUtils';
 import { findMatches, isOpenForMatching } from '../utils/matching';
-import { formatDate, timeAgo } from '../utils/dateUtils';
+import { formatDate, isWithinHours, timeAgo } from '../utils/dateUtils';
 import ItemImage from './ItemImage';
 import StatusBadge from './StatusBadge';
 import Icon from './Icon';
@@ -21,7 +21,7 @@ export default function ItemCard({ item, index = 0, highlight = '' }) {
   const { items } = useItems();
   const { id, type, name, category, location, date, status, createdAt } = item; // DESTRUCTURING
   // Reported in the last 24 hours → show a "New" label
-  const isNew = Date.now() - new Date(createdAt).getTime() < 24 * 60 * 60 * 1000;
+  const isNew = isWithinHours(createdAt, 24);
   // How many reports of the opposite type could be this item (only for open reports)
   const matchCount = useMemo(
     () => (isOpenForMatching(item) ? findMatches(item, items).length : 0),
