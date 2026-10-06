@@ -116,6 +116,7 @@ const PARTIAL_MATCH_TEXT = {
 
 // Detailed, factor-by-factor comparison (shown on the Smart Match page)
 export function getMatchBreakdown(lostItem, foundItem) {
+  if (!lostItem || !foundItem) return [];
   const lostNameWords = extractKeywords(lostItem.name, 2);
   const foundNameWords = extractKeywords(foundItem.name, 2);
   const lostDescWords = extractKeywords(lostItem.description);
@@ -190,6 +191,7 @@ const sumPoints = (factors) => factors.reduce((total, factor) => total + factor.
 
 // The main reusable function: returns a number from 0 to 100
 export function calculateMatchScore(lostItem, foundItem) {
+  if (!lostItem || !foundItem) return 0;
   const score = sumPoints(getMatchBreakdown(lostItem, foundItem));
   return Math.max(0, Math.min(100, score));
 }
