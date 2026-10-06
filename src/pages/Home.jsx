@@ -10,6 +10,7 @@ import useDocumentTitle from '../hooks/useDocumentTitle';
 import { CATEGORIES, CATEGORY_META, STATUS } from '../data/constants';
 import { countBy, getClaimStats, getItemStats, getRecentItems, getTopMatchPairs } from '../utils/statistics';
 import { cx } from '../utils/helpers';
+import { toISODate } from '../utils/dateUtils';
 import logo from '../assets/logo.svg';
 import SearchBar from '../components/SearchBar';
 import StatCard from '../components/StatCard';
@@ -75,6 +76,11 @@ export default function Home() {
   const [searchIn, setSearchIn] = useState('found');
 
   const itemStats = useMemo(() => getItemStats(items), [items]);
+  // Reports dated today, per type (for the "+2 today" hints)
+  const today = useMemo(() => {
+    const todays = items.filter((item) => item.date === toISODate());
+    return { lost: todays.filter((item) => item.type === 'lost').length, found: todays.filter((item) => item.type === 'found').length };
+  }, [items]);
   const claimStats = useMemo(() => getClaimStats(claims), [claims]);
   const recentLost = useMemo(() => getRecentItems(items.filter((item) => item.type === 'lost'), 4), [items]);
   const recentFound = useMemo(() => getRecentItems(items.filter((item) => item.type === 'found'), 4), [items]);
@@ -132,8 +138,8 @@ export default function Home() {
 
       <div className="container page-body">
         <section className="stat-grid" aria-label="Statistics">
-          <StatCard label="Lost Items" value={itemStats.lost} icon="search" tone="blue" to="/lost" />
-          <StatCard label="Found Items" value={itemStats.found} icon="inventory_2" tone="green" to="/found" />
+          <StatCard label="Lost Items" value={itemStats.lost} icon="search" tone="blue" hint={today.lost ? `+${today.lost} today` : undefined} to="/lost" />
+          <StatCard label="Found Items" value={itemStats.found} icon="inventory_2" tone="green" hint={today.found ? `+${today.found} today` : undefined} to="/found" />
           <StatCard label="Claims Pending" value={claimStats.pending} icon="hourglass_top" tone="yellow"
             to={isDoss ? '/doss/claims' : '/my-claims'} />
           <StatCard label="Resolved Items" value={itemStats.resolved} icon="task_alt" tone="red" to="/resolved" />
