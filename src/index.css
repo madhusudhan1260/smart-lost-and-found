@@ -861,3 +861,11 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .lightbox__close { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; display: grid; place-items: center; border: none; border-radius: 50%; background: rgba(255, 255, 255, 0.15); color: #fff; cursor: pointer; }
 .lightbox__close:hover { background: rgba(255, 255, 255, 0.25); }
 .date-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; } .date-chips .chip { height: 28px; font-size: 0.78rem; }
+
+/* Required-fields progress bar on the report form */
+.form-progress { position: sticky; top: 64px; z-index: 4; margin: 0 -24px; padding: 14px 24px 12px; background: var(--bg); border-bottom: 1px solid var(--border-light); border-radius: var(--radius) var(--radius) 0 0; }
+.form-progress__label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-2); margin-bottom: 6px; }
+.form-progress__label strong { color: var(--blue-dark); font-weight: 500; }
+.form-progress__track { height: 6px; border-radius: 3px; background: var(--grey-soft); overflow: hidden; }
+.form-progress__track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--green)); transition: width 0.4s var(--ease); }
+@media (max-width: 640px) { .form-progress { margin: 0 -16px; padding: 12px 16px; } }

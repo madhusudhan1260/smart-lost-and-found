@@ -134,9 +134,23 @@ export default function ItemForm({ type }) {
 
   // ---------- FORM ----------
   const descriptionLength = values.description?.length ?? 0;
+  // How many required fields are already filled in correctly (for the progress bar)
+  const requiredFields = ['name', 'category', 'color', 'description', 'location', 'date', 'contactName', 'contact',
+    ...(type === 'lost' ? ['privateDetails'] : [])];
+  const doneCount = requiredFields.filter((field) => values[field] && !validateField(field, values[field], type)).length;
+  const progress = Math.round((doneCount / requiredFields.length) * 100);
 
   return (
     <form className="item-form card" onSubmit={handleSubmit} aria-busy={submitting} noValidate>
+      <div className="form-progress" aria-live="polite">
+        <div className="form-progress__label">
+          <span>{doneCount} of {requiredFields.length} required fields complete</span>
+          <strong>{progress}%</strong>
+        </div>
+        <div className="form-progress__track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
+          <span style={{ width: `${progress}%` }} />
+        </div>
+      </div>
       <fieldset className="form-section">
         <legend><Icon name="info" /> Item details</legend>
         <div className="form-grid">
