@@ -49,6 +49,9 @@ export default function MatchCard({ match, rank }) {
             <span className="factor__text">
               <strong>{factor.matched ? factor.summary : factor.label}</strong>
               <small>{factor.detail}</small>
+              <span className="factor__meter" aria-hidden="true">
+                <span style={{ width: `${factor.max ? (factor.points / factor.max) * 100 : 0}%` }} />
+              </span>
             </span>
             <span className="factor__points">{factor.points}/{factor.max}</span>
           </li>
