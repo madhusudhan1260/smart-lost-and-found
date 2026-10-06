@@ -872,3 +872,13 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .bar-chart__label--link { color: var(--text-2); text-decoration: none; } .bar-chart__label--link:hover { color: var(--blue-dark); text-decoration: underline; }
 .notice--link { text-decoration: none !important; transition: box-shadow 0.2s; } .notice--link:hover { box-shadow: var(--shadow-1); }
 .resolved-stats { margin-bottom: 20px; }
+
+/* On phones, table rows become stacked cards (labels come from data-label) */
+@media (max-width: 640px) {
+  .table--stack thead { display: none; }
+  .table--stack, .table--stack tbody, .table--stack tr, .table--stack td { display: block; width: 100%; }
+  .table--stack tr { padding: 12px 14px; border-bottom: 1px solid var(--border-light); }
+  .table--stack td { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border: none; text-align: right; }
+  .table--stack td[data-label]::before { content: attr(data-label); color: var(--text-2); font-size: 0.8rem; text-align: left; }
+  .table--stack td:first-child { padding-bottom: 8px; }
+}

@@ -88,7 +88,7 @@ export default function ResolvedItems() {
           </EmptyState>
         ) : (
           <div className="card table-wrap">
-            <table className="table">
+            <table className="table table--stack">
               <thead>
                 <tr>
                   <th scope="col">Item</th>
@@ -108,11 +108,11 @@ export default function ResolvedItems() {
                         <span><strong>{item.name}</strong><small className="muted">{item.location}</small></span>
                       </Link>
                     </td>
-                    <td><TypeChip type={item.type} /></td>
-                    <td>{claimantFor(item)}</td>
-                    <td className="muted">{formatDateTime(item.collectedAt)}</td>
-                    <td className="muted">{formatDateTime(item.resolvedAt)}</td>
-                    <td><StatusBadge status={item.status} size="sm" /></td>
+                    <td data-label="Report"><TypeChip type={item.type} /></td>
+                    <td data-label="Returned to">{claimantFor(item)}</td>
+                    <td className="muted" data-label="Collected">{formatDateTime(item.collectedAt)}</td>
+                    <td className="muted" data-label="Resolved">{formatDateTime(item.resolvedAt)}</td>
+                    <td data-label="Status"><StatusBadge status={item.status} size="sm" /></td>
                   </tr>
                 ))}
               </tbody>
