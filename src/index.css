@@ -883,3 +883,4 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
   .table--stack td:first-child { padding-bottom: 8px; }
 }
 .claims-toolbar__row { display: flex; align-items: center; gap: 10px; } .claims-toolbar__row .search-bar { flex: 1; } @media (max-width: 640px) { .claims-toolbar__row { flex-direction: column; align-items: stretch; } }
+.notfound-links { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 220px)); justify-content: center; gap: 8px; margin: 20px auto 0; padding: 0; } .notfound-links a { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); } .notfound-links a:hover { border-color: var(--blue-dark); text-decoration: none; color: var(--blue-dark); } @media (max-width: 640px) { .notfound-links { grid-template-columns: 1fr; } }
