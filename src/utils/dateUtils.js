@@ -43,12 +43,11 @@ export const isoHoursAgo = (hours = 0) => {
 export const isoDaysAgo = (days = 0) => isoHoursAgo((Number(days) || 0) * 24);
 
 export function parseLocalDate(dateString) {
-  if (!dateString || typeof dateString !== 'string') return new Date();
+  if (!dateString || typeof dateString !== 'string') return new Date(NaN);
   const clean = dateString.split('T')[0];
   const [year, month, day] = clean.split('-').map(Number);
   if (!year || !month || !day) {
-    const fallback = new Date(dateString);
-    return isNaN(fallback.getTime()) ? new Date() : fallback;
+    return new Date(dateString);
   }
   return new Date(year, month - 1, day);
 }
