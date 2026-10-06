@@ -1,6 +1,8 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useMode } from './context/ModeContext';
 import useRipple from './hooks/useRipple';
+import useOnlineStatus from './hooks/useOnlineStatus';
+import Icon from './components/Icon';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -25,12 +27,18 @@ export default function App() {
   const location = useLocation();
   const { isDoss } = useMode();
   useRipple(); // Material ripple on every button
+  const online = useOnlineStatus();
 
   return (
     <div className="app">
       <a href="#main" className="skip-link">Skip to content</a>
       <ScrollToTop />
       <Navbar />
+      {!online && (
+        <div className="offline-banner" role="status">
+          <Icon name="cloud_off" /> You are offline. Everything still works – your data is saved in this browser.
+        </div>
+      )}
       {/* key on pathname replays the page-enter animation on every navigation */}
       <main id="main" className="page" key={location.pathname}>
         <Routes>
