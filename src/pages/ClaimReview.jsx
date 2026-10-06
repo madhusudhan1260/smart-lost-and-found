@@ -118,9 +118,14 @@ function ClaimReviewContent() {
           {claim.status === STATUS.CLAIM_ACCEPTED && (
             <>
               <p><Icon name="storefront" className="tone-text--blue" /> Accepted {formatDateTime(claim.acceptedAt)} · <strong>Ready for collection</strong></p>
-              <button type="button" className="btn btn--primary" onClick={() => setModal('collect')}>
-                <Icon name="handshake" /> Mark as collected
-              </button>
+              <div className="action-bar__buttons">
+                <button type="button" className="btn btn--outline" onClick={() => window.print()}>
+                  <Icon name="print" /> Print handover slip
+                </button>
+                <button type="button" className="btn btn--primary" onClick={() => setModal('collect')}>
+                  <Icon name="handshake" /> Mark as collected
+                </button>
+              </div>
             </>
           )}
           {claim.status === STATUS.COLLECTED && (
