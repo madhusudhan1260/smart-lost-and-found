@@ -105,6 +105,7 @@ export function getDailyCounts(items, days = 7) {
 
 // Best Smart Match for every open lost item (used on Home, Student and DOSS dashboards)
 export function getTopMatchPairs(items, limit = 5, minScore = DEFAULT_MATCH_THRESHOLD) {
+  if (!Array.isArray(items)) return [];
   return items
     .filter((item) => item.type === 'lost' && item.status === STATUS.LOST)
     .map((lost) => ({ lost, best: findMatches(lost, items, minScore)[0] ?? null }))
@@ -115,7 +116,10 @@ export function getTopMatchPairs(items, limit = 5, minScore = DEFAULT_MATCH_THRE
 
 // A single timeline of everything that happened, newest first
 export function getRecentActivity(items, claims, limit = 8) {
-  const itemEvents = items.map((item) => ({
+  const safeItems = Array.isArray(items) ? items : [];
+  const safeClaims = Array.isArray(claims) ? claims : [];
+
+  const itemEvents = safeItems.map((item) => ({
     id: `item-${item.id}`,
     at: item.createdAt,
     icon: item.type === 'lost' ? 'search' : 'inventory_2',
@@ -123,7 +127,7 @@ export function getRecentActivity(items, claims, limit = 8) {
     link: `/items/${item.id}`,
   }));
 
-  const claimEvents = claims.flatMap((claim) => {
+  const claimEvents = safeClaims.flatMap((claim) => {
     const events = [{ id: `${claim.id}-new`, at: claim.createdAt, icon: 'front_hand', text: `${claim.claimantName} submitted claim ${claim.id}` }];
     if (claim.reviewedAt) {
       const accepted = Boolean(claim.acceptedAt);
