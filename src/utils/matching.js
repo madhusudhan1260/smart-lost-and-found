@@ -204,7 +204,7 @@ export const isOpenForMatching = (item) => OPEN_STATUSES.includes(item.status);
 // Works from either side: a lost item is compared with found items and vice versa.
 // Returns [{ item, score, factors }] sorted from highest to lowest score.
 export function findMatches(sourceItem, allItems, minScore = DEFAULT_MATCH_THRESHOLD) {
-  if (!sourceItem) return [];
+  if (!sourceItem || !Array.isArray(allItems)) return [];
   const oppositeType = sourceItem.type === 'lost' ? 'found' : 'lost';
 
   return allItems
