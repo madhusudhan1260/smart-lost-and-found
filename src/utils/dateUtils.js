@@ -60,10 +60,10 @@ export function daysBetween(dateA, dateB) {
 
 export const isFutureDate = (dateString) => daysBetween(toISODate(), dateString) > 0;
 
-export function formatDate(dateString) {
-  if (!dateString) return '—';
+export function formatDate(dateString, fallback = '—') {
+  if (!dateString) return fallback;
   const d = parseLocalDate(dateString);
-  if (isNaN(d.getTime())) return '—';
+  if (isNaN(d.getTime())) return fallback;
   return d.toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'short',
