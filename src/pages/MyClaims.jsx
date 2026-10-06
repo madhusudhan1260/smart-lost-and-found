@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
 import { useNotification } from '../context/NotificationContext';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import { MODES } from '../data/constants';
+import { MODES, STATUS } from '../data/constants';
+import { cx } from '../utils/helpers';
 import PageHeader from '../components/PageHeader';
 import ClaimCard from '../components/ClaimCard';
 import ModeGate from '../components/ModeGate';
@@ -16,6 +17,13 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Icon from '../components/Icon';
 
 // Claim IDs look like CL-3001 or CL-ABC12 – checked with a regular expression
+// Filter tabs: name + test function
+const CLAIM_FILTERS = [
+  { key: 'all', label: 'All', test: () => true },
+  { key: 'open', label: 'In progress', test: (claim) => [STATUS.CLAIM_PENDING, STATUS.CLAIM_ACCEPTED].includes(claim.status) },
+  { key: 'closed', label: 'Closed', test: (claim) => [STATUS.COLLECTED, STATUS.RESOLVED, STATUS.CLAIM_REJECTED].includes(claim.status) },
+];
+
 const CLAIM_ID_PATTERN = /^CL-[A-Z0-9]{3,10}$/;
 
 function MyClaimsContent() {
@@ -23,6 +31,9 @@ function MyClaimsContent() {
   const { myClaims, claims, loading, trackClaim } = useItems();
   const { notify } = useNotification();
   const [claimIdInput, setClaimIdInput] = useState('');
+  const [filterKey, setFilterKey] = useState('all');
+  const activeFilter = CLAIM_FILTERS.find((entry) => entry.key === filterKey) ?? CLAIM_FILTERS[0];
+  const shownClaims = myClaims.filter(activeFilter.test);
 
   // Follow a claim that was made on another device
   const handleTrack = (event) => {
@@ -63,9 +74,20 @@ function MyClaimsContent() {
             <Link to="/found" className="btn btn--primary">Browse found items</Link>
           </EmptyState>
         ) : (
-          <div className="claim-list">
-            {myClaims.map((claim, index) => <ClaimCard key={claim.id} claim={claim} index={index} />)}
-          </div>
+          <>
+            <div className="segmented" role="group" aria-label="Filter claims">
+              {CLAIM_FILTERS.map(({ key, label, test }) => (
+                <button key={key} type="button" className={cx('segmented__item', filterKey === key && 'is-active')}
+                  onClick={() => setFilterKey(key)} aria-pressed={filterKey === key}>
+                  {label} <span className="tab__count">{myClaims.filter(test).length}</span>
+                </button>
+              ))}
+            </div>
+            {shownClaims.length === 0 && <p className="muted">No claims in this group.</p>}
+            <div className="claim-list">
+              {shownClaims.map((claim, index) => <ClaimCard key={claim.id} claim={claim} index={index} />)}
+            </div>
+          </>
         )}
         <p className="muted small center-text"><Icon name="info" /> There is no login – claims are remembered in this browser’s localStorage.</p>
       </div>
