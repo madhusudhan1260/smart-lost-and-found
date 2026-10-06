@@ -164,8 +164,19 @@ export default function SmartMatch() {
           <div className="match-toolbar card">
             <div className="range-field">
               <label htmlFor="min-score">Minimum match score: <strong>{minScore}%</strong></label>
-              <input id="min-score" type="range" min="0" max="90" step="5" value={minScore}
-                onChange={(event) => setMinScore(Number(event.target.value))} />
+              <input
+                id="min-score"
+                type="range"
+                min="0"
+                max="90"
+                step="5"
+                value={minScore}
+                aria-valuemin={0}
+                aria-valuemax={90}
+                aria-valuenow={minScore}
+                aria-valuetext={`${minScore}% minimum match score`}
+                onChange={(event) => setMinScore(Number(event.target.value))}
+              />
             </div>
             <p className="muted" aria-live="polite">{pluralize(matches.length, 'match', 'matches')} among open {oppositeLabel} reports</p>
           </div>
