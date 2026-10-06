@@ -15,14 +15,15 @@ export const canBeClaimed = (item) =>
 // After a claim is rejected: if other claims are still waiting the item stays
 // "claim pending", otherwise it goes back to being a normal found item.
 export function statusAfterRejection(itemId, claims, rejectedClaimId) {
+  if (!Array.isArray(claims)) return STATUS.FOUND;
   const othersPending = claims.some(
-    (claim) => claim.itemId === itemId && claim.id !== rejectedClaimId && claim.status === STATUS.CLAIM_PENDING,
+    (claim) => claim?.itemId === itemId && claim?.id !== rejectedClaimId && claim?.status === STATUS.CLAIM_PENDING,
   );
   return othersPending ? STATUS.CLAIM_PENDING : STATUS.FOUND;
 }
 
 // Was this claim ever accepted? (it may have moved on to collected / resolved since)
-export const wasAccepted = (claim) => Boolean(claim.acceptedAt);
+export const wasAccepted = (claim) => Boolean(claim?.acceptedAt);
 
 /**
  * Helps DOSS compare the claimant's answers with the PRIVATE details
