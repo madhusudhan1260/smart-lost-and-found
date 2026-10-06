@@ -13,6 +13,7 @@ const ROTATE_EVERY_MS = 5000;
 export default function TipTicker() {
   const [tips, setTips] = useState(FALLBACK_TIPS);
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false); // stop rotating while the user is reading
 
   useEffect(() => {
     let cancelled = false; // ignore the result if the component unmounted meanwhile
@@ -25,17 +26,17 @@ export default function TipTicker() {
   }, []);
 
   useEffect(() => {
-    if (tips.length < 2) return undefined;
+    if (tips.length < 2 || paused) return undefined;
     const intervalId = setInterval(() => {
       setIndex((current) => (current + 1) % tips.length);
     }, ROTATE_EVERY_MS);
     return () => clearInterval(intervalId); // stop the timer when leaving the page
-  }, [tips]);
+  }, [tips, paused]);
 
   const tip = tips[index] ?? FALLBACK_TIPS[0];
 
   return (
-    <div className="tip-ticker" aria-live="polite">
+    <div className="tip-ticker" aria-live="polite" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <Icon name={tip.icon} className="tip-ticker__icon" />
       <p key={index} className="tip-ticker__text">{tip.text}</p>
       <div className="tip-ticker__dots" aria-hidden="true">
