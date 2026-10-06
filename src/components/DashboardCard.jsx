@@ -8,14 +8,14 @@ import Icon from './Icon';
 // White card with a title row and an optional "View all" link – used on every dashboard
 export default function DashboardCard({ title, icon, action, actionTo, className = '', children }) {
   return (
-    <section className={`card dash-card ${className}`}>
+    <section className={`card dash-card ${className}`} aria-label={title}>
       <div className="dash-card__head">
         <h2>
           {icon && <Icon name={icon} className="dash-card__icon" />}
           {title}
         </h2>
         {action && actionTo && (
-          <Link to={actionTo} className="link-arrow">
+          <Link to={actionTo} className="link-arrow" aria-label={`${action} ${title}`}>
             {action} <Icon name="arrow_forward" />
           </Link>
         )}
