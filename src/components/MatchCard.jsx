@@ -59,9 +59,11 @@ export default function MatchCard({ match, rank }) {
       </ul>
 
       <div className="match-card__footer">
-        <Link to={`/items/${item.id}`} className="btn btn--text btn--sm">View details</Link>
+        <Link to={`/items/${item.id}`} className="btn btn--text btn--sm" aria-label={`View details for ${item.name}`}>
+          View details
+        </Link>
         {isStudent && canBeClaimed(item) && (
-          <Link to={`/items/${item.id}/claim`} className="btn btn--tonal btn--sm">
+          <Link to={`/items/${item.id}/claim`} className="btn btn--tonal btn--sm" aria-label={`Claim ${item.name}`}>
             <Icon name="front_hand" /> This is my item
           </Link>
         )}
