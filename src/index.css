@@ -91,7 +91,8 @@ kbd { font-family: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; }
 .skip-link { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--blue-dark); color: #fff; padding: 10px 16px; border-radius: var(--radius-sm); }
 .skip-link:focus { top: 12px; }
-:focus-visible { outline: 2px solid var(--blue-dark); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--blue-dark); outline-offset: 2px; border-radius: 4px; }
+.btn:focus-visible, .chip:focus-visible, .mode-switch__option:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--blue-dark); }
 
 /* Material Symbols */
 .icon { font-size: 20px; line-height: 1; vertical-align: middle; user-select: none; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
