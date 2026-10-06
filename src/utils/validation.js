@@ -67,8 +67,10 @@ export function validateField(name, value = '', type = 'lost') {
     case 'location':
       return required(text, 'Please choose a location');
 
-    case 'date':
-      return validatePastDate(text);
+    case 'date': {
+      const label = type === 'found' ? 'Date found' : 'Date lost';
+      return validatePastDate(text, label);
+    }
 
     case 'time':
       return !text || PATTERNS.time.test(text) ? '' : 'Enter a valid time (HH:MM)';
