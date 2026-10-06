@@ -58,10 +58,10 @@ function MyClaimsContent() {
     <>
       <PageHeader icon="assignment_ind" tone="blue" eyebrow="Student" title="My Claims"
         subtitle="Track the status of every ownership claim you have made from this device.">
-        <form className="track-form" onSubmit={handleTrack}>
+        <form className="track-form" onSubmit={handleTrack} role="search" aria-label="Track an existing claim">
           <label htmlFor="track-claim" className="sr-only">Claim ID</label>
           <input id="track-claim" value={claimIdInput} onChange={(event) => setClaimIdInput(event.target.value)} placeholder="Track by claim ID, e.g. CL-3001" />
-          <button type="submit" className="btn btn--outline">Track</button>
+          <button type="submit" className="btn btn--outline" aria-label="Track claim by ID">Track</button>
         </form>
       </PageHeader>
 
