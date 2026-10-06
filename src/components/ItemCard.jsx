@@ -10,9 +10,10 @@ import { formatDate, timeAgo } from '../utils/dateUtils';
 import ItemImage from './ItemImage';
 import StatusBadge from './StatusBadge';
 import Icon from './Icon';
+import Highlight from './Highlight';
 
 // One report as a card. Private verification details are NEVER shown here.
-export default function ItemCard({ item, index = 0 }) {
+export default function ItemCard({ item, index = 0, highlight = '' }) {
   const { isStudent } = useMode();
   const { id, type, name, category, location, date, status, createdAt } = item; // DESTRUCTURING
   // Reported in the last 24 hours → show a "New" label
@@ -32,7 +33,7 @@ export default function ItemCard({ item, index = 0 }) {
           <StatusBadge status={status} size="sm" />
         </div>
         <h3 className="item-card__title">
-          <Link to={`/items/${id}`}>{name}</Link>
+          <Link to={`/items/${id}`}><Highlight text={name} query={highlight} /></Link>
         </h3>
         <ul className="item-card__meta">
           <li><Icon name="location_on" /> {location}</li>

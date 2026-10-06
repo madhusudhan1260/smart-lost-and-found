@@ -103,7 +103,7 @@ export default function ItemsBrowser({ type }) {
         </EmptyState>
       ) : (
         <div className="item-grid">
-          {visibleItems.map((item, index) => <ItemCard key={item.id} item={item} index={index} />)}
+          {visibleItems.map((item, index) => <ItemCard key={item.id} item={item} index={index} highlight={debouncedSearch} />)}
         </div>
       )}
     </div>
