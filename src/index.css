@@ -753,3 +753,8 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .btn { position: relative; overflow: hidden; }
 .ripple { position: absolute; border-radius: 50%; background: currentColor; opacity: 0.18; transform: scale(0); pointer-events: none; animation: ripple 0.55s ease-out forwards; }
 @keyframes ripple { to { transform: scale(2.4); opacity: 0; } }
+
+/* Navbar gets slightly shorter once the page is scrolled */
+.navbar__inner { transition: height 0.25s var(--ease); }
+.navbar--scrolled .navbar__inner { height: 56px; }
+.navbar--scrolled .brand__logo { transform: scale(0.9); }
