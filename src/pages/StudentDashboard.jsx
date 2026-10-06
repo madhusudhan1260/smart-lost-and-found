@@ -81,7 +81,8 @@ export default function StudentDashboard() {
               <MatchPairList pairs={pairs} />
             </DashboardCard>
             <DashboardCard title="Unclaimed found items by category" icon="inventory_2" action="Found items" actionTo="/found">
-              <BarChart data={openFound} colorFor={(label) => CATEGORY_META[label]?.color} emptyText="No unclaimed items." />
+              <BarChart data={openFound} colorFor={(label) => CATEGORY_META[label]?.color}
+                linkFor={(label) => `/found?category=${encodeURIComponent(label)}`} emptyText="No unclaimed items." />
             </DashboardCard>
             <DashboardCard title="Campus at a glance" icon="insights">
               <ul className="glance">

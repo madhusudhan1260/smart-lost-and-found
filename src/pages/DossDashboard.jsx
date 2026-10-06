@@ -156,7 +156,8 @@ export default function DossDashboard() {
           </DashboardCard>
 
           <DashboardCard title="Reports by category" icon="category">
-            <BarChart data={categories} colorFor={(label) => CATEGORY_META[label]?.color} />
+            <BarChart data={categories} colorFor={(label) => CATEGORY_META[label]?.color}
+              linkFor={(label) => `/found?category=${encodeURIComponent(label)}`} />
           </DashboardCard>
         </div>
 
