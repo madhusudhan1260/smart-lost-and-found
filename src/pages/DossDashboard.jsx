@@ -98,6 +98,16 @@ export default function DossDashboard() {
 
         <div className="two-col section">
           <DashboardCard title="Pending claims" icon="fact_check" action="All claims" actionTo="/doss/claims">
+            {/* pendingClaims is sorted oldest first, so [0] has waited the longest */}
+            {pendingClaims.length > 0 && Date.now() - new Date(pendingClaims[0].createdAt) > 24 * 60 * 60 * 1000 && (
+              <Link to={`/doss/claims/${pendingClaims[0].id}`} className="notice notice--yellow notice--link">
+                <Icon name="schedule" />
+                <p>
+                  <strong>{pendingClaims[0].claimantName}</strong> submitted a claim {timeAgo(pendingClaims[0].createdAt)} and
+                  is still waiting. Review this claim first.
+                </p>
+              </Link>
+            )}
             {pendingClaims.length ? (
               <div className="claim-rows">
                 {pendingClaims.map((claim, index) => <ClaimCard key={claim.id} claim={claim} view="doss" index={index} />)}
