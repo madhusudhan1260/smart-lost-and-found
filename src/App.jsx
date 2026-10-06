@@ -4,6 +4,7 @@ import useRipple from './hooks/useRipple';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import BackToTop from './components/BackToTop';
 import Home from './pages/Home';
 import LostItems from './pages/LostItems';
 import FoundItems from './pages/FoundItems';
@@ -57,6 +58,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
