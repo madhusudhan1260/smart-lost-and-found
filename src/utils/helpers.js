@@ -57,12 +57,18 @@ export function getItemIcon({ name = '', category }) {
 }
 
 // Replace one object inside an array (matched by id) without mutating the array
-export const replaceById = (list, updated) =>
-  list.map((entry) => (entry.id === updated.id ? updated : entry));
+export const replaceById = (list, updated) => {
+  if (!Array.isArray(list)) return [];
+  if (!updated?.id) return [...list];
+  return list.map((entry) => (entry?.id === updated.id ? updated : entry));
+};
 
 // Apply several updated objects to a list: reduce() replaces them one by one
-export const mergeUpdates = (list, updatedRecords) =>
-  updatedRecords.reduce((current, updated) => replaceById(current, updated), list);
+export const mergeUpdates = (list, updatedRecords) => {
+  if (!Array.isArray(list)) return [];
+  if (!Array.isArray(updatedRecords)) return [...list];
+  return updatedRecords.reduce((current, updated) => replaceById(current, updated), list);
+};
 
 // Safely truncate long text to a maximum length with an ellipsis or custom suffix
 export function truncate(text, maxLength = 100, suffix = '…') {
