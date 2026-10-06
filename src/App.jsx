@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useMode } from './context/ModeContext';
+import useRipple from './hooks/useRipple';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -22,6 +23,7 @@ import NotFound from './pages/NotFound';
 export default function App() {
   const location = useLocation();
   const { isDoss } = useMode();
+  useRipple(); // Material ripple on every button
 
   return (
     <div className="app">
