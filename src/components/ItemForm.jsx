@@ -10,7 +10,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import useFormState from '../hooks/useFormState';
 import { CATEGORIES, ITEM_LOCATIONS_NOW, LOCATIONS, STORAGE_KEYS } from '../data/constants';
 import { isFormValid, validateField, validateItemForm } from '../utils/validation';
-import { toISODate } from '../utils/dateUtils';
+import { daysAgoISO, toISODate } from '../utils/dateUtils';
 import { cx } from '../utils/helpers';
 import ImageUploader from './ImageUploader';
 import FormField from './FormField';
@@ -173,6 +173,14 @@ export default function ItemForm({ type }) {
           </FormField>
           <FormField id="date" label={text.date} required error={errors.date}>
             <input type="date" max={toISODate()} {...fieldProps('date')} />
+            <div className="date-chips">
+              {[['Today', 0], ['Yesterday', 1], ['2 days ago', 2]].map(([label, days]) => (
+                <button key={label} type="button" className={cx('chip chip--toggle', values.date === daysAgoISO(days) && 'is-active')}
+                  onClick={() => setValues((previous) => ({ ...previous, date: daysAgoISO(days) }))}>
+                  {label}
+                </button>
+              ))}
+            </div>
           </FormField>
           <FormField id="time" label="Approximate time" error={errors.time}>
             <input type="time" {...fieldProps('time')} />
