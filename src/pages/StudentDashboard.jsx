@@ -15,7 +15,7 @@ import ClaimCard from '../components/ClaimCard';
 import MatchPairList from '../components/MatchPairList';
 import BarChart from '../components/BarChart';
 import EmptyState from '../components/EmptyState';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { DashboardSkeleton } from '../components/LoadingSpinner';
 import Icon from '../components/Icon';
 
 export default function StudentDashboard() {
@@ -45,7 +45,7 @@ export default function StudentDashboard() {
     [items],
   );
 
-  if (loading) return <div className="container page-body"><LoadingSpinner /></div>;
+  if (loading) return <DashboardSkeleton stats={4} />;
 
   return (
     <>

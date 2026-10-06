@@ -20,7 +20,7 @@ import MatchPairList from '../components/MatchPairList';
 import BarChart from '../components/BarChart';
 import ItemImage from '../components/ItemImage';
 import Modal from '../components/Modal';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { DashboardSkeleton } from '../components/LoadingSpinner';
 import Icon from '../components/Icon';
 
 export default function DossDashboard() {
@@ -71,7 +71,7 @@ export default function DossDashboard() {
     }
   };
 
-  if (loading) return <div className="container page-body"><LoadingSpinner label="Crunching the numbers…" /></div>;
+  if (loading) return <DashboardSkeleton stats={9} />;
 
   return (
     <>

@@ -28,3 +28,18 @@ export function SkeletonGrid({ count = 6 }) {
     </div>
   );
 }
+
+// Placeholder layout for the dashboards: a row of stat tiles and two panels
+export function DashboardSkeleton({ stats = 4 }) {
+  return (
+    <div className="container page-body" aria-busy="true" aria-label="Loading dashboard">
+      <div className="stat-grid">
+        {Array.from({ length: stats }, (_, index) => <div key={index} className="skeleton skeleton--stat" />)}
+      </div>
+      <div className="two-col section">
+        <div className="skeleton skeleton--panel" />
+        <div className="skeleton skeleton--panel" />
+      </div>
+    </div>
+  );
+}
