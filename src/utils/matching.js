@@ -4,8 +4,8 @@
 // SMART MATCH ALGORITHM
 // Compares a LOST item with a FOUND item and gives a score from 0 to 100.
 // Plain JavaScript only: strings, arrays, objects, Date and a little maths. No AI / ML.
-import { NEARBY_LOCATIONS, STATUS, DEFAULT_MATCH_THRESHOLD } from '../data/constants';
-import { daysBetween } from './dateUtils';
+import { NEARBY_LOCATIONS, STATUS, DEFAULT_MATCH_THRESHOLD } from '../data/constants.js';
+import { daysBetween } from './dateUtils.js';
 
 // Maximum points for every factor (they add up to 100)
 export const MATCH_WEIGHTS = {
