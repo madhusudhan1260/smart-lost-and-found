@@ -38,6 +38,9 @@ export async function compressImage(file, maxSize = 640, quality = 0.8) {
   canvas.height = Math.round(image.height * scale);
 
   const context = canvas.getContext('2d');
+  if (!context) {
+    throw new Error('Canvas 2D context is not supported or available');
+  }
   context.fillStyle = '#ffffff'; // JPEG has no transparency
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.drawImage(image, 0, 0, canvas.width, canvas.height);
