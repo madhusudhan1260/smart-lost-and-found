@@ -36,7 +36,14 @@ export default function TipTicker() {
   const tip = tips[index] ?? FALLBACK_TIPS[0];
 
   return (
-    <div className="tip-ticker" aria-live="polite" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <div
+      className="tip-ticker"
+      aria-live="polite"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <Icon name={tip.icon} className="tip-ticker__icon" />
       <p key={index} className="tip-ticker__text">{tip.text}</p>
       <div className="tip-ticker__dots" aria-hidden="true">
