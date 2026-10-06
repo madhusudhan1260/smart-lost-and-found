@@ -62,8 +62,9 @@ export function hasActiveFilters(filters) {
 }
 
 // Search claims by claimant name, roll number, contact or claim ID (DOSS claims page)
-export function searchClaims(claims, query) {
-  const text = query.trim().toLowerCase();
+export function searchClaims(claims, query = '') {
+  if (!Array.isArray(claims)) return [];
+  const text = typeof query === 'string' ? query.trim().toLowerCase() : '';
   if (!text) return claims;
   return claims.filter(({ id, claimantName, rollNumber, contact }) =>
     [id, claimantName, rollNumber, contact].some((value) => value?.toLowerCase().includes(text)),
