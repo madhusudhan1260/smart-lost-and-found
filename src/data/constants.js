@@ -135,6 +135,7 @@ export const STORAGE_KEYS = {
   DRAFT_PREFIX: 'lf_v2_draft_',
   FILTERS_PREFIX: 'lf_v2_filters_',
   VIEW: 'lf_v2_view',
+  RECENT: 'lf_v2_recent',
 };
 
 export const DATE_RANGES = [

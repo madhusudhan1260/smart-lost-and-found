@@ -2,13 +2,14 @@
 // Purpose: Page /items/:id – full report details and actions.
 // Used by: App.jsx
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
 import { useMode } from '../context/ModeContext';
 import { useNotification } from '../context/NotificationContext';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import { STATUS } from '../data/constants';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { STATUS, STORAGE_KEYS } from '../data/constants';
 import { findMatches } from '../utils/matching';
 import { canBeClaimed } from '../utils/claimUtils';
 import { formatDate, formatDateTime, formatTime, timeAgo } from '../utils/dateUtils';
@@ -50,6 +51,12 @@ export default function ItemDetails() {
   const [photoOpen, setPhotoOpen] = useState(false);
 
   const item = getItemById(id);
+  const [, setRecent] = useLocalStorage(STORAGE_KEYS.RECENT, []);
+
+  // Remember this item in "Recently viewed" (newest first, max 6, no duplicates)
+  useEffect(() => {
+    if (item) setRecent((previous) => [item.id, ...previous.filter((entry) => entry !== item.id)].slice(0, 6));
+  }, [item, setRecent]);
   useDocumentTitle(item?.name ?? 'Item details');
 
   const matches = useMemo(() => (item ? findMatches(item, items) : []), [item, items]);

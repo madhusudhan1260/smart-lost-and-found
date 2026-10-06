@@ -7,7 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
 import { useMode } from '../context/ModeContext';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import { CATEGORIES, CATEGORY_META, STATUS } from '../data/constants';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { CATEGORIES, CATEGORY_META, STATUS, STORAGE_KEYS } from '../data/constants';
 import { countBy, getClaimStats, getItemStats, getRecentItems, getTopMatchPairs } from '../utils/statistics';
 import { cx } from '../utils/helpers';
 import { toISODate } from '../utils/dateUtils';
@@ -23,6 +24,7 @@ import MatchPairList from '../components/MatchPairList';
 import EmptyState from '../components/EmptyState';
 import Icon from '../components/Icon';
 import { SkeletonGrid } from '../components/LoadingSpinner';
+import ItemImage from '../components/ItemImage';
 
 // Category tiles: how many found items are waiting in each category
 function CategoryTiles({ items }) {
@@ -70,6 +72,9 @@ function RecentSection({ title, icon, type, items, loading }) {
 export default function Home() {
   useDocumentTitle('Home');
   const { items, claims, myClaims, loading } = useItems();
+  const [recentIds] = useLocalStorage(STORAGE_KEYS.RECENT, []);
+  // IDs → items (skip any that were deleted)
+  const recentlyViewed = recentIds.map((id) => items.find((item) => item.id === id)).filter(Boolean);
   const { isDoss } = useMode();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
@@ -144,6 +149,20 @@ export default function Home() {
             to={isDoss ? '/doss/claims' : '/my-claims'} />
           <StatCard label="Resolved Items" value={itemStats.resolved} icon="task_alt" tone="red" to="/resolved" />
         </section>
+
+        {recentlyViewed.length > 0 && (
+          <section className="section">
+            <div className="section__head"><h2><Icon name="history" /> Recently viewed</h2></div>
+            <div className="recent-strip">
+              {recentlyViewed.map((item) => (
+                <Link key={item.id} to={`/items/${item.id}`} className="recent-chip">
+                  <ItemImage item={item} className="recent-chip__image" />
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         <CategoryTiles items={items} />
 
