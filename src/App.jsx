@@ -2,9 +2,6 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { useMode } from './context/ModeContext';
 import useRipple from './hooks/useRipple';
 import useOnlineStatus from './hooks/useOnlineStatus';
-import usePendingTitleBadge from './hooks/usePendingTitleBadge';
-import { useItems } from './context/ItemContext';
-import { STATUS } from './data/constants';
 import Icon from './components/Icon';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -32,9 +29,6 @@ export default function App() {
   const { isDoss } = useMode();
   useRipple(); // Material ripple on every button
   const online = useOnlineStatus();
-  const { claims } = useItems();
-  const pendingCount = claims.filter((claim) => claim.status === STATUS.CLAIM_PENDING).length;
-  usePendingTitleBadge(pendingCount, isDoss);
 
   return (
     <div className="app">

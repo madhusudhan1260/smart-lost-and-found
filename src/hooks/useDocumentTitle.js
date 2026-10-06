@@ -7,10 +7,20 @@
 //          pages/StudentDashboard.jsx
 
 import { useEffect } from 'react';
+import { useMode } from '../context/ModeContext';
+import { useItems } from '../context/ItemContext';
+import { STATUS } from '../data/constants';
 
-// Updates the browser tab title for each page
+// Updates the browser tab title for each page.
+// In DOSS mode the number of pending claims is shown first, like an unread count:
+// "(3) Claims · Smart Lost & Found"
 export default function useDocumentTitle(title) {
+  const { isDoss } = useMode();
+  const { claims } = useItems();
+  const pending = claims.filter((claim) => claim.status === STATUS.CLAIM_PENDING).length;
+
   useEffect(() => {
-    document.title = title ? `${title} · Smart Lost & Found` : 'Smart Lost & Found';
-  }, [title]);
+    const base = title ? `${title} · Smart Lost & Found` : 'Smart Lost & Found';
+    document.title = isDoss && pending > 0 ? `(${pending}) ${base}` : base;
+  }, [title, isDoss, pending]);
 }
