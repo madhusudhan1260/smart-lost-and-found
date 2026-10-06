@@ -6,8 +6,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
+import { useNotification } from '../context/NotificationContext';
 import { STATUS } from '../data/constants';
 import { formatDateTime, timeAgo } from '../utils/dateUtils';
+import { copyToClipboard } from '../utils/helpers';
 import ItemImage from './ItemImage';
 import StatusBadge from './StatusBadge';
 import ClaimTimeline from './ClaimTimeline';
@@ -22,6 +24,7 @@ import Icon from './Icon';
  */
 export default function ClaimCard({ claim, view = 'student', index = 0 }) {
   const { getItemById } = useItems();
+  const { notify } = useNotification();
   const [showInstructions, setShowInstructions] = useState(false);
   const item = getItemById(claim.itemId);
   const isAccepted = claim.status === STATUS.CLAIM_ACCEPTED;
@@ -60,7 +63,14 @@ export default function ClaimCard({ claim, view = 'student', index = 0 }) {
       <div className="claim-card__head">
         <ItemImage item={item} className="claim-card__image" />
         <div className="claim-card__info">
-          <p className="muted">Claim <code>{claim.id}</code> · submitted {formatDateTime(claim.createdAt)}</p>
+          <p className="muted">
+            Claim <code>{claim.id}</code>
+            <button type="button" className="copy-btn" aria-label={`Copy claim ID ${claim.id}`}
+              onClick={async () => notify(await copyToClipboard(claim.id) ? `Claim ID ${claim.id} copied` : 'Could not copy', 'info', 2000)}>
+              <Icon name="content_copy" />
+            </button>
+            · submitted {formatDateTime(claim.createdAt)}
+          </p>
           <h3><Link to={`/items/${item.id}`}>{item.name}</Link></h3>
           <p className="muted">Found at {item.location}</p>
         </div>
