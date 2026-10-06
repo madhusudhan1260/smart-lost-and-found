@@ -208,27 +208,41 @@ export default function ItemDetails() {
 
           <div className="details__actions">
             {isStudent && canBeClaimed(item) && (
-              <Link to={`/items/${id}/claim`} className="btn btn--primary">
+              <Link to={`/items/${id}/claim`} className="btn btn--primary" aria-label={`Claim ${name} as my item`}>
                 <Icon name="front_hand" /> This is my item
               </Link>
             )}
-            <Link to={`/smart-match/${id}`} className="btn btn--outline">
+            <Link to={`/smart-match/${id}`} className="btn btn--outline" aria-label={`Find possible matches for ${name}`}>
               <Icon name="join_inner" /> Find possible matches
             </Link>
-            <button type="button" className="btn btn--text"
-              onClick={async () => notify(await copyToClipboard(id) ? `Report ID ${id} copied` : 'Could not copy – please copy it manually', 'info', 2500)}>
+            <button
+              type="button"
+              className="btn btn--text"
+              aria-label={`Copy Report ID ${id}`}
+              onClick={async () => notify(await copyToClipboard(id) ? `Report ID ${id} copied` : 'Could not copy – please copy it manually', 'info', 2500)}
+            >
               <Icon name="content_copy" /> Copy ID
             </button>
-            <button type="button" className="btn btn--text" onClick={handleShare}>
+            <button type="button" className="btn btn--text" onClick={handleShare} aria-label={`Share ${name}`}>
               <Icon name="share" /> Share
             </button>
             {isDoss && dossAction && (
-              <button type="button" className="btn btn--primary" onClick={() => setModal(dossAction.key)}>
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() => setModal(dossAction.key)}
+                aria-label={`${dossAction.label} for ${name}`}
+              >
                 <Icon name={dossAction.icon} /> {dossAction.label}
               </button>
             )}
             {isDoss && (
-              <button type="button" className="btn btn--danger-text" onClick={() => setModal('delete')}>
+              <button
+                type="button"
+                className="btn btn--danger-text"
+                onClick={() => setModal('delete')}
+                aria-label={`Delete report for ${name}`}
+              >
                 <Icon name="delete" /> Delete
               </button>
             )}
