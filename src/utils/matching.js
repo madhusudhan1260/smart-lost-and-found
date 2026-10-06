@@ -27,6 +27,7 @@ const STOP_WORDS = [
 
 // "Black iPhone 15, transparent case!" → ['black', 'iphone', '15', 'transparent', 'case']
 export function extractKeywords(text = '', minLength = 3) {
+  if (typeof text !== 'string' || !text.trim()) return [];
   const words = text
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, ' ') // remove punctuation with a regular expression
