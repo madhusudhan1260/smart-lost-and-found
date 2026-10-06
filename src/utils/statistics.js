@@ -56,8 +56,9 @@ export const getDossStats = (items, claims) => ({
 
 // countBy(items, 'category') → { Electronics: 4, Books: 2, ... }
 export function countBy(items, key) {
+  if (!Array.isArray(items)) return {};
   return items.reduce((counts, item) => {
-    const value = item[key] ?? 'Unknown';
+    const value = item?.[key] ?? 'Unknown';
     counts[value] = (counts[value] || 0) + 1;
     return counts;
   }, {});
