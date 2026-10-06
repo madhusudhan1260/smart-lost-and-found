@@ -138,7 +138,7 @@ export default function ItemDetails() {
 
   return (
     <div className="container page-body details">
-      <div className="details__topbar">
+      <nav className="details__topbar" aria-label="Details navigation">
         <button type="button" className="btn btn--text back-btn" onClick={() => navigate(-1)}>
           <Icon name="arrow_back" /> Back
         </button>
@@ -147,7 +147,7 @@ export default function ItemDetails() {
           { label: type === 'lost' ? 'Lost items' : 'Found items', to: `/${type}` },
           { label: name },
         ]} />
-      </div>
+      </nav>
 
       <div className="details__grid">
         <div className="details__media card">
