@@ -9,13 +9,17 @@ import Icon from './Icon';
 
 // Compact list of "lost item ↔ best found item" pairs from Smart Match
 export default function MatchPairList({ pairs, emptyText = 'No possible matches right now.' }) {
-  if (pairs.length === 0) return <p className="muted">{emptyText}</p>;
+  if (!pairs || pairs.length === 0) return <p className="muted">{emptyText}</p>;
 
   return (
-    <ul className="pair-list">
+    <ul className="pair-list" aria-label="Smart match suggestions">
       {pairs.map(({ lost, best }) => (
         <li key={lost.id}>
-          <Link to={`/smart-match/${lost.id}`} className="pair">
+          <Link
+            to={`/smart-match/${lost.id}`}
+            className="pair"
+            aria-label={`Match details: ${lost.name} and ${best.item.name}, ${best.score}% match`}
+          >
             <ItemImage item={lost} className="pair__image" />
             <span className="pair__names">
               <strong>{lost.name}</strong>
