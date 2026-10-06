@@ -31,6 +31,8 @@ function PrivateBox({ text }) {
 }
 
 function ReportPanel({ title, icon, item }) {
+  if (!item) return null;
+
   return (
     <section className="review-panel card">
       <h2><Icon name={icon} /> {title}</h2>
