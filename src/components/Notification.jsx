@@ -4,10 +4,12 @@
 
 import Icon from './Icon';
 
-const ICONS = { success: 'check_circle', error: 'error', info: 'info' };
+const ICONS = { success: 'check_circle', error: 'error', info: 'info', warning: 'warning' };
 
 // Stack of toast messages at the bottom of the screen
 export default function Notification({ notifications, onDismiss }) {
+  if (!notifications || notifications.length === 0) return null;
+
   return (
     <div className="toast-stack" aria-live="polite" aria-atomic="false">
       {notifications.map(({ id, message, type, duration = 3500 }) => (
