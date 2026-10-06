@@ -95,6 +95,7 @@ export function verifyClaim(claim, foundItem, lostItem = null) {
 
 // Steps for the claim progress tracker shown to the student
 export function getClaimTimeline(claim) {
+  if (!claim) return [];
   const rejected = claim.status === STATUS.CLAIM_REJECTED;
 
   const steps = [
