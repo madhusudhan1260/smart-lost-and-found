@@ -35,7 +35,12 @@ export function createItemFilter({ search = '', category, location, dateRange, s
 }
 
 // Combine the date and time of an item into a real Date for comparison
-const itemTimestamp = (item) => new Date(`${item.date}T${item.time || '00:00'}`).getTime();
+const itemTimestamp = (item) => {
+  if (!item) return 0;
+  if (!item.date) return item.createdAt ? new Date(item.createdAt).getTime() || 0 : 0;
+  const time = new Date(`${item.date}T${item.time || '00:00'}`).getTime();
+  return isNaN(time) ? (item.createdAt ? new Date(item.createdAt).getTime() || 0 : 0) : time;
+};
 
 // An object of compare functions – sortItems() picks one by name
 const SORTERS = {
