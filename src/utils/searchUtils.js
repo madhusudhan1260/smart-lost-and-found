@@ -51,12 +51,14 @@ const SORTERS = {
 };
 
 export function sortItems(items, sortBy = 'newest') {
+  if (!Array.isArray(items)) return [];
   const compare = SORTERS[sortBy] ?? SORTERS.newest;
   return [...items].sort(compare); // copy first – sort() changes the original array
 }
 
 export function applyFilters(items, filters) {
-  return sortItems(items.filter(createItemFilter(filters)), filters.sortBy);
+  if (!Array.isArray(items)) return [];
+  return sortItems(items.filter(createItemFilter(filters)), filters?.sortBy);
 }
 
 // some() → true if at least one filter differs from its default (sorting is ignored)
