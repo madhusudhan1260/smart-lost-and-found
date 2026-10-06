@@ -13,7 +13,7 @@ export const DEFAULT_FILTERS = {
 };
 
 // Only PUBLIC fields are searchable – privateDetails must never leak through search
-const SEARCHABLE_FIELDS = ['name', 'category', 'location', 'description', 'color'];
+export const SEARCHABLE_FIELDS = ['name', 'category', 'location', 'description', 'color'];
 
 // HIGHER-ORDER FUNCTION + CLOSURE:
 // returns a new function that "remembers" the filters and tests one item at a time.
