@@ -14,13 +14,16 @@ import Icon from './Icon';
 // One report as a card. Private verification details are NEVER shown here.
 export default function ItemCard({ item, index = 0 }) {
   const { isStudent } = useMode();
-  const { id, type, name, category, location, date, status } = item; // DESTRUCTURING
+  const { id, type, name, category, location, date, status, createdAt } = item; // DESTRUCTURING
+  // Reported in the last 24 hours → show a "New" label
+  const isNew = Date.now() - new Date(createdAt).getTime() < 24 * 60 * 60 * 1000;
   const showClaimButton = isStudent && canBeClaimed(item);
 
   return (
     <article className="item-card" style={{ '--delay': `${Math.min(index, 12) * 40}ms` }}>
       <Link to={`/items/${id}`} className="item-card__media" tabIndex={-1} aria-hidden="true">
         <ItemImage item={item} />
+        {isNew && <span className="new-badge">New</span>}
       </Link>
 
       <div className="item-card__body">
