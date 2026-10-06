@@ -98,6 +98,8 @@ export default function Navbar() {
             aria-controls="navbar-nav-links"
           >
             <Icon name={menuOpen ? 'close' : 'menu'} />
+            {/* The Claims badge is hidden inside the closed mobile menu, so hint at it here */}
+            {isDoss && pendingCount > 0 && !menuOpen && <span className="menu-dot" aria-hidden="true" />}
           </button>
         </div>
       </nav>

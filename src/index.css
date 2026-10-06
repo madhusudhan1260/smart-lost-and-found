@@ -902,3 +902,4 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .score-legend__dot--high { background: var(--green); }
 .score-legend__dot--medium { background: var(--blue); }
 .score-legend__dot--low { background: var(--yellow); }
+.navbar__menu-btn { position: relative; } .menu-dot { position: absolute; top: 8px; right: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--red-dark); box-shadow: 0 0 0 2px var(--bg); }
