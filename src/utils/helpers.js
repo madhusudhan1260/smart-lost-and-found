@@ -63,3 +63,10 @@ export const replaceById = (list, updated) =>
 // Apply several updated objects to a list: reduce() replaces them one by one
 export const mergeUpdates = (list, updatedRecords) =>
   updatedRecords.reduce((current, updated) => replaceById(current, updated), list);
+
+// Safely truncate long text to a maximum length with an ellipsis or custom suffix
+export function truncate(text, maxLength = 100, suffix = '…') {
+  if (!text || typeof text !== 'string') return '';
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength).trimEnd()}${suffix}`;
+}
