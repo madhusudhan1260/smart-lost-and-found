@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
 import { STATUS } from '../data/constants';
 import { canBeClaimed } from '../utils/claimUtils';
-import { formatDate } from '../utils/dateUtils';
+import { formatDate, timeAgo } from '../utils/dateUtils';
 import ItemImage from './ItemImage';
 import StatusBadge from './StatusBadge';
 import Icon from './Icon';
@@ -37,6 +37,7 @@ export default function ItemCard({ item, index = 0 }) {
         <ul className="item-card__meta">
           <li><Icon name="location_on" /> {location}</li>
           <li><Icon name="calendar_today" /> {type === 'lost' ? 'Lost' : 'Found'} {formatDate(date)}</li>
+          <li className="item-card__ago"><Icon name="schedule" /> Reported {timeAgo(createdAt)}</li>
         </ul>
       </div>
 
