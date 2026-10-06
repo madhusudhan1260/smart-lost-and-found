@@ -70,7 +70,9 @@ export function formatDate(dateString) {
 // ISO timestamp → "24 Sept 2026, 3:05 pm"
 export function formatDateTime(isoString) {
   if (!isoString) return '—';
-  return new Date(isoString).toLocaleString('en-IN', {
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) return '—';
+  return d.toLocaleString('en-IN', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
