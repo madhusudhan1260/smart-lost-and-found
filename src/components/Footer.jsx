@@ -33,7 +33,7 @@ export default function Footer() {
           <Link to="/resolved">Resolved cases</Link>
         </nav>
       </div>
-      <p className="container footer__copy muted">© {year} B.Tech CSE Microproject · Built with React &amp; JavaScript</p>
+      <p className="container footer__copy muted">© {year} B.Tech CSE Microproject · Built with React &amp; JavaScript · Press <kbd>?</kbd> for keyboard shortcuts</p>
     </footer>
   );
 }
