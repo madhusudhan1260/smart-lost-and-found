@@ -18,7 +18,7 @@ export default function Notification({ notifications, onDismiss }) {
           <button type="button" className="icon-btn icon-btn--sm" onClick={() => onDismiss(id)} aria-label="Dismiss notification">
             <Icon name="close" />
           </button>
-          <span className="toast__timer" aria-hidden="true" />
+          <span className="toast__timer" aria-hidden="true" onAnimationEnd={() => onDismiss(id)} />
         </div>
       ))}
     </div>

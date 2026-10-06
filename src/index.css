@@ -838,3 +838,6 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .toast--error .toast__timer { color: #f28b82; }
 .toast--info .toast__timer { color: #8ab4f8; }
 @keyframes toastTimer { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+.toast:hover .toast__timer, .toast:focus-within .toast__timer { animation-play-state: paused; }
+/* Reduced motion must not make toasts vanish instantly */
+@media (prefers-reduced-motion: reduce) { .toast__timer { animation-duration: var(--toast-duration, 3500ms) !important; } }
