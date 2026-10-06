@@ -4,6 +4,7 @@
 //          pages/ReportFound.jsx, pages/ReportLost.jsx
 
 import { useMode } from '../context/ModeContext';
+import { useNotification } from '../context/NotificationContext';
 import { MODES } from '../data/constants';
 import EmptyState from './EmptyState';
 
@@ -11,19 +12,27 @@ import EmptyState from './EmptyState';
 // interface focused. The user can switch modes with one click.
 export default function ModeGate({ mode: requiredMode, children }) {
   const { mode, setMode } = useMode();
+  const { notify } = useNotification();
 
   if (mode === requiredMode) return children;
 
   const isDossPage = requiredMode === MODES.DOSS;
+  const targetLabel = isDossPage ? 'DOSS' : 'Student';
+
+  const handleSwitch = () => {
+    setMode(requiredMode);
+    notify(`Switched to ${targetLabel} mode`, 'info', 2000);
+  };
+
   return (
     <div className="container page-body">
       <EmptyState
         icon={isDossPage ? 'shield_person' : 'school'}
         title={isDossPage ? 'This page is part of the DOSS interface' : 'This page is part of the Student interface'}
-        message={`Switch to ${isDossPage ? 'DOSS' : 'Student'} mode to continue.`}
+        message={`Switch to ${targetLabel} mode to continue.`}
       >
-        <button type="button" className="btn btn--primary" onClick={() => setMode(requiredMode)}>
-          Switch to {isDossPage ? 'DOSS' : 'Student'} mode
+        <button type="button" className="btn btn--primary" onClick={handleSwitch}>
+          Switch to {targetLabel} mode
         </button>
       </EmptyState>
     </div>
