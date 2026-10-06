@@ -76,3 +76,13 @@ export function truncate(text, maxLength = 100, suffix = '…') {
   if (text.length <= maxLength) return text;
   return `${text.slice(0, maxLength).trimEnd()}${suffix}`;
 }
+
+// Copy text to the clipboard. Returns a Promise<boolean> so callers can show a toast.
+export async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false; // e.g. clipboard blocked by the browser
+  }
+}

@@ -12,7 +12,7 @@ import { STATUS } from '../data/constants';
 import { findMatches } from '../utils/matching';
 import { canBeClaimed } from '../utils/claimUtils';
 import { formatDate, formatDateTime, formatTime, timeAgo } from '../utils/dateUtils';
-import { pluralize } from '../utils/helpers';
+import { copyToClipboard, pluralize } from '../utils/helpers';
 import ItemImage from '../components/ItemImage';
 import StatusBadge, { TypeChip } from '../components/StatusBadge';
 import ClaimCard from '../components/ClaimCard';
@@ -184,6 +184,10 @@ export default function ItemDetails() {
             <Link to={`/smart-match/${id}`} className="btn btn--outline">
               <Icon name="join_inner" /> Find possible matches
             </Link>
+            <button type="button" className="btn btn--text"
+              onClick={async () => notify(await copyToClipboard(id) ? `Report ID ${id} copied` : 'Could not copy – please copy it manually', 'info', 2500)}>
+              <Icon name="content_copy" /> Copy ID
+            </button>
             {isDoss && dossAction && (
               <button type="button" className="btn btn--primary" onClick={() => setModal(dossAction.key)}>
                 <Icon name={dossAction.icon} /> {dossAction.label}
