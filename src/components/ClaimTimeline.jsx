@@ -12,11 +12,12 @@ export default function ClaimTimeline({ claim }) {
   const steps = getClaimTimeline(claim);
 
   return (
-    <ol className="timeline">
+    <ol className="timeline" aria-label="Claim status timeline">
       {steps.map((step) => (
         <li
           key={step.key}
           className={cx('timeline__step', step.done && 'is-done', step.current && 'is-current', step.failed && 'is-failed')}
+          aria-current={step.current ? 'step' : undefined}
         >
           <span className="timeline__dot">
             <Icon name={step.failed ? 'close' : step.done ? 'check' : 'more_horiz'} />
