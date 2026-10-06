@@ -21,6 +21,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import EmptyState from '../components/EmptyState';
 import ScoreRing from '../components/ScoreRing';
 import Icon from '../components/Icon';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 // Which DOSS action is possible for the current status (switch on status)
 function getDossAction(item) {
@@ -114,9 +115,16 @@ export default function ItemDetails() {
 
   return (
     <div className="container page-body details">
-      <button type="button" className="btn btn--text back-btn" onClick={() => navigate(-1)}>
-        <Icon name="arrow_back" /> Back
-      </button>
+      <div className="details__topbar">
+        <button type="button" className="btn btn--text back-btn" onClick={() => navigate(-1)}>
+          <Icon name="arrow_back" /> Back
+        </button>
+        <Breadcrumbs crumbs={[
+          { label: 'Home', to: '/' },
+          { label: type === 'lost' ? 'Lost items' : 'Found items', to: `/${type}` },
+          { label: name },
+        ]} />
+      </div>
 
       <div className="details__grid">
         <div className="details__media card">
