@@ -134,6 +134,7 @@ export const STORAGE_KEYS = {
   MY_CLAIMS: 'lf_v2_my_claims',
   DRAFT_PREFIX: 'lf_v2_draft_',
   FILTERS_PREFIX: 'lf_v2_filters_',
+  VIEW: 'lf_v2_view',
 };
 
 export const DATE_RANGES = [

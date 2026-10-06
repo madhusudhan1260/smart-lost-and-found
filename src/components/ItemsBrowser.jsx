@@ -10,7 +10,8 @@ import useDebounce from '../hooks/useDebounce';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../data/constants';
 import { DEFAULT_FILTERS, applyFilters, hasActiveFilters } from '../utils/searchUtils';
-import { pluralize } from '../utils/helpers';
+import { cx, pluralize } from '../utils/helpers';
+import Icon from './Icon';
 import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import ActiveFilters from './ActiveFilters';
@@ -30,6 +31,9 @@ export default function ItemsBrowser({ type }) {
     DEFAULT_FILTERS,
     'session',
   );
+
+  // Grid or list layout – remembered in localStorage
+  const [view, setView] = useLocalStorage(STORAGE_KEYS.VIEW, 'grid');
 
   // Coming from the Home page search box: /found?q=phone
   const queryFromUrl = searchParams.get('q');
@@ -81,13 +85,23 @@ export default function ItemsBrowser({ type }) {
 
       <ActiveFilters filters={filters} onRemove={(name) => handleFilterChange(name, DEFAULT_FILTERS[name])} />
 
+      <div className="browser__summary-row">
       <p className="browser__summary" aria-live="polite">
-        {isSearching ? (
-          <span className="muted">Searching…</span>
-        ) : (
-          <>Showing <strong>{visibleItems.length}</strong> of {pluralize(itemsOfType.length, `${type} report`)}</>
-        )}
-      </p>
+          {isSearching ? (
+            <span className="muted">Searching…</span>
+          ) : (
+            <>Showing <strong>{visibleItems.length}</strong> of {pluralize(itemsOfType.length, `${type} report`)}</>
+          )}
+        </p>
+        <div className="view-toggle" role="group" aria-label="Layout">
+          {[['grid', 'grid_view'], ['list', 'view_list']].map(([mode, icon]) => (
+            <button key={mode} type="button" className={cx('icon-btn', view === mode && 'is-active')}
+              onClick={() => setView(mode)} aria-pressed={view === mode} aria-label={`${mode} view`}>
+              <Icon name={icon} />
+            </button>
+          ))}
+        </div>
+      </div>
 
       {loading ? (
         <SkeletonGrid />
@@ -105,7 +119,7 @@ export default function ItemsBrowser({ type }) {
           )}
         </EmptyState>
       ) : (
-        <div className="item-grid">
+        <div className={cx('item-grid', view === 'list' && 'item-grid--list')}>
           {visibleItems.map((item, index) => <ItemCard key={item.id} item={item} index={index} highlight={debouncedSearch} />)}
         </div>
       )}
