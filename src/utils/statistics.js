@@ -66,6 +66,7 @@ export function countBy(items, key) {
 
 // { Books: 2, Keys: 5 } → [{ label: 'Keys', count: 5 }, { label: 'Books', count: 2 }]
 export function toSortedEntries(counts, limit = Infinity) {
+  if (!counts || typeof counts !== 'object') return [];
   return Object.entries(counts)
     .map(([label, count]) => ({ label, count }))
     .sort((a, b) => b.count - a.count)
@@ -73,6 +74,7 @@ export function toSortedEntries(counts, limit = Infinity) {
 }
 
 export function getRecentItems(items, limit = 5) {
+  if (!Array.isArray(items)) return [];
   return [...items]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, limit);
