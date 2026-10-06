@@ -7,6 +7,9 @@ import { findMatches, isOpenForMatching } from './matching';
 
 // One pass with reduce() builds all the item counters at once
 export function getItemStats(items) {
+  if (!Array.isArray(items)) {
+    return { total: 0, lost: 0, found: 0, readyForCollection: 0, collected: 0, resolved: 0, open: 0 };
+  }
   return items.reduce(
     (stats, item) => {
       stats.total += 1;
