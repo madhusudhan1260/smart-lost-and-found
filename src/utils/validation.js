@@ -45,7 +45,7 @@ function validatePastDate(text, label = 'Date') {
  * `type` matters for privateDetails: required for lost reports, optional for found ones.
  */
 export function validateField(name, value = '', type = 'lost') {
-  const text = typeof value === 'string' ? value.trim() : value;
+  const text = typeof value === 'string' ? value.trim() : (value != null ? String(value).trim() : '');
 
   switch (name) {
     case 'name':
