@@ -97,6 +97,7 @@ export function timeAgo(isoString) {
   const timestamp = new Date(isoString).getTime();
   if (isNaN(timestamp)) return '—';
   const seconds = Math.floor((Date.now() - timestamp) / 1000);
+  if (seconds < 5) return 'just now';
 
   for (const unit of TIME_UNITS) {
     const value = Math.floor(seconds / unit.seconds);
