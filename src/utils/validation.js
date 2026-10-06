@@ -172,6 +172,7 @@ export const isFormValid = (errors) => {
 
 export function validateImageFile(file) {
   if (!file) return '';
+  if (file.size === 0) return 'Selected image file is empty';
   if (!PATTERNS.imageType.test(file.type)) return 'Only PNG, JPG, WEBP or GIF images are allowed';
   if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
     return `Image must be smaller than ${MAX_IMAGE_SIZE_MB} MB`;
