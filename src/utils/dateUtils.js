@@ -28,15 +28,19 @@ export function toISODate(date = new Date()) {
   return `${year}-${month}-${day}`;
 }
 
-export function daysAgoISO(days) {
+export function daysAgoISO(days = 0) {
+  const d = Number(days) || 0;
   const date = new Date();
-  date.setDate(date.getDate() - days);
+  date.setDate(date.getDate() - d);
   return toISODate(date);
 }
 
 // Full timestamps (used for createdAt / collectedAt in the sample data)
-export const isoHoursAgo = (hours) => new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
-export const isoDaysAgo = (days) => isoHoursAgo(days * 24);
+export const isoHoursAgo = (hours = 0) => {
+  const h = Number(hours) || 0;
+  return new Date(Date.now() - h * 60 * 60 * 1000).toISOString();
+};
+export const isoDaysAgo = (days = 0) => isoHoursAgo((Number(days) || 0) * 24);
 
 export function parseLocalDate(dateString) {
   if (!dateString || typeof dateString !== 'string') return new Date();
