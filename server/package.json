@@ -1,0 +1,29 @@
+{
+  "name": "smart-lost-and-found-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "REST API for Smart Lost & Found – Node.js + Express.js + MongoDB (Mongoose)",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "seed": "node src/seed/seed.js",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.11.1",
+    "morgan": "^1.12.1"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.1"
+  }
+}
