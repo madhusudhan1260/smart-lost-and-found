@@ -89,7 +89,7 @@ function MyClaimsContent() {
             </div>
           </>
         )}
-        <p className="muted small center-text"><Icon name="info" /> There is no login – claims are remembered in this browser’s localStorage.</p>
+        <p className="muted small center-text"><Icon name="info" /> Students don’t need an account – the IDs of your claims are remembered in this browser.</p>
       </div>
     </>
   );

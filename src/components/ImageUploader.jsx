@@ -58,8 +58,8 @@ export default function ImageUploader({ image, onChange, error, onError }) {
             <p><strong>Photo added</strong></p>
             <p className="muted">
               {sizeInfo
-                ? `Compressed from ${formatBytes(sizeInfo.before)} to ${formatBytes(sizeInfo.after)} to save browser storage.`
-                : 'It will be resized and stored in your browser.'}
+                ? `Compressed from ${formatBytes(sizeInfo.before)} to ${formatBytes(sizeInfo.after)} before uploading.`
+                : 'It will be resized before it is sent to the server.'}
             </p>
             <button type="button" className="btn btn--outline btn--sm" onClick={() => onChange(null)}>
               <Icon name="delete" /> Remove photo

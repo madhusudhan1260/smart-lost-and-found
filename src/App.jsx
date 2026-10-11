@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useMode } from './context/ModeContext';
+import { useItems } from './context/ItemContext';
 import useRipple from './hooks/useRipple';
 import useOnlineStatus from './hooks/useOnlineStatus';
 import Icon from './components/Icon';
@@ -29,6 +30,7 @@ export default function App() {
   const { isDoss } = useMode();
   useRipple(); // Material ripple on every button
   const online = useOnlineStatus();
+  const { error: dataError, reload } = useItems();
 
   return (
     <div className="app">
@@ -37,7 +39,13 @@ export default function App() {
       <Navbar />
       {!online && (
         <div className="offline-banner" role="status">
-          <Icon name="cloud_off" /> You are offline. Everything still works – your data is saved in this browser.
+          <Icon name="cloud_off" /> You are offline. Reports are saved on the server, so reconnect to see the latest data.
+        </div>
+      )}
+      {dataError && (
+        <div className="server-banner" role="alert">
+          <Icon name="dns" /> {dataError}
+          <button type="button" className="btn btn--sm btn--outline" onClick={reload}>Try again</button>
         </div>
       )}
       {/* key on pathname replays the page-enter animation on every navigation */}

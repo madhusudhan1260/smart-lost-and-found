@@ -82,6 +82,8 @@ export default function ClaimForm({ item }) {
       setSubmittedClaim(claim);
       notify('Claim submitted successfully.', 'success');
     } catch (error) {
+      // The server checks the data again; show its messages under the matching fields
+      if (error.details) showAllErrors(error.details);
       notify(error.message, 'error');
     } finally {
       setSubmitting(false);

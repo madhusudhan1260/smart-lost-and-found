@@ -100,6 +100,8 @@ export default function ItemForm({ type }) {
       notify(text.toast, 'success');
       redirectTimerRef.current = setTimeout(() => navigate(`/items/${newItem.id}`), REDIRECT_DELAY_MS);
     } catch (error) {
+      // The server checks the data again; show its messages under the matching fields
+      if (error.details) showAllErrors(error.details);
       notify(error.message ?? 'Something went wrong while saving.', 'error');
     } finally {
       setSubmitting(false);
