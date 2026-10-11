@@ -127,9 +127,10 @@ export const STATUS_OPTIONS_BY_TYPE = {
 
 export const ITEM_LOCATIONS_NOW = ['Handed over to DOSS Office', 'With the finder'];
 
+// Browser storage keys. Reports and claims now live in MongoDB (via the API),
+// so only small per-browser settings are kept here.
 export const STORAGE_KEYS = {
-  ITEMS: 'lf_v2_items',
-  CLAIMS: 'lf_v2_claims',
+  TOKEN: 'lf_v2_token',
   MODE: 'lf_v2_mode',
   MY_CLAIMS: 'lf_v2_my_claims',
   DRAFT_PREFIX: 'lf_v2_draft_',
@@ -161,3 +162,6 @@ export const DOSS_OFFICE = {
 
 // Matches below this percentage are hidden by default
 export const DEFAULT_MATCH_THRESHOLD = 35;
+
+// Sample claims that "this browser" made – shown on My Claims for the demo
+export const DEMO_MY_CLAIM_IDS = ['CL-3002', 'CL-3003'];
