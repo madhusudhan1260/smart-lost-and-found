@@ -3,8 +3,10 @@
 // Used by: App.jsx
 
 import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
+import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import { useItems } from '../context/ItemContext';
 import { STATUS } from '../data/constants';
 import { cx } from '../utils/helpers';
@@ -33,6 +35,16 @@ const DOSS_LINKS = [
 
 export default function Navbar() {
   const { isDoss } = useMode();
+  const { user, logout } = useAuth();
+  const { notify } = useNotification();
+  const navigate = useNavigate();
+
+  // Logging out also switches back to the student view (see ModeContext)
+  const handleLogout = () => {
+    logout();
+    notify('Logged out of DOSS mode', 'info', 2000);
+    navigate('/');
+  };
   const { claims } = useItems();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -105,7 +117,11 @@ export default function Navbar() {
       </nav>
       {isDoss && (
         <div className="mode-banner">
-          <Icon name="shield_person" /> DOSS mode · you can see private verification details and review claims
+          <Icon name="shield_person" />
+          <span>Logged in as <strong>{user?.name ?? 'DOSS staff'}</strong> · you can see private details and review claims</span>
+          <button type="button" className="mode-banner__logout" onClick={handleLogout}>
+            <Icon name="logout" /> Log out
+          </button>
         </div>
       )}
     </header>

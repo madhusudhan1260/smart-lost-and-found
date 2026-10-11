@@ -906,3 +906,13 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .copy-btn { display: inline-flex; align-items: center; vertical-align: middle; margin-left: 2px; padding: 2px; border: none; border-radius: 4px; background: none; color: var(--text-2); cursor: pointer; } .copy-btn .icon { font-size: 16px; } .copy-btn:hover { background: var(--grey-soft); color: var(--blue-dark); }
 .recent-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; } .recent-chip { display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding: 8px 14px 8px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-pill); color: var(--text); text-decoration: none !important; font-size: 0.88rem; transition: box-shadow 0.2s; } .recent-chip:hover { box-shadow: var(--shadow-1); } .recent-chip__image { width: 32px; height: 32px; border-radius: 50%; } .recent-chip__image .icon { font-size: 18px; }
 .skeleton--stat { height: 82px; border-radius: var(--radius); } .skeleton--panel { height: 260px; border-radius: var(--radius); }
+
+/* DOSS login + logout */
+.mode-banner { flex-wrap: wrap; }
+.mode-banner__logout { display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; padding: 2px 10px; border: 1px solid #aecbfa; border-radius: var(--radius-pill); background: var(--bg); color: #174ea6; font-size: 0.78rem; font-weight: 500; cursor: pointer; }
+.mode-banner__logout:hover { background: #d2e3fc; }
+.login-form { display: grid; gap: 12px; }
+.login-form .form-field { margin: 0; }
+.login-form__hint { display: flex; align-items: center; gap: 6px; margin: 0; padding: 8px 12px; border-radius: var(--radius-sm); background: var(--bg-2); font-size: 0.8rem; color: var(--text-2); }
+.login-form__hint .icon { font-size: 16px; }
+.server-banner { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px 16px; background: var(--red-soft); color: #a50e0e; font-size: 0.88rem; } .server-banner .icon { font-size: 20px; }

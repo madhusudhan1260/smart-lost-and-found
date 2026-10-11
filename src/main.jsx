@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import { ModeProvider } from './context/ModeContext';
 import { ItemProvider } from './context/ItemContext';
 import { NotificationProvider } from './context/NotificationContext';
@@ -18,11 +19,13 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <NotificationProvider>
-        <ModeProvider>
-          <ItemProvider>
-            <App />
-          </ItemProvider>
-        </ModeProvider>
+        <AuthProvider>
+          <ModeProvider>
+            <ItemProvider>
+              <App />
+            </ItemProvider>
+          </ModeProvider>
+        </AuthProvider>
       </NotificationProvider>
     </BrowserRouter>
   </StrictMode>,

@@ -16,16 +16,18 @@ const OPTIONS = [
 
 // [ STUDENT ] [ DOSS ] – switches the interface. Not a login.
 export default function ModeSwitcher({ onSwitch }) {
-  const { mode, setMode } = useMode();
+  const { mode, switchMode } = useMode();
   const { notify } = useNotification();
   const navigate = useNavigate();
 
   const handleSwitch = (nextMode) => {
     if (nextMode === mode) return;
-    setMode(nextMode);
-    notify(`Switched to ${nextMode === MODES.DOSS ? 'DOSS' : 'Student'} mode`, 'info', 2000);
-    navigate(nextMode === MODES.DOSS ? '/dashboard' : '/');
-    onSwitch?.();
+    // DOSS needs a staff login first – switchMode shows the login dialog when needed
+    switchMode(nextMode, () => {
+      notify(`Switched to ${nextMode === MODES.DOSS ? 'DOSS' : 'Student'} mode`, 'info', 2000);
+      navigate(nextMode === MODES.DOSS ? '/dashboard' : '/');
+      onSwitch?.();
+    });
   };
 
   return (

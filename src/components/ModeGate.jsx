@@ -11,7 +11,7 @@ import EmptyState from './EmptyState';
 // Shows a page only in the right mode. This is NOT security – just keeps each
 // interface focused. The user can switch modes with one click.
 export default function ModeGate({ mode: requiredMode, children }) {
-  const { mode, setMode } = useMode();
+  const { mode, switchMode } = useMode();
   const { notify } = useNotification();
 
   if (mode === requiredMode) return children;
@@ -20,8 +20,7 @@ export default function ModeGate({ mode: requiredMode, children }) {
   const targetLabel = isDossPage ? 'DOSS' : 'Student';
 
   const handleSwitch = () => {
-    setMode(requiredMode);
-    notify(`Switched to ${targetLabel} mode`, 'info', 2000);
+    switchMode(requiredMode, () => notify(`Switched to ${targetLabel} mode`, 'info', 2000));
   };
 
   return (
