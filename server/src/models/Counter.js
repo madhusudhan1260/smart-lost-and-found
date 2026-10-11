@@ -17,7 +17,7 @@ export async function nextId(kind) {
   const counter = await Counter.findOneAndUpdate(
     { _id: kind },
     { $inc: { seq: 1 } },
-    { new: true, upsert: true },
+    { returnDocument: 'after', upsert: true },
   );
   return FORMATS[kind](counter.seq);
 }
