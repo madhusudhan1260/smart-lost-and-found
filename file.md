@@ -17,3 +17,13 @@ Help users search for potentially matching belongings.
 Improve communication and coordination during item recovery.
 
 Reduce the effort required to locate missing possessions.
+
+Key Benefits
+
+Convenience: Access lost-and-found information through a digital platform.
+
+Organization: Keep item reports structured and easier to manage.
+
+Accessibility: Help users find relevant reports in one place.
+
+Efficiency: Simplify the process of identifying and recovering belongings.
