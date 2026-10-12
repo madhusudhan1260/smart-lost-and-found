@@ -5,3 +5,15 @@ The Smart Lost and Found System is a web-based application designed to help peop
 Problem Statement
 
 People frequently lose personal belongings in colleges, offices, public places, and other shared spaces. Traditional lost-and-found processes often depend on manual reporting and communication, making it difficult to identify and recover missing items efficiently.
+
+Objectives
+
+Provide a centralized platform for lost-and-found information.
+
+Make it easier to report lost and found items.
+
+Help users search for potentially matching belongings.
+
+Improve communication and coordination during item recovery.
+
+Reduce the effort required to locate missing possessions.
