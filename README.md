@@ -1,9 +1,11 @@
 # 🔎 Smart Lost & Found
 ### College Campus Lost & Found Management System
 
-A React.js + JavaScript microproject (3rd-year B.Tech CSE) that manages the **complete lost-and-found lifecycle** on a college campus: reporting, searching, smart matching, ownership claims, verification by the DOSS office, collection and case closure.
+A full-stack **React.js → Node.js/Express.js → MongoDB** project (3rd-year B.Tech CSE) that manages the **complete lost-and-found lifecycle** on a college campus: reporting, searching, smart matching, ownership claims, verification by the DOSS office, collection and case closure.
 
-> React 19 · Vite · React Router · plain JavaScript (ES6+) · localStorage · **no backend, no login**
+> React 19 · Vite · React Router · Node.js · Express 5 · MongoDB (Mongoose) · REST API · JWT login for DOSS staff
+>
+> 📄 [Architecture](docs/ARCHITECTURE.md) · [Database design](docs/DATABASE.md) · [API details](docs/API.md) · [Team roles](docs/TEAM_ROLES.md) · [Screenshots](docs/SCREENSHOTS.md)
 
 ---
 
@@ -22,7 +24,7 @@ A React.js + JavaScript microproject (3rd-year B.Tech CSE) that manages the **co
 - [8. Folder structure](#8-folder-structure)
 - [9. Smart Match algorithm (`src/utils/matching.js`)](#9-smart-match-algorithm-srcutilsmatchingjs)
 - [10. Data flow example: "Accept claim"](#10-data-flow-example-accept-claim)
-- [11. localStorage](#11-localstorage)
+- [11. Data storage](#11-data-storage)
 - [12. JavaScript & React concepts](#12-javascript--react-concepts)
 - [13. Installation & running](#13-installation--running)
   - [Troubleshooting](#troubleshooting)
@@ -43,7 +45,7 @@ The sample data is set up so you can show the whole workflow straight away:
 | 4 | DOSS | **Accept claim** → confirm | **Ready for collection** |
 | 5 | Student | **My Claims** | "Claim accepted" + Collection instructions |
 | 6 | DOSS | **Mark as collected** → **Mark as resolved** | The case appears in **Resolved** |
-| 7 | Any | Refresh the page | Everything is still there (localStorage) |
+| 7 | Any | Refresh the page, or open `mongosh` → `db.claims.find()` | Everything is stored in MongoDB |
 
 **Smart Match:** open **Smart Match → Leather Wallet** to see an 84% match with every factor explained.
 
@@ -75,7 +77,7 @@ Build a working web application where:
 
 | Area | Features |
 |---|---|
-| **Mode switch** | `[ STUDENT ] [ DOSS ]` toggle in the top bar. **Not a login**: just two interfaces for the two roles. Saved in localStorage. |
+| **Mode switch** | `[ STUDENT ] [ DOSS ]` toggle in the top bar. Students need no account; **DOSS asks for a staff login** (JWT). |
 | **Home** | Google-style hero with a large search box, Report Lost / Report Found buttons, live statistics, rotating campus tips (`fetch` + `setInterval`), recent lost & found items, possible matches, My Claims (student) / Pending Claims (DOSS). |
 | **Report forms** | Controlled inputs, live validation with regular expressions, image upload with preview and compression (FileReader + canvas), **private verification details**, auto-saved draft, success screen and redirect. |
 | **Lost / Found lists** | Debounced search, filters (category, location, date, status), sorting (Newest, Oldest, A–Z, Z–A), skeleton loading, empty states. Private details are never searchable. |
@@ -121,7 +123,7 @@ Try it with the sample data: open **Found Items → Black iPhone → This is my 
 
 ## 5. DOSS workflow
 
-1. Switch to **DOSS** mode. The dashboard shows *Pending claims: 3*.
+1. Switch to **DOSS** mode and log in (`doss@college.edu` / `Doss@123`). The dashboard shows *Pending claims: 3*.
 2. Open a claim → **Claim Review** page.
 3. Compare: found report (with the finder's private notes) · lost report (with the owner's private notes) · claimant's answers · verification helper.
 4. **Accept claim** → "Are you sure you want to accept this ownership claim?" → the item becomes **READY_FOR_COLLECTION**. Other pending claims for the same item are rejected automatically.
@@ -158,43 +160,34 @@ Items and claims each have their own status. `CLAIM_ACCEPTED` / `CLAIM_REJECTED`
 
 ## 6. Technology stack
 
-| Technology | Use |
-|---|---|
-| React 19 | UI components and hooks |
-| Vite | Dev server and build |
-| React Router 7 | Pages and dynamic routes |
-| JavaScript ES6+ | All logic. **No TypeScript.** |
-| HTML5 + CSS3 | Hand-written Google-inspired design system (no UI library) |
-| localStorage / sessionStorage | Persistence |
-| `material-symbols`, `@fontsource/roboto` | Icons and font, **bundled locally** so the demo works offline |
+| Layer | Technology | Use |
+|---|---|---|
+| Frontend | **React 19**, React Router 7, Vite | Pages, components, hooks, routing, dev server |
+| Frontend | JavaScript ES6+, HTML5, CSS3 | All logic (no TypeScript), Google-inspired design system |
+| Backend | **Node.js + Express 5** | REST API, middleware, business rules (`server/`) |
+| Database | **MongoDB 8 + Mongoose 9** | Collections `items`, `claims`, `users`, `counters` |
+| Auth | JSON Web Tokens + bcrypt | DOSS staff login; students need no account |
+| Testing | Node test runner + supertest | 17 API tests (`server/test`) + frontend unit tests (`test/`) |
+| Tooling | concurrently, dotenv, morgan, oxlint | One `npm run dev`, config in `.env`, request logs, linting |
+| Assets | `material-symbols`, `@fontsource/roboto` | Icons and font bundled locally (work offline) |
 
 ## 7. Architecture
 
-```
-┌──────────────── UI (React) ────────────────┐
-│  pages/   →  components/                    │
-│      │  useItems() / useMode() / useNotification()
-│      ▼                                       │
-│  context/ItemContext  (items + claims + workflow actions)
-│  context/ModeContext  (STUDENT / DOSS)      │
-└──────┬──────────────────────────────────────┘
-       │ async calls (Promises)
-       ▼
-services/itemService.js  (mock API with a simulated network delay)
-       │ JSON.stringify / JSON.parse
-       ▼
-localStorage  (lf_v2_items, lf_v2_claims)
-
-utils/  → pure JavaScript used everywhere:
-  matching.js · claimUtils.js · validation.js · searchUtils.js · statistics.js · dateUtils.js …
+```mermaid
+flowchart LR
+    A["React.js<br/>pages · components · context"] -- "fetch /api/... (JSON, JWT)" --> B["Node.js + Express.js<br/>routes · controllers · middleware"]
+    B -- "Mongoose" --> C[("MongoDB<br/>items · claims · users")]
 ```
 
-- **Pages** only arrange components.
-- **Context** holds the shared state and the workflow (submit / accept / reject / collect / resolve).
-- **Service** is the only file that touches storage for items and claims.
-- **Utils** contain the logic you explain in the viva. They do not import React, so each can be understood alone.
+- **React** (`src/`) only shows data and collects input. `src/services/apiClient.js` is the one place that calls the API.
+- **Express** (`server/src/`) exposes the REST API, checks the JWT for DOSS routes, validates input and runs the claim workflow (`services/claimWorkflow.js`).
+- **MongoDB** stores everything; the Mongoose schemas in `server/src/models/` define the database design and validation.
+
+Full diagrams (layers and a request sequence): **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
 
 ### Privacy Boundary & Field Exposure
+
+These rules are enforced by the **server**: `privateDetails` has `select: false` in MongoDB, and public claim responses leave out personal fields.
 
 | Field | Public Cards & Lists | Search Engine (`SEARCHABLE_FIELDS`) | Student Details View | DOSS Staff View |
 |---|---|---|---|---|
@@ -229,12 +222,29 @@ lost_and_found/
     │   ├── Home  LostItems  FoundItems  ReportLost  ReportFound  ItemDetails
     │   ├── ClaimItem  MyClaims  SmartMatch  StudentDashboard
     │   └── DossDashboard  DossClaims  ClaimReview  ResolvedItems  NotFound
-    ├── context/     ItemContext.jsx  ModeContext.jsx  NotificationContext.jsx
+    ├── context/     ItemContext.jsx  AuthContext.jsx  ModeContext.jsx  NotificationContext.jsx
     ├── hooks/       useLocalStorage.js  useDebounce.js  useFormState.js  useDocumentTitle.js
-    ├── services/    itemService.js
+    ├── services/    apiClient.js  itemService.js  authService.js
     ├── utils/       matching.js  claimUtils.js  validation.js  searchUtils.js  statistics.js
     │                dateUtils.js  storage.js  imageUtils.js  helpers.js
-    └── data/        constants.js  initialItems.js (25)  initialClaims.js (7)
+    └── data/        constants.js
+
+server/                                ← Node.js + Express + MongoDB API
+├── .env.example                       ← copy to .env (PORT, MONGODB_URI, JWT_SECRET …)
+├── src/
+│   ├── index.js                       ← connect MongoDB → listen on 5050
+│   ├── app.js                         ← Express app: CORS, JSON, routes, errors
+│   ├── config/      env.js  db.js  constants.js
+│   ├── models/      Item.js  Claim.js  User.js  Counter.js
+│   ├── routes/      index.js  itemRoutes.js  claimRoutes.js
+│   ├── controllers/ itemController  claimController  authController  statsController  adminController
+│   ├── services/    claimWorkflow.js   ← claim lifecycle rules
+│   ├── middleware/  auth.js (JWT)  errorHandler.js
+│   ├── seed/        seed.js  seedDatabase.js  sampleItems.js (25)  sampleClaims.js (7)
+│   └── utils/       dates.js  HttpError.js  pick.js
+└── test/api.test.js                   ← 17 API integration tests
+
+docs/   ARCHITECTURE.md  DATABASE.md  API.md  TEAM_ROLES.md  SCREENSHOTS.md
 ```
 
 ### Routes
@@ -310,34 +320,32 @@ It returns *Strong / Some / Weak evidence* with a percentage.
 
 ## 10. Data flow example: "Accept claim"
 
-1. `ClaimReview.jsx` shows a modal. On confirm it calls `acceptClaim(claimId, note)` from `ItemContext`.
-2. `acceptClaim` finds the claim with `find()` and the competing pending claims with `filter()`.
-3. It calls `itemService.updateClaim()` and `itemService.updateItem()` in parallel with `Promise.all`:
-   - claim → `CLAIM_ACCEPTED`, and `acceptedAt` is saved
+1. `ClaimReview.jsx` shows a confirmation modal. On confirm it calls `acceptClaim(claimId, note)` from `ItemContext`.
+2. `itemService.acceptClaim()` sends `POST /api/claims/:id/accept` with the DOSS JWT (`apiClient.js`).
+3. Express runs `requireDoss` (checks the token), then `claimWorkflow.acceptClaim()`:
+   - claim → `CLAIM_ACCEPTED` with `acceptedAt`
    - found item and linked lost report → `READY_FOR_COLLECTION`
-   - competing claims → `CLAIM_REJECTED`
-4. Each service call waits (simulated network), reads localStorage, updates the record with the spread operator, and writes it back.
-5. The context merges the returned objects into state (`mergeUpdates` uses `reduce`). React re-renders every page that uses `useItems()`: the dashboard counts, My Claims, the badges.
+   - other pending claims on the same item → `CLAIM_REJECTED`
+4. Mongoose saves the documents in MongoDB and the API returns `{ items, claims }`, only the documents that changed.
+5. `ItemContext` merges them into state (`mergeUpdates` uses `reduce`). Every page using `useItems()` re-renders.
 6. A toast says "Claim accepted by DOSS."
 
-## 11. localStorage
+## 11. Data storage
 
-localStorage stores **strings only**, so all data goes through `JSON.stringify()` and `JSON.parse()` in `utils/storage.js`. Every call is in `try/catch`, because storage can be full, blocked, or hold corrupted JSON.
+**MongoDB** holds all shared data: reports, claims, DOSS accounts and ID counters. See **[docs/DATABASE.md](docs/DATABASE.md)** for the ER diagram, every field and every index. Refreshing the page or opening the app on another computer shows the same data.
 
-| Key | Where | Contents |
-|---|---|---|
-| `lf_v2_items` | `itemService` | all 25+ reports |
-| `lf_v2_claims` | `itemService` | all claims (status, review note, acceptedAt, collectedAt, resolvedAt) |
-| `lf_v2_mode` | `ModeContext` via `useLocalStorage` | `"student"` / `"doss"` |
-| `lf_v2_my_claims` | `ItemContext` via `useLocalStorage` | IDs of claims made from this browser ("My Claims" without login) |
-| `lf_v2_draft_lost` / `_found` | `ItemForm` via `useLocalStorage` | unsaved form (removed after submit) |
-| `lf_v2_filters_lost` / `_found` | `ItemsBrowser` via `useLocalStorage(…, 'session')` | search / filter / sort, in **sessionStorage** |
+The **browser** keeps only small per-user settings with `useLocalStorage` (JSON in `localStorage` / `sessionStorage`):
 
-- **First visit:** the service finds no data and **seeds** the sample items (25 initial records) and claims (7 initial records).
-- **Refresh:** everything is read back directly from localStorage, preserving all live edits and submitted claims.
-- **Start over:** use **DOSS dashboard → Reset demo data** (`resetAllData()` in `itemService.js`), which purges user changes and reseeds original fixtures.
-- **Quota resilience:** Base64 images are compressed to ≤640px JPEG before persistence to prevent reaching the ~5 MB browser quota.
-- **Defensive parsing:** `readFromStorage()` and `writeToStorage()` gracefully handle `QuotaExceededError` and corrupted JSON strings by returning safe fallbacks.
+| Key | Contents |
+|---|---|
+| `lf_v2_token` | DOSS login token (JWT), removed on logout |
+| `lf_v2_mode` | `"student"` / `"doss"` |
+| `lf_v2_my_claims` | IDs of claims made from this browser (students have no account) |
+| `lf_v2_draft_lost` / `_found` | unsaved report form (removed after submit) |
+| `lf_v2_filters_lost` / `_found` | search / filter / sort (**sessionStorage**) |
+| `lf_v2_view`, `lf_v2_recent` | grid/list choice, recently viewed items |
+
+**Reset demo data** (DOSS dashboard) calls `POST /api/admin/reset`, which re-seeds MongoDB.
 
 ## 12. JavaScript & React concepts
 
@@ -346,36 +354,40 @@ localStorage stores **strings only**, so all data goes through `JSON.stringify()
 
 ## 13. Installation & running
 
-Requirements: **Node.js 18+** and npm.
+Requirements: **Node.js 18+**, npm, and **MongoDB** running locally (or a MongoDB Atlas connection string).
 
 ```bash
-# Clone the repository
 git clone https://github.com/madhusudhan1260/smart-lost-and-found.git
 cd smart-lost-and-found
 
-# Verify Node.js version (Node 18+ required)
-node -v
-
-# Install dependencies and start the development server
-npm install
-npm run dev
+npm run setup      # installs frontend + server packages and seeds MongoDB
+npm run dev        # starts the API (http://localhost:5050) and React (http://localhost:5173)
 ```
 
-Open the URL Vite prints (usually <http://localhost:5173>).
+Optional: copy `server/.env.example` to `server/.env` to change the port, the MongoDB URI (e.g. Atlas), the JWT secret or the DOSS account.
 
-| Command | Purpose | Output / Notes |
-|---|---|---|
-| `npm run dev` | Start local Vite development server with HMR | Spawns local dev server at `http://localhost:5173` |
-| `npm run build` | Compile and bundle production assets | Generates optimized minified assets into `dist/` |
-| `npm run preview` | Locally preview the generated production build | Verifies production behavior before deployment |
-| `npm run lint` | Fast static analysis using oxlint | Checks hooks rules, component exports, and unused variables |
+**DOSS login (demo):** `doss@college.edu` / `Doss@123`. Switch to **DOSS** in the top bar.
 
-The icons and font are bundled, so the app works **without internet** once `npm install` is done.
+| Command (project root) | Purpose |
+|---|---|
+| `npm run dev` | API + React together (`concurrently`) |
+| `npm run dev:server` / `npm run dev:client` | Only one of them |
+| `npm run seed` | Reset MongoDB to the sample data |
+| `npm run test:server` | 17 API integration tests (needs MongoDB) |
+| `npm test` | Frontend unit tests |
+| `npm run build` | Production build of the React app into `dist/` |
+| `npm run lint` | oxlint |
+
+Installing MongoDB on macOS: `brew tap mongodb/brew && brew install mongodb-community && brew services start mongodb-community`. On Windows use the MongoDB Community installer, or use a free MongoDB Atlas cluster and put its URI in `server/.env`.
 
 ### Troubleshooting
 
+- **"Cannot reach the server" banner:** the API is not running. Start everything with `npm run dev` and check the `[api]` lines.
+- **`Could not start the API … Is MongoDB running?`:** start MongoDB (`brew services start mongodb-community`) or fix `MONGODB_URI` in `server/.env`.
+- **Port 5050 in use:** set `PORT=5051` in `server/.env` and change the proxy in `vite.config.js`.
+
 - **Port in use (`EADDRINUSE: 5173`):** Vite will automatically select the next available port (e.g., `5174`). You can force a specific port using `npx vite --port 3000`.
-- **Corrupted localStorage state:** Open Developer Tools (`F12`) → Application → Local Storage → Clear all entries, or click **Reset demo data** on the DOSS Dashboard.
+- **Odd browser state:** Open Developer Tools (`F12`) → Application → Local Storage → Clear all entries (this only clears settings; data is in MongoDB), or click **Reset demo data** on the DOSS Dashboard.
 - **Node version mismatch:** Ensure `node -v` prints `v18.0.0` or higher. Use `nvm use 18` or `nvm use 20` if installed.
 - **Build cache clean:** If changes are not reflected, run `rm -rf node_modules/.vite dist` and restart with `npm run dev`.
 
@@ -389,15 +401,16 @@ The icons and font are bundled, so the app works **without internet** once `npm 
 
 ## 14. Limitations
 
-- **No real authentication.** The Student / DOSS switch is only a demo of two roles, and anyone can switch.
-- Data lives in **one browser**, so two students on two laptops do not see each other's reports.
-- "My Claims" is tied to the browser (claim IDs in localStorage). It can also track a claim by its ID.
-- Smart Match and the verification helper use keyword overlap. They do not understand synonyms ("cellphone" vs "mobile").
-- localStorage holds only about 5 MB, which limits how many photos can be stored.
+- Students have no accounts: "My Claims" is remembered per browser (claim IDs), with "track by claim ID" as a fallback.
+- One DOSS role only; there is no admin screen for managing staff accounts (they are created by the seed script).
+- Photos are stored inside MongoDB documents as compressed data URLs, which is fine for a campus demo but not for thousands of photos.
+- Smart Match and the verification helper use keyword overlap and do not understand synonyms ("cellphone" vs "mobile").
+- No e-mail/SMS notifications yet.
 
 ## 15. Future improvements
 
-- A real backend (Node.js + Express + MongoDB, or Firebase) shared by all students
+- Deploy: API on Render/Railway, database on MongoDB Atlas, React on Vercel/Netlify (`VITE_API_URL`)
+- Store photos in object storage (e.g. Cloudinary) instead of inside documents
 - College SSO login with real roles (student / DOSS staff)
 - Email / SMS notifications when a claim is accepted or a strong match appears
 - A QR code on the collection slip, scanned at the DOSS counter
@@ -409,7 +422,7 @@ The icons and font are bundled, so the app works **without internet** once `npm 
 ## 16. Viva questions
 
 **Q1. Is the Student/DOSS switch a login?**
-No. It is a UI mode stored in localStorage through `ModeContext`. It shows two interfaces of the same data so the full workflow can be demonstrated on one computer. A real system would add authentication.
+Students need no account. Switching to DOSS opens a login dialog; `POST /api/auth/login` checks the bcrypt hash and returns a JWT. DOSS-only routes (accept, reject, collect, resolve, delete) are protected on the server by the `requireDoss` middleware, so hiding buttons is not the only protection.
 
 **Q2. Why keep some details private?**
 If every detail were public, anyone could copy them into a claim. The owner (in the lost report) and the finder (in the found report) each keep private details. Only DOSS sees them, and it compares them with the claimant's answer.
@@ -423,11 +436,11 @@ Both claims are `CLAIM_PENDING`. When DOSS accepts one, `acceptClaim` uses `filt
 **Q5. Explain `calculateMatchScore`.**
 It compares six factors. Each gives a ratio from 0 to 1, which is multiplied by its weight (20/25/15/20/10/10), and the points are added with `reduce`. See section 9.
 
-**Q6. Where do you use `async/await` and why a mock service?**
-All `itemService` functions are `async` and `await` a `wait()` Promise that simulates network delay. The UI treats them like a real API: loading states, `try/catch/finally` and error toasts. Later they can be replaced with `fetch()` calls to a real backend without changing the pages.
+**Q6. Where do you use `async/await`?**
+Every API call: `itemService` functions return Promises from `fetch()` (via `apiClient.request`), and the context and forms `await` them inside `try/catch/finally` to show loading states, server validation errors and toasts. On the server, every controller is an `async` function that awaits Mongoose queries.
 
-**Q7. What is `Promise.all` doing in `acceptClaim`?**
-It runs several updates in parallel (the claim, the found item, the lost report, the competing claims) and waits until all of them finish before updating state.
+**Q7. Where is `Promise.all` used?**
+`ItemContext.loadData` fetches items and claims in parallel, and the server's `saveAll()` saves several changed documents at once.
 
 **Q8. What is debouncing?**
 It waits until the user stops typing before running the search. `useDebounce` starts a `setTimeout` on every keystroke and clears the previous one in the effect cleanup. It is used on the item lists and the DOSS claim search.
@@ -435,8 +448,8 @@ It waits until the user stops typing before running the search. `useDebounce` st
 **Q9. What is a closure in your project?**
 `createIdGenerator(prefix)` returns `nextId()`, which remembers a private `counter` between calls. `createItemFilter(filters)` returns a function that remembers the chosen filters.
 
-**Q10. localStorage vs sessionStorage?**
-localStorage keeps data until it is cleared; we use it for reports, claims, mode and drafts. sessionStorage is cleared when the tab closes; we use it for list filters.
+**Q10. localStorage vs sessionStorage – and why not store reports there any more?**
+localStorage keeps data until cleared (we keep the login token, mode and drafts there); sessionStorage is cleared when the tab closes (list filters). Reports and claims must be shared by all students and DOSS, so they live in MongoDB behind the API.
 
 **Q11. Why `JSON.stringify` / `JSON.parse`?**
 Storage only accepts strings. `stringify` converts objects to strings and `parse` converts them back.
@@ -456,8 +469,8 @@ Both the report form and the claim form need the same logic: controlled values, 
 **Q16. Why are there two statuses for accepted?**
 A **claim** becomes `CLAIM_ACCEPTED`, while the **item** becomes `READY_FOR_COLLECTION`. They are different objects: a claim is about a person's request, and the item's status tells DOSS where the physical object is.
 
-**Q17. How is an image stored without a server?**
-`FileReader.readAsDataURL` (wrapped in a Promise) reads the file, a canvas resizes it, and the Base64 data URL is saved inside the item object.
+**Q17. How is an image stored?**
+`FileReader.readAsDataURL` (wrapped in a Promise) reads the file, a canvas resizes it, and the Base64 data URL is sent in the JSON body and saved inside the item document. The Item schema checks it really is an image data URL.
 
 **Q18. Why do list items need `key`?**
 So React can tell which element is which between renders. We use unique IDs such as `item.id` and `claim.id`, not the array index.
@@ -465,5 +478,35 @@ So React can tell which element is which between renders. We use unique IDs such
 **Q19. How do dynamic routes work?**
 `/items/:id` and `/doss/claims/:claimId`: `useParams()` reads the ID from the URL, and `find()` gets the record.
 
-**Q20. What if localStorage is full?**
-`writeToStorage` catches the error and returns `false`. The service then throws a friendly error, and the page shows it in a red toast without crashing.
+**Q20. What happens when the server is down?**
+`fetch` fails (or the dev proxy returns 502), `apiClient` throws an `ApiError` "Cannot reach the server", and `App.jsx` shows a red banner with a **Try again** button instead of crashing.
+
+**Q21. What is REST? Give examples from the project.**
+Resources are nouns in the URL and HTTP methods are the actions: `GET /api/items` (read), `POST /api/items` (create), `PATCH /api/items/:id` (update), `DELETE /api/items/:id` (delete). Responses are JSON with proper status codes (201, 400, 401, 404, 409).
+
+**Q22. What is middleware in Express?**
+A function `(req, res, next)` that runs before the route handler. Ours: `cors`, `express.json`, `morgan` (logging), `requireDoss`/`optionalAuth` (JWT), `notFound` and `errorHandler` (4 parameters, turns errors into JSON).
+
+**Q23. How does the server validate data?**
+Mongoose schemas use `required`, `enum`, `minlength`/`maxlength`, `match` (regex) and custom `validate` functions (e.g. date not in the future). On failure, `errorHandler` returns 400 with one message per field, which React shows under the matching input.
+
+**Q24. Why validate on both the client and the server?**
+Client validation gives instant feedback; server validation is the real protection, because anyone can send a request with `curl` and skip the React form.
+
+**Q25. How are passwords stored?**
+Only a bcrypt hash (`passwordHash`, `select: false`). Login compares with `bcrypt.compare`, and the error message is the same for "no such email" and "wrong password".
+
+**Q26. What does a JWT contain and how is it checked?**
+Header, payload (`sub` = user id, `role`, `name`, expiry) and a signature made with `JWT_SECRET`. `jwt.verify` in `middleware/auth.js` rejects tampered or expired tokens with 401.
+
+**Q27. Why are claims a separate collection instead of being embedded in items?**
+An item can have several claims, DOSS lists claims on their own, and a claim links two items (found + lost). We reference items by ID and use `populate()` to join them when needed.
+
+**Q28. How are IDs like `LF-1013` generated safely?**
+The `counters` collection: `findOneAndUpdate({ _id: 'lost' }, { $inc: { seq: 1 } }, { upsert: true })`. `$inc` is atomic in MongoDB, so two simultaneous reports never get the same number.
+
+**Q29. What does `GET /api/stats` show about MongoDB?**
+The aggregation pipeline: `$group` by type/status and by category with `$sum: 1`, like `GROUP BY` in SQL, computed inside the database.
+
+**Q30. How did you test the backend?**
+`server/test/api.test.js` uses Node's test runner and supertest to call the real Express app against a separate test database: login, CRUD, validation errors, privacy of public responses, and the whole claim lifecycle (17 tests).
