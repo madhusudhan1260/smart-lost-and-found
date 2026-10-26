@@ -14,7 +14,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 ->Help users search for potentially matching belongings.
 
-Improve communication and coordination during item recovery.
+->Improve communication and coordination during item recovery.
 
 Reduce the effort required to locate missing possessions.
 
