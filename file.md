@@ -12,7 +12,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 ->Make it easier to report lost and found items.
 
-Help users search for potentially matching belongings.
+->Help users search for potentially matching belongings.
 
 Improve communication and coordination during item recovery.
 
