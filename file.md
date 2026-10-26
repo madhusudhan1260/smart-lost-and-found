@@ -20,6 +20,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 ->Reduce the effort required to locate missing possessions.
 
+
 **Key Benefits**
 
 **Convenience:** Access lost-and-found information through a digital platform.
