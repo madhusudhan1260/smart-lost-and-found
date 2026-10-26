@@ -20,7 +20,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 **Key Benefits**
 
-Convenience: Access lost-and-found information through a digital platform.
+**Convenience:** Access lost-and-found information through a digital platform.
 
 Organization: Keep item reports structured and easier to manage.
 
