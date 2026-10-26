@@ -10,7 +10,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 ->Provide a centralized platform for lost-and-found information.
 
-Make it easier to report lost and found items.
+->Make it easier to report lost and found items.
 
 Help users search for potentially matching belongings.
 
