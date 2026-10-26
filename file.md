@@ -16,7 +16,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 ->Improve communication and coordination during item recovery.
 
-Reduce the effort required to locate missing possessions.
+->Reduce the effort required to locate missing possessions.
 
 **Key Benefits**
 
