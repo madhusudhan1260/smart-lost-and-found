@@ -27,7 +27,6 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 **Organization:** Keep item reports structured and easier to manage.
 
-
 **Accessibility:** Help users find relevant reports in one place.
 
 **Efficiency:** Simplify the process of identifying and recovering belongings.
