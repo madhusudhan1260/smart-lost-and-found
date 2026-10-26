@@ -27,7 +27,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 **Accessibility:** Help users find relevant reports in one place.
 
-Efficiency: Simplify the process of identifying and recovering belongings.
+**Efficiency:** Simplify the process of identifying and recovering belongings.
 
 **Potential Applications**
 
