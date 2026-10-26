@@ -22,7 +22,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 **Convenience:** Access lost-and-found information through a digital platform.
 
-Organization: Keep item reports structured and easier to manage.
+**Organization:** Keep item reports structured and easier to manage.
 
 Accessibility: Help users find relevant reports in one place.
 
