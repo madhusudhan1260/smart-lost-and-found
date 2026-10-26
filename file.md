@@ -8,7 +8,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 **Objectives**
 
-Provide a centralized platform for lost-and-found information.
+->Provide a centralized platform for lost-and-found information.
 
 Make it easier to report lost and found items.
 
