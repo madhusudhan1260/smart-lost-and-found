@@ -36,6 +36,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 The system can be useful in educational institutions, offices, libraries, events, and other shared environments where people may misplace personal belongings.
 
+
 **Conclusion**
 
 The Smart Lost and Found System aims to make the recovery of lost belongings easier through a centralized digital solution. By organizing lost-and-found reports and improving access to information, the project can help create a more convenient and reliable recovery process.
