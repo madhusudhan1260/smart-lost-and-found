@@ -31,6 +31,7 @@ People frequently lose personal belongings in colleges, offices, public places, 
 
 **Efficiency:** Simplify the process of identifying and recovering belongings.
 
+
 **Potential Applications**
 
 The system can be useful in educational institutions, offices, libraries, events, and other shared environments where people may misplace personal belongings.
