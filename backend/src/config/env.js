@@ -1,4 +1,4 @@
-// Reads settings from server/.env (see .env.example) with safe defaults for local development.
+// Reads settings from backend/.env (see .env.example) with safe defaults for local development.
 import 'dotenv/config';
 
 export const config = {

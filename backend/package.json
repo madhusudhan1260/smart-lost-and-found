@@ -1,5 +1,5 @@
 {
-  "name": "smart-lost-and-found-server",
+  "name": "smart-lost-and-found-backend",
   "version": "1.0.0",
   "private": true,
   "description": "REST API for Smart Lost & Found – Node.js + Express.js + MongoDB (Mongoose)",
@@ -12,7 +12,7 @@
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
     "seed": "node src/seed/seed.js",
-    "test": "node --test test/"
+    "test": "node --test tests/"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

@@ -1,6 +1,6 @@
 // Integration tests for the REST API (Node's built-in test runner + supertest).
 // They use a SEPARATE database, so the demo data is never touched.
-// Run:  cd server && npm test        (MongoDB must be running)
+// Run:  cd backend && npm test        (MongoDB must be running)
 import { after, before, describe, test } from 'node:test';
 import assert from 'node:assert/strict';
 

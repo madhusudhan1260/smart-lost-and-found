@@ -21,6 +21,6 @@ try {
   });
 } catch (error) {
   console.error(`❌ Could not start the API: ${error.message}`);
-  console.error('   Is MongoDB running? Check MONGODB_URI in server/.env');
+  console.error('   Is MongoDB running? Check MONGODB_URI in backend/.env');
   process.exit(1);
 }
