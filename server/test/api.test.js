@@ -92,6 +92,75 @@ describe('authentication', () => {
   });
 });
 
+describe('roles: student, DOSS and super admin', () => {
+  let adminToken;
+  let studentToken;
+  const loginAs = (email, password, portal) => api.post('/api/auth/login').send({ email, password, portal });
+
+  before(async () => {
+    adminToken = (await loginAs(config.adminEmail, config.adminPassword, 'superadmin')).body.token;
+    studentToken = (await loginAs(config.studentEmail, config.studentPassword, 'student')).body.token;
+  });
+
+  test('each login tab only accepts its own kind of account', async () => {
+    const wrongTab = await loginAs(config.studentEmail, config.studentPassword, 'doss');
+    assert.equal(wrongTab.status, 403);
+    assert.match(wrongTab.body.error, /Student tab/);
+    assert.equal((await loginAs(config.dossEmail, config.dossPassword, 'superadmin')).status, 403);
+    assert.equal((await loginAs(config.adminEmail, config.adminPassword, 'doss')).status, 200); // admin may use DOSS tab
+  });
+
+  test('students can sign up, but never as staff', async () => {
+    const res = await api.post('/api/auth/register').send({
+      name: 'Priya Nair', email: 'priya.nair@college.edu', rollNumber: '22ece-017', password: 'Priya2024', role: 'superadmin',
+    });
+    assert.equal(res.status, 201);
+    assert.equal(res.body.user.role, 'student');
+    assert.equal(res.body.user.rollNumber, '22ECE017');
+
+    const again = await api.post('/api/auth/register').send({
+      name: 'Priya Nair', email: 'PRIYA.NAIR@college.edu', rollNumber: '22ECE017', password: 'Priya2024',
+    });
+    assert.equal(again.status, 409);
+
+    const weak = await api.post('/api/auth/register').send({ name: 'Weak Pass', email: 'weak@college.edu', rollNumber: '22CSE099', password: '123' });
+    assert.equal(weak.status, 400);
+    assert.ok(weak.body.details.password);
+  });
+
+  test('a student token cannot do DOSS work', async () => {
+    const res = await api.post('/api/claims/CL-3001/accept').set('Authorization', `Bearer ${studentToken}`);
+    assert.equal(res.status, 403);
+    const items = await api.get('/api/items/LF-2001').set('Authorization', `Bearer ${studentToken}`);
+    assert.equal(items.body.privateDetails, undefined);
+  });
+
+  test('only the super admin manages accounts', async () => {
+    assert.equal((await api.get('/api/users').set('Authorization', `Bearer ${token}`)).status, 403);
+
+    const created = await api.post('/api/users').set('Authorization', `Bearer ${adminToken}`)
+      .send({ name: 'Anita Rao', email: 'anita.rao@college.edu', password: 'Staff2024', role: 'doss' });
+    assert.equal(created.status, 201);
+
+    const list = await api.get('/api/users?role=doss').set('Authorization', `Bearer ${adminToken}`);
+    assert.ok(list.body.some((user) => user.email === 'anita.rao@college.edu'));
+    assert.ok(list.body.every((user) => user.passwordHash === undefined));
+
+    // Disabled accounts cannot log in
+    await api.patch(`/api/users/${created.body.id}`).set('Authorization', `Bearer ${adminToken}`).send({ active: false });
+    assert.equal((await loginAs('anita.rao@college.edu', 'Staff2024')).status, 403);
+
+    const deleted = await api.delete(`/api/users/${created.body.id}`).set('Authorization', `Bearer ${adminToken}`);
+    assert.equal(deleted.status, 200);
+  });
+
+  test('the super admin cannot lock themselves out', async () => {
+    const me = await api.get('/api/auth/me').set('Authorization', `Bearer ${adminToken}`);
+    const res = await api.patch(`/api/users/${me.body.user.id}`).set('Authorization', `Bearer ${adminToken}`).send({ active: false });
+    assert.equal(res.status, 400);
+  });
+});
+
 describe('items (CRUD)', () => {
   test('public list hides private details, DOSS list includes them', async () => {
     const publicRes = await api.get('/api/items?type=found');
@@ -190,6 +259,70 @@ describe('claim workflow', () => {
     const res = await api.post('/api/claims').send(validClaim({ lostDate: today(), lostItemId: null, contact: 'other@college.edu' }));
     assert.equal(res.status, 409);
   });
+
+  test('accepting one claim auto-rejects competing pending claims for that item', async () => {
+    // Create a new found item to test competing claims
+    const foundRes = await api.post('/api/items').send({
+      type: 'found',
+      name: 'Competing Test Backpack',
+      category: 'Bags',
+      color: 'Navy Blue',
+      description: 'Found navy blue backpack near seminar hall.',
+      location: 'Seminar Hall',
+      date: today(),
+      contactName: 'Hall Guard',
+      contact: 'guard@college.edu',
+    });
+    const testItemId = foundRes.body.id;
+
+    // Submit claim 1
+    const claim1Res = await api.post('/api/claims').send(validClaim({
+      itemId: testItemId,
+      lostItemId: null,
+      claimantName: 'Claimant One',
+      rollNumber: '22-CSE-088', // test delimiter normalization
+      contact: 'claimant1@college.edu',
+      lostDate: today(),
+    }));
+    assert.equal(claim1Res.status, 201);
+    assert.equal(claim1Res.body.claim.rollNumber, '22CSE088');
+    const c1Id = claim1Res.body.claim.id;
+
+    // Submit claim 2 (competing)
+    const claim2Res = await api.post('/api/claims').send(validClaim({
+      itemId: testItemId,
+      lostItemId: null,
+      claimantName: 'Claimant Two',
+      rollNumber: '22ECE099',
+      contact: 'claimant2@college.edu',
+      lostDate: today(),
+    }));
+    assert.equal(claim2Res.status, 201);
+    const c2Id = claim2Res.body.claim.id;
+
+    // DOSS accepts claim 1
+    const acceptRes = await api.post(`/api/claims/${c1Id}/accept`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ reviewNote: 'Claimant 1 verified' });
+    assert.equal(acceptRes.status, 200);
+
+    // Verify claim 1 accepted
+    const c1After = await api.get(`/api/claims/${c1Id}`).set('Authorization', `Bearer ${token}`);
+    assert.equal(c1After.body.status, 'CLAIM_ACCEPTED');
+
+    // Verify claim 2 auto-rejected
+    const c2After = await api.get(`/api/claims/${c2Id}`).set('Authorization', `Bearer ${token}`);
+    assert.equal(c2After.body.status, 'CLAIM_REJECTED');
+    assert.match(c2After.body.reviewNote, /Another claim/);
+  });
+
+  test('GET /api/claims/:id?populate=items populates full item documents for DOSS', async () => {
+    const res = await api.get('/api/claims/CL-3001?populate=items').set('Authorization', `Bearer ${token}`);
+    assert.equal(res.status, 200);
+    assert.ok(res.body.itemId);
+    assert.equal(typeof res.body.itemId, 'object');
+    assert.ok(res.body.itemId.name);
+  });
 });
 
 describe('statistics (aggregation)', () => {
@@ -198,5 +331,15 @@ describe('statistics (aggregation)', () => {
     assert.equal(res.status, 200);
     assert.equal(res.body.items.total, res.body.items.lost + res.body.items.found);
     assert.ok(res.body.claims.RESOLVED >= 1);
+  });
+});
+
+describe('admin reset', () => {
+  test('POST /api/admin/reset restores sample data when authenticated', async () => {
+    assert.equal((await api.post('/api/admin/reset')).status, 401);
+    const res = await api.post('/api/admin/reset').set('Authorization', `Bearer ${token}`);
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, 'Demo data restored.');
+    assert.ok(res.body.items > 0);
   });
 });
