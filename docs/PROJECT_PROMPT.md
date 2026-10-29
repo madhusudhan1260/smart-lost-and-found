@@ -66,7 +66,7 @@ Demo accounts (seed data only): Student `student@college.edu / Student@123`, DOS
 | Context API | built in | Global state (auth, mode, items, notifications) | Avoids "prop drilling"; no extra library like Redux needed for this size |
 | Fetch API | built in | HTTP calls to the REST API | Native, promise-based, no axios dependency |
 | localStorage / sessionStorage | built in | JWT token, mode, drafts, filters, "my claims" IDs | Survives page reloads; per-browser settings |
-| Plain CSS (custom properties) | – | Google-Material-inspired design system in `index.css` | Full control, no framework; tokens for colours, radius, shadows; media queries for mobile |
+| Plain CSS (custom properties) | – | Google-Material-inspired design system in `frontend/src/styles/` | Full control, no framework; tokens for colours, radius, shadows; media queries for mobile |
 | material-symbols | 0.47 | Icons (bundled locally) | Works offline, consistent Google look |
 | @fontsource/roboto | 5 | Roboto font (bundled locally) | No Google Fonts request, works offline |
 | oxlint | 1.x | Linting | Very fast linter catching React/JS mistakes |
@@ -708,16 +708,16 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 | Private-field hiding | models/controllers | Privacy of verification details and personal data |
 | Safe redirect (`next` must start with `/`, not `//`) | Login.jsx | Open-redirect protection |
 | Body size limit (2 MB) | app.js | Abuse protection |
-| Secrets in `.env`, git-ignored | server | No leaked credentials |
+| Secrets in `.env`, git-ignored | backend | No leaked credentials |
 
 ### UI/UX, accessibility, performance
 | Topic | Where | Why |
 |---|---|---|
-| Responsive design (Grid/Flex, breakpoints) | index.css | Works on phones |
+| Responsive design (Grid/Flex, breakpoints) | `styles/responsive.css` | Works on phones |
 | ARIA roles (tabs, radiogroup, menu, alert, live regions), skip link, focus rings, keyboard navigation | Login, ModeSwitcher, AccountMenu, Modal, FormField | Accessibility |
 | Skeleton loaders, empty states, toasts, error/offline banners | components | Clear feedback |
 | Debouncing, event delegation, memoisation, image compression | hooks/utils | Performance |
-| `prefers-reduced-motion` | index.css | Respects user settings |
+| `prefers-reduced-motion` | `styles/animations.css`, `styles/enhancements.css` | Respects user settings |
 
 ### Testing & tooling
 | Topic | Where | Why |
@@ -734,7 +734,7 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 ## 9. How to run
 
 ```bash
-npm run setup        # install frontend + server packages and seed MongoDB
+npm run setup        # install root, frontend and backend packages and seed MongoDB
 npm run dev          # API on http://localhost:5050, React on http://localhost:5173
 npm test             # all tests: 53 frontend + 25 backend (MongoDB must be running)
 npm run build        # production build into frontend/dist/
