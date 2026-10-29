@@ -1,7 +1,7 @@
 // File: src/services/itemService.js
 // Purpose: REST API calls for items, claims and statistics (Express + MongoDB backend).
 // Used by: context/ItemContext.jsx, components/ui/TipTicker.jsx
-/
+
 // Each function returns a Promise – the React code awaits them with async/await.
 import { request } from './apiClient';
 
