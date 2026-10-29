@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { DOSS_OFFICE } from '../data/constants';
 import logo from '../assets/logo.svg';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Footer() {
-  const year = new Date().getFullYear();
+  const year = CURRENT_YEAR;
 
   return (
     <footer className="footer">
