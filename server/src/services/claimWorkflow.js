@@ -38,6 +38,13 @@ export async function submitClaim(body) {
   const item = await findItem(data.itemId);
   if (!canBeClaimed(item)) throw new HttpError(409, 'This item can no longer be claimed.');
 
+  const duplicate = await Claim.exists({
+    itemId: item._id,
+    status: STATUS.CLAIM_PENDING,
+    contact: new RegExp(`^${String(data.contact ?? '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i'),
+  });
+  if (duplicate) throw new HttpError(409, 'You already have a pending claim for this item.');
+
   // You cannot lose something more than a day after it was found
   if (data.lostDate && daysBetween(item.date, data.lostDate) > 1) {
     throw new HttpError(400, 'Please check the highlighted fields.', {
@@ -54,13 +61,6 @@ export async function submitClaim(body) {
   } else {
     data.lostItemId = null;
   }
-
-  const duplicate = await Claim.exists({
-    itemId: item._id,
-    status: STATUS.CLAIM_PENDING,
-    contact: new RegExp(`^${String(data.contact ?? '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i'),
-  });
-  if (duplicate) throw new HttpError(409, 'You already have a pending claim for this item.');
 
   const claim = new Claim({ ...data, status: STATUS.CLAIM_PENDING });
   await claim.validate(); // check the answers before using up an ID number

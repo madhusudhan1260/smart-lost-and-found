@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 import { CLAIM_STATUSES, LOCATIONS, PATTERNS } from '../config/constants.js';
 import { isFutureDate } from '../utils/dates.js';
 
-const isContact = (value) => PATTERNS.email.test(value) || PATTERNS.phone.test(value.replace(/[\s-]/g, ''));
+const isContact = (value) =>
+  typeof value === 'string' &&
+  (PATTERNS.email.test(value.trim()) || PATTERNS.phone.test(value.replace(/[\s\-()]/g, '')));
 
 const claimSchema = new mongoose.Schema(
   {
@@ -18,6 +20,7 @@ const claimSchema = new mongoose.Schema(
     },
     rollNumber: {
       type: String, trim: true, uppercase: true, required: [true, 'Roll number / USN is required'],
+      set: (v) => (typeof v === 'string' ? v.replace(/[\s\-_/]/g, '').toUpperCase() : v),
       match: [PATTERNS.rollNumber, 'Use 6–12 letters and digits, e.g. 22CSE045'],
     },
     contact: {

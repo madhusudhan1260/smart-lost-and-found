@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 import { CATEGORIES, HANDED_TO, ITEM_STATUSES, ITEM_TYPES, LOCATIONS, PATTERNS } from '../config/constants.js';
 import { daysBetween, isFutureDate, toISODate } from '../utils/dates.js';
 
-const isContact = (value) => PATTERNS.email.test(value) || PATTERNS.phone.test(value.replace(/[\s-]/g, ''));
+const isContact = (value) =>
+  typeof value === 'string' &&
+  (PATTERNS.email.test(value.trim()) || PATTERNS.phone.test(value.replace(/[\s\-()]/g, '')));
 
 const itemSchema = new mongoose.Schema(
   {
@@ -48,7 +50,11 @@ const itemSchema = new mongoose.Schema(
     },
     image: {
       type: String, default: null,
-      validate: { validator: (value) => value === null || PATTERNS.imageDataUrl.test(value), message: 'Image must be a PNG, JPG, WEBP or GIF data URL' },
+      set: (value) => (value === '' ? null : value),
+      validate: {
+        validator: (value) => value === null || value === undefined || PATTERNS.imageDataUrl.test(value),
+        message: 'Image must be a PNG, JPG, WEBP or GIF data URL',
+      },
     },
     handedTo: { type: String, enum: HANDED_TO },
     status: { type: String, enum: ITEM_STATUSES, required: true },

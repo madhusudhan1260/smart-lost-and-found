@@ -19,7 +19,10 @@ export const isoHoursAgo = (hours) => new Date(Date.now() - hours * 60 * 60 * 10
 export const isoDaysAgo = (days) => isoHoursAgo(days * 24);
 
 const parseLocalDate = (value) => {
-  const [year, month, day] = value.split('-').map(Number);
+  if (!value || typeof value !== 'string') return new Date(NaN);
+  const clean = value.split('T')[0];
+  const [year, month, day] = clean.split('-').map(Number);
+  if (!year || !month || !day) return new Date(value);
   return new Date(year, month - 1, day);
 };
 
