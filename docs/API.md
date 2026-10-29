@@ -12,8 +12,9 @@
 | Method | Path | Access | Purpose | Success |
 |---|---|---|---|---|
 | GET | `/api/health` | Public | API + database status | 200 |
-| POST | `/api/auth/login` | Public | DOSS login → JWT | 200 |
-| GET | `/api/auth/me` | DOSS | Who is logged in | 200 |
+| POST | `/api/auth/login` | Public | Sign in (student, DOSS or super admin) → JWT | 200 |
+| POST | `/api/auth/register` | Public | Student sign-up → JWT | 201 |
+| GET | `/api/auth/me` | Any account | Who is logged in | 200 |
 | GET | `/api/items` | Public* | List reports (filters below) | 200 |
 | GET | `/api/items/:id` | Public* | One report | 200 |
 | POST | `/api/items` | Public | **Create** a lost/found report | 201 |
@@ -28,6 +29,12 @@
 | POST | `/api/claims/:id/reject` | DOSS | Reject with a reason | 200 |
 | GET | `/api/stats` | Public | Counts via MongoDB aggregation | 200 |
 | POST | `/api/admin/reset` | DOSS | Restore the sample data | 200 |
+| GET | `/api/users` | Super admin | List accounts (`?role=`) | 200 |
+| POST | `/api/users` | Super admin | Create an account (any role) | 201 |
+| PATCH | `/api/users/:id` | Super admin | Enable/disable, change role, reset password | 200 |
+| DELETE | `/api/users/:id` | Super admin | Delete an account | 200 |
+
+**DOSS** routes accept DOSS staff *and* super admins.
 
 \* **Public\*** = anyone can call it, but logged-in DOSS staff receive extra fields: `privateDetails` on items, and names/roll numbers/contacts/answers on claims.
 
@@ -38,20 +45,30 @@
 | 200 / 201 | Success / created |
 | 400 | Validation failed (`details` lists each field), bad JSON |
 | 401 | Missing, wrong or expired token; wrong password |
-| 403 | Logged in but not DOSS |
+| 403 | Logged in with the wrong role, wrong login tab, or a disabled account |
 | 404 | Unknown ID or route |
 | 409 | Business-rule conflict: item can't be claimed, duplicate claim, claim already reviewed, item not ready to resolve |
 | 413 | Body too large (photo) |
+| 429 | Too many failed logins (5 per email and IP, 15 min lock) |
 | 500 | Unexpected server error |
 
 ---
 
 ## Auth
 
+Three kinds of account share one `users` collection:
+
+| Role | Demo login | Can do |
+|---|---|---|
+| `student` | `student@college.edu` / `Student@123` | Everything a guest can, with name/roll/email pre-filled on claims |
+| `doss` | `doss@college.edu` / `Doss@123` | Review claims, see private details, hand items over |
+| `superadmin` | `admin@college.edu` / `Admin@123` | Everything DOSS can, plus `/api/users` |
+
 ### `POST /api/auth/login`
 ```json
-{ "email": "doss@college.edu", "password": "Doss@123" }
+{ "email": "doss@college.edu", "password": "Doss@123", "portal": "doss" }
 ```
+`portal` (optional) is the login tab used. A student account on the DOSS tab gets **403** *"This is a Student account. Please use the Student tab."* A super admin may also use the DOSS tab.
 **200**
 ```json
 {
@@ -60,6 +77,12 @@
 }
 ```
 **401** `{ "error": "Incorrect email or password." }` – the same message for unknown emails, so accounts can't be guessed. Tokens expire after `JWT_EXPIRES_IN` (8 h).
+
+### `POST /api/auth/register`
+```json
+{ "name": "Priya Nair", "email": "priya.nair@college.edu", "rollNumber": "22ECE017", "password": "Priya2024" }
+```
+**201** `{ token, user }` with `role: "student"`. The role is never read from the request, so nobody can sign up as staff. Password: 8+ characters with a letter and a number. **409** if the email is already registered.
 
 ---
 

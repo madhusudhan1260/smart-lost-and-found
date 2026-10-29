@@ -121,15 +121,19 @@ erDiagram
 
 **Public view:** students only receive `PUBLIC_CLAIM_FIELDS` (ids, status, review note, dates) – never names, roll numbers, contacts or answers.
 
-## `users` – DOSS staff
+## `users` – students, DOSS staff and super admins
 
 | Field | Type | Rules |
 |---|---|---|
+| `name` | String | required, letters only |
 | `email` | String | unique index, lower case |
 | `passwordHash` | String | bcrypt (10 rounds), `select: false` – the password itself is never stored |
-| `role` | String | `doss` |
+| `role` | String | `student`, `doss` or `superadmin` |
+| `rollNumber` | String | students only, normalised to upper case (`22-cse-045` → `22CSE045`) |
+| `active` | Boolean | `false` = disabled by the super admin, cannot sign in |
+| `lastLoginAt` | Date | set on every successful sign-in |
 
-Students do not have accounts.
+Student accounts are optional – guests can still report and claim.
 
 ## `counters` – readable sequential IDs
 
@@ -148,7 +152,7 @@ Students do not have accounts.
 npm run seed     # from the project root (or `npm run seed` inside server/)
 ```
 
-`server/src/seed/seedDatabase.js` clears the collections and inserts 25 sample reports, 7 claims in different stages, the counters and the demo DOSS account (`doss@college.edu` / `Doss@123`). The API also seeds automatically when it starts with an empty database. **DOSS dashboard → Reset demo data** calls `POST /api/admin/reset`, which runs the same function.
+`server/src/seed/seedDatabase.js` clears the collections and inserts 25 sample reports, 7 claims in different stages, the counters and one demo account per role (`student@college.edu` / `Student@123`, `doss@college.edu` / `Doss@123`, `admin@college.edu` / `Admin@123`). The API also seeds automatically when it starts with an empty database. **DOSS dashboard → Reset demo data** calls `POST /api/admin/reset`, which runs the same function.
 
 ## Useful mongosh commands for the demo
 

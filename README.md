@@ -123,7 +123,7 @@ Try it with the sample data: open **Found Items → Black iPhone → This is my 
 
 ## 5. DOSS workflow
 
-1. Switch to **DOSS** mode and log in (`doss@college.edu` / `Doss@123`). The dashboard shows *Pending claims: 3*.
+1. Switch to **DOSS** mode and sign in on the DOSS tab (`doss@college.edu` / `Doss@123`). The dashboard shows *Pending claims: 3*.
 2. Open a claim → **Claim Review** page.
 3. Compare: found report (with the finder's private notes) · lost report (with the owner's private notes) · claimant's answers · verification helper.
 4. **Accept claim** → "Are you sure you want to accept this ownership claim?" → the item becomes **READY_FOR_COLLECTION**. Other pending claims for the same item are rejected automatically.
@@ -366,7 +366,15 @@ npm run dev        # starts the API (http://localhost:5050) and React (http://lo
 
 Optional: copy `server/.env.example` to `server/.env` to change the port, the MongoDB URI (e.g. Atlas), the JWT secret or the DOSS account.
 
-**DOSS login (demo):** `doss@college.edu` / `Doss@123`. Switch to **DOSS** in the top bar.
+**Sign in** at http://localhost:5173/login – one page with a tab for each role (each tab has a *Use demo* button):
+
+| Tab | Demo account | Lands on |
+|---|---|---|
+| Student | `student@college.edu` / `Student@123` (or *Create an account*) | Student dashboard |
+| DOSS staff | `doss@college.edu` / `Doss@123` | DOSS dashboard |
+| Super Admin | `admin@college.edu` / `Admin@123` | Manage accounts (`/admin/users`) |
+
+Guests can still browse, report and claim without signing in.
 
 | Command (project root) | Purpose |
 |---|---|
