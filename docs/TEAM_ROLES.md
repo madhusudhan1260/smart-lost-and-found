@@ -18,11 +18,11 @@ Fill in the names before submission. Every member should be able to explain thei
 **Responsible for:** every screen, reusable components, routing, client-side validation, Smart Match, and the Google-inspired responsive design.
 
 **Main files:**
-- `src/pages/*` – Home, Lost/Found lists, report forms, item details, claim form, My Claims, Smart Match, both dashboards, Claim Review
-- `src/components/*` – ItemCard, ItemForm, ClaimForm, ClaimReview, Modal, Navbar, StatCard …
+- `src/pages/{public,student,doss,auth,admin}/*` – Home, Lost/Found lists, report forms, item details, claim form, My Claims, Smart Match, both dashboards, Claim Review, Login, Manage accounts
+- `src/components/{layout,ui,items,claims,matching}/*` – Navbar, Modal, StatCard, ItemCard, ItemForm, ClaimForm, ClaimReview, MatchCard …
 - `src/hooks/*` – useLocalStorage, useDebounce, useFormState
 - `src/utils/matching.js` (Smart Match), `validation.js`, `searchUtils.js`, `statistics.js`
-- `src/index.css`, `src/App.jsx` (routes)
+- `src/styles/*.css` (imported by `src/index.css`), `src/App.jsx` (lazy-loaded routes)
 
 **Demo:** search and filters, the report form with live validation and photo upload, Smart Match scores, mobile layout.
 
@@ -74,7 +74,7 @@ Fill in the names before submission. Every member should be able to explain thei
 - `server/src/controllers/authController.js`, `server/src/models/User.js` (bcrypt)
 - `src/services/apiClient.js` – `fetch` wrapper, adds `Authorization: Bearer <token>`, `ApiError`
 - `src/services/itemService.js`, `authService.js`
-- `src/context/AuthContext.jsx`, `src/components/LoginDialog.jsx`, `src/context/ModeContext.jsx`
+- `src/context/AuthContext.jsx`, `src/pages/auth/Login.jsx`, `src/pages/admin/AdminUsers.jsx`, `src/context/ModeContext.jsx`, `server/src/middleware/loginLimiter.js`
 - `vite.config.js` (`/api` proxy), root `package.json` (`npm run dev` starts both)
 - `server/test/api.test.js` (17 API tests), `test/*.test.js` (frontend unit tests)
 

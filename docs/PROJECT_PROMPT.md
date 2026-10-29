@@ -247,12 +247,14 @@ lost_and_found/
 │   ├── PROJECT_PROMPT.md     # this file
 │   └── screenshots/01–16 *.png
 ├── src/                      # React frontend
-│   ├── main.jsx  App.jsx  index.css
+│   ├── README.md             # guide: which folder to open for each change
+│   ├── main.jsx  App.jsx (lazy routes)  index.css (imports styles/)
+│   ├── styles/    (10) tokens, base, controls, components, pages, animations, responsive, enhancements, auth, admin
 │   ├── assets/logo.svg
 │   ├── context/   (4)  AuthContext, ModeContext, ItemContext, NotificationContext
 │   ├── services/  (4)  apiClient, authService, itemService, userService
-│   ├── pages/     (17) one file per route
-│   ├── components/(40) reusable UI pieces
+│   ├── pages/     (17) public/ student/ doss/ auth/ admin/
+│   ├── components/(40) layout/ ui/ items/ claims/ matching/
 │   ├── hooks/     (6)  custom hooks
 │   ├── utils/     (10) pure JavaScript logic
 │   └── data/constants.js
@@ -395,8 +397,8 @@ Format: **File – what it contains · topics used · why**
 | File | Contains | Topics | Why |
 |---|---|---|---|
 | `main.jsx` | `createRoot`, `<StrictMode>`, `<BrowserRouter>`, providers nested `Notification → Auth → Mode → Item`, imports fonts/icons/CSS | Provider pattern, React 19 root | Every page can use shared state; order matters (Mode needs Auth, Item needs Auth) |
-| `App.jsx` | Routes; `/login` rendered full-screen without navbar; offline banner (`useOnlineStatus`), server-error banner with "Try again", skip link, `key={location.pathname}` page animation, Navbar/Footer/BackToTop/KeyboardShortcuts, `useRipple` | React Router `<Routes>/<Route>`, dynamic params, conditional rendering, accessibility | Central navigation map of the SPA |
-| `index.css` | Design tokens (`--blue`, `--radius`, shadows), base, buttons/chips/badges/forms, layout components, pages, login page (split layout, tabs, strength meter, shake animation), account menu, admin page, animations (`fadeUp`, `spin`), responsive media queries (1180/900/640/480px), `prefers-reduced-motion` | CSS custom properties, Grid, Flexbox, media queries, keyframes | Consistent Google-Material look; works on phones; respects accessibility settings |
+| `App.jsx` | Routes (every page except Home is loaded on demand with `React.lazy` + `Suspense`); `/login` rendered full-screen without navbar; offline banner (`useOnlineStatus`), server-error banner with "Try again", skip link, `key={location.pathname}` page animation, Navbar/Footer/BackToTop/KeyboardShortcuts, `useRipple` | React Router `<Routes>/<Route>`, dynamic params, conditional rendering, accessibility | Central navigation map of the SPA |
+| `index.css` + `styles/*.css` | `index.css` only imports the 10 files in `styles/` in order. They hold: design tokens (`--blue`, `--radius`, shadows), base, buttons/chips/badges/forms, layout components, pages, login page (split layout, tabs, strength meter, shake animation), account menu, admin page, animations (`fadeUp`, `spin`), responsive media queries (1180/900/640/480px), `prefers-reduced-motion` | CSS custom properties, Grid, Flexbox, media queries, keyframes | Consistent Google-Material look; works on phones; respects accessibility settings |
 
 #### Routes (pages)
 
@@ -429,12 +431,12 @@ Format: **File – what it contains · topics used · why**
 
 | File | Contains | Topics | Why |
 |---|---|---|---|
-| `apiClient.js` | `request(path, { method, body })`: base URL `VITE_API_URL` or `/api`, JSON headers, adds `Authorization: Bearer <token>`, `ApiError(message, status, details)`, network failure / 502+ without JSON → "Cannot reach the server…" | Fetch API, custom Error class, promises | One place for HTTP; friendly errors |
+| `apiClient.js` | `request(path, { method, body })`: fires a session-expired event on 401 with a saved token; base URL `VITE_API_URL` or `/api`, JSON headers, adds `Authorization: Bearer <token>`, `ApiError(message, status, details)`, network failure / 502+ without JSON → "Cannot reach the server…" | Fetch API, custom Error class, promises | One place for HTTP; friendly errors |
 | `authService.js` | `login`, `register`, `getCurrentUser` | REST calls | Separates API from UI |
 | `itemService.js` | `getItems`, `getItem`, `addItem`, `updateItem`, `deleteItem`, `markCollected`, `markResolved`, `getClaims`, `addClaim`, `acceptClaim`, `rejectClaim`, `getStats`, `resetAllData`, `getCampusTips` | CRUD over REST | Same |
 | `userService.js` | `getUsers`, `createUser`, `updateUser`, `deleteUser` | REST | Super admin page |
 
-#### `pages/`
+#### `pages/` (grouped by role: `public/`, `student/`, `doss/`, `auth/`, `admin/`)
 
 | File | Contains | Topics | Why |
 |---|---|---|---|
@@ -454,7 +456,7 @@ Format: **File – what it contains · topics used · why**
 | `AdminUsers.jsx` | Super-admin guard; stat cards per role; filter + search; accounts table (avatar initials, role dropdown, active badge, last sign-in "time ago", enable/disable, delete with confirm modal); "Add an account" form with password generator | CRUD UI, optimistic list updates | Account management |
 | `NotFound.jsx` | 404 with suggestions | Catch-all route | Friendly unknown URLs |
 
-#### `components/` (reusable UI)
+#### `components/` (reusable UI, grouped into `layout/`, `ui/`, `items/`, `claims/`, `matching/`)
 
 | Component | Purpose / topics |
 |---|---|
@@ -633,6 +635,8 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 | Conditional & list rendering with `key` | Navbar links, tables, cards | Dynamic UI |
 | React Router (`Routes`, `Route`, `Link`, `NavLink`, `useParams`, `useNavigate`, `useLocation`, `useSearchParams`) | App, pages | SPA navigation, URL state |
 | Portals (`createPortal`) | Modal | Overlay above all content |
+| Code splitting (`React.lazy`, `Suspense`) | App.jsx | Smaller first download (main bundle 417 kB → 252 kB) |
+| `key` to reset a component | ClaimItem → ClaimForm | Re-create the form once the login is known |
 | `StrictMode` | main.jsx | Detects unsafe patterns in development |
 | Lifting state up | Filters → ItemsBrowser | Share state between siblings |
 

@@ -206,27 +206,33 @@ lost_and_found/
 ├── public/
 │   ├── favicon.svg
 │   └── data/campus-tips.json          ← loaded with fetch()
-└── src/
+└── src/                               ← see src/README.md for a full guide
     ├── main.jsx                       ← Router + providers + fonts
-    ├── App.jsx                        ← all routes
-    ├── index.css                      ← design system, animations, responsive rules
+    ├── App.jsx                        ← all routes (pages load on demand with React.lazy)
+    ├── index.css                      ← imports the files in styles/ in order
+    ├── styles/      tokens  base  controls  components  pages  animations
+    │                responsive  enhancements  auth  admin
     ├── assets/logo.svg
     ├── components/
-    │   ├── Navbar  ModeSwitcher  ModeGate  Footer  PageHeader  ScrollToTop  Icon
-    │   ├── ItemCard  ItemImage  StatusBadge  SearchBar  FilterPanel  ItemsBrowser
-    │   ├── ItemForm  FormField  ImageUploader  ReportLayout
-    │   ├── ClaimForm  ClaimCard  ClaimTimeline  ClaimReview  CollectionInstructions
-    │   ├── MatchCard  MatchPairList  ScoreRing  BarChart  StatCard  DashboardCard
-    │   └── Modal  Notification  LoadingSpinner  EmptyState  TipTicker
+    │   ├── layout/   Navbar  Footer  AccountMenu  ModeSwitcher  ModeGate  PageHeader
+    │   │             Breadcrumbs  ReportLayout  ScrollToTop  BackToTop  KeyboardShortcuts
+    │   ├── ui/       Icon  Modal  Lightbox  Notification  EmptyState  LoadingSpinner  FormField
+    │   │             StatusBadge  StatCard  DashboardCard  BarChart  ScoreRing  Highlight  TipTicker
+    │   ├── items/    ItemCard  ItemImage  ItemsBrowser  SearchBar  FilterPanel  ActiveFilters
+    │   │             ItemForm  ImageUploader
+    │   ├── claims/   ClaimForm  ClaimCard  ClaimTimeline  ClaimReview  CollectionInstructions
+    │   └── matching/ MatchCard  MatchPairList
     ├── pages/
-    │   ├── Home  LostItems  FoundItems  ReportLost  ReportFound  ItemDetails
-    │   ├── ClaimItem  MyClaims  SmartMatch  StudentDashboard
-    │   └── DossDashboard  DossClaims  ClaimReview  ResolvedItems  NotFound
+    │   ├── public/   Home  LostItems  FoundItems  ItemDetails  SmartMatch  ResolvedItems  NotFound
+    │   ├── student/  ReportLost  ReportFound  ClaimItem  MyClaims  StudentDashboard
+    │   ├── doss/     DossDashboard  DossClaims  ClaimReview
+    │   ├── auth/     Login
+    │   └── admin/    AdminUsers
     ├── context/     ItemContext.jsx  AuthContext.jsx  ModeContext.jsx  NotificationContext.jsx
-    ├── hooks/       useLocalStorage.js  useDebounce.js  useFormState.js  useDocumentTitle.js
-    ├── services/    apiClient.js  itemService.js  authService.js
-    ├── utils/       matching.js  claimUtils.js  validation.js  searchUtils.js  statistics.js
-    │                dateUtils.js  storage.js  imageUtils.js  helpers.js
+    ├── hooks/       useLocalStorage  useDebounce  useFormState  useDocumentTitle  useOnlineStatus  useRipple
+    ├── services/    apiClient.js  itemService.js  authService.js  userService.js
+    ├── utils/       matching.js  claimUtils.js  validation.js  authValidation.js  searchUtils.js
+    │                statistics.js  dateUtils.js  storage.js  imageUtils.js  helpers.js
     └── data/        constants.js
 
 server/                                ← Node.js + Express + MongoDB API
@@ -236,7 +242,7 @@ server/                                ← Node.js + Express + MongoDB API
 │   ├── app.js                         ← Express app: CORS, JSON, routes, errors
 │   ├── config/      env.js  db.js  constants.js
 │   ├── models/      Item.js  Claim.js  User.js  Counter.js
-│   ├── routes/      index.js  itemRoutes.js  claimRoutes.js
+│   ├── routes/      index.js  itemRoutes.js  claimRoutes.js  userRoutes.js
 │   ├── controllers/ itemController  claimController  authController  statsController  adminController
 │   ├── services/    claimWorkflow.js   ← claim lifecycle rules
 │   ├── middleware/  auth.js (JWT)  errorHandler.js
@@ -403,7 +409,7 @@ Installing MongoDB on macOS: `brew tap mongodb/brew && brew install mongodb-comm
 
 1. **Pure ES6+ JavaScript:** All app and business logic is written in plain JavaScript with modern ES6+ features (destructuring, arrow functions, async/await).
 2. **Modular Architecture:** Keep business rules in `src/utils/` as standalone pure functions without React dependencies.
-3. **No Heavy UI Libraries:** UI styling relies on hand-crafted Google-inspired CSS tokens in `src/index.css`.
+3. **No Heavy UI Libraries:** UI styling relies on hand-crafted Google-inspired CSS tokens in `src/styles/tokens.css`.
 4. **Conventional Commits:** Prefix all commit messages with conventional types (`docs:`, `fix:`, `feat:`, `refactor:`, `test:`, `a11y:`, `perf:`).
 5. **Quality Verification:** Always run `npm run lint` and `npm run build` to confirm zero errors and successful production build before submitting changes.
 

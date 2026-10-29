@@ -13,7 +13,7 @@ React.js (frontend)  →  Node.js + Express.js (REST API)  →  MongoDB (databas
 ```mermaid
 flowchart LR
     subgraph Browser["🖥️ Browser – React 19 + Vite (port 5173)"]
-        Pages["pages/<br/>Home · Lost · Found · Claim · DOSS dashboard · Claim review"]
+        Pages["pages/ (public · student · doss · auth · admin)<br/>Home · Lost · Found · Claim · Login · DOSS dashboard · Claim review · Accounts"]
         Ctx["context/<br/>ItemContext · AuthContext · ModeContext"]
         Svc["services/<br/>apiClient.js (fetch + JWT)<br/>itemService.js · authService.js"]
         Utils["utils/<br/>Smart Match · validation · statistics"]
@@ -41,7 +41,7 @@ flowchart LR
 
 | Layer | Folder | Responsibility |
 |---|---|---|
-| **Presentation** | `src/pages`, `src/components` | What the user sees; forms with client-side validation for quick feedback |
+| **Presentation** | `src/pages/<role>/`, `src/components/<feature>/`, `src/styles/` | What the user sees; forms with client-side validation for quick feedback |
 | **State** | `src/context` | Shared items/claims (`ItemContext`), DOSS login (`AuthContext`), Student/DOSS view (`ModeContext`) |
 | **API client** | `src/services` | The only code that calls the server. `apiClient.js` adds JSON headers and the JWT and turns error responses into `ApiError` |
 | **Routing** | `server/src/routes` | Maps URLs + HTTP methods to controllers and applies `requireDoss` / `optionalAuth` |
