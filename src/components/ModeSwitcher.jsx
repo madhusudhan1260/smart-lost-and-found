@@ -22,7 +22,7 @@ export default function ModeSwitcher({ onSwitch }) {
 
   const handleSwitch = (nextMode) => {
     if (nextMode === mode) return;
-    // DOSS needs a staff login first – switchMode shows the login dialog when needed
+    // DOSS needs a staff login first – switchMode opens the sign-in page when needed
     switchMode(nextMode, () => {
       notify(`Switched to ${nextMode === MODES.DOSS ? 'DOSS' : 'Student'} mode`, 'info', 2000);
       navigate(nextMode === MODES.DOSS ? '/dashboard' : '/');

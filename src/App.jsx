@@ -23,6 +23,8 @@ import DossDashboard from './pages/DossDashboard';
 import DossClaims from './pages/DossClaims';
 import ClaimReview from './pages/ClaimReview';
 import ResolvedItems from './pages/ResolvedItems';
+import Login from './pages/Login';
+import AdminUsers from './pages/AdminUsers';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -31,6 +33,16 @@ export default function App() {
   useRipple(); // Material ripple on every button
   const online = useOnlineStatus();
   const { error: dataError, reload } = useItems();
+
+  // The sign-in page is a full-screen layout of its own (no navbar or footer)
+  if (location.pathname === '/login') {
+    return (
+      <div className="app">
+        <ScrollToTop />
+        <Login />
+      </div>
+    );
+  }
 
   return (
     <div className="app">
@@ -70,6 +82,9 @@ export default function App() {
           {/* DOSS */}
           <Route path="/doss/claims" element={<DossClaims />} />
           <Route path="/doss/claims/:claimId" element={<ClaimReview />} />
+
+          {/* Super Admin */}
+          <Route path="/admin/users" element={<AdminUsers />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

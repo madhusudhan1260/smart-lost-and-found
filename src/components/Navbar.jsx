@@ -12,6 +12,7 @@ import { STATUS } from '../data/constants';
 import { cx } from '../utils/helpers';
 import logo from '../assets/logo.svg';
 import ModeSwitcher from './ModeSwitcher';
+import AccountMenu from './AccountMenu';
 import Icon from './Icon';
 
 // Different links for each mode (conditional rendering driven by data)
@@ -35,21 +36,23 @@ const DOSS_LINKS = [
 
 export default function Navbar() {
   const { isDoss } = useMode();
-  const { user, logout } = useAuth();
+  const { user, logout, isSuperAdmin } = useAuth();
   const { notify } = useNotification();
   const navigate = useNavigate();
 
   // Logging out also switches back to the student view (see ModeContext)
   const handleLogout = () => {
     logout();
-    notify('Logged out of DOSS mode', 'info', 2000);
+    notify('Signed out', 'info', 2000);
     navigate('/');
   };
   const { claims } = useItems();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const links = isDoss ? DOSS_LINKS : STUDENT_LINKS;
+  const links = isDoss
+    ? [...DOSS_LINKS, ...(isSuperAdmin ? [{ to: '/admin/users', label: 'Accounts', icon: 'manage_accounts' }] : [])]
+    : STUDENT_LINKS;
   const pendingCount = claims.filter((claim) => claim.status === STATUS.CLAIM_PENDING).length;
 
   // Add a thin shadow once the page is scrolled
@@ -101,6 +104,7 @@ export default function Navbar() {
           <div className="navbar__mode-desktop">
             <ModeSwitcher />
           </div>
+          <AccountMenu />
           <button
             type="button"
             className="icon-btn navbar__menu-btn"
@@ -118,9 +122,9 @@ export default function Navbar() {
       {isDoss && (
         <div className="mode-banner">
           <Icon name="shield_person" />
-          <span>Logged in as <strong>{user?.name ?? 'DOSS staff'}</strong> · you can see private details and review claims</span>
+          <span>Signed in as <strong>{user?.name ?? 'DOSS staff'}</strong>{isSuperAdmin && ' (Super Admin)'} · you can see private details and review claims</span>
           <button type="button" className="mode-banner__logout" onClick={handleLogout}>
-            <Icon name="logout" /> Log out
+            <Icon name="logout" /> Sign out
           </button>
         </div>
       )}
