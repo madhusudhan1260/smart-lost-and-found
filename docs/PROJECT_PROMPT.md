@@ -290,7 +290,7 @@ lost_and_found/
 
 Format: **File – what it contains · topics used · why**
 
-### 5.1 Root files
+### 5.1 Root and setup files
 
 | File | Contains | Topics used | Why |
 |---|---|---|---|
@@ -409,7 +409,7 @@ Format: **File – what it contains · topics used · why**
 |---|---|---|---|
 | `main.jsx` | `createRoot`, `<StrictMode>`, `<BrowserRouter>`, providers nested `Notification → Auth → Mode → Item`, imports fonts/icons/CSS | Provider pattern, React 19 root | Every page can use shared state; order matters (Mode needs Auth, Item needs Auth) |
 | `App.jsx` | Routes (every page except Home is loaded on demand with `React.lazy` + `Suspense`); `/login` rendered full-screen without navbar; offline banner (`useOnlineStatus`), server-error banner with "Try again", skip link, `key={location.pathname}` page animation, Navbar/Footer/BackToTop/KeyboardShortcuts, `useRipple` | React Router `<Routes>/<Route>`, dynamic params, conditional rendering, accessibility | Central navigation map of the SPA |
-| `index.css` + `styles/*.css` | `index.css` only imports the 10 files in `styles/` in order. They hold: design tokens (`--blue`, `--radius`, shadows), base, buttons/chips/badges/forms, layout components, pages, login page (split layout, tabs, strength meter, shake animation), account menu, admin page, animations (`fadeUp`, `spin`), responsive media queries (1180/900/640/480px), `prefers-reduced-motion` | CSS custom properties, Grid, Flexbox, media queries, keyframes | Consistent Google-Material look; works on phones; respects accessibility settings |
+| `index.css` | `index.css` only imports the 10 files in `styles/` in order. They hold: design tokens (`--blue`, `--radius`, shadows), base, buttons/chips/badges/forms, layout components, pages, login page (split layout, tabs, strength meter, shake animation), account menu, admin page, animations (`fadeUp`, `spin`), responsive media queries (1180/900/640/480px), `prefers-reduced-motion` | CSS custom properties, Grid, Flexbox, media queries, keyframes | Consistent Google-Material look; works on phones; respects accessibility settings |
 
 #### Routes (pages)
 
@@ -449,53 +449,72 @@ Format: **File – what it contains · topics used · why**
 
 #### `pages/` (grouped by role: `public/`, `student/`, `doss/`, `auth/`, `admin/`)
 
-| File | Contains | Topics | Why |
+| File (in `frontend/src/pages/`) | Contains | Topics | Why |
 |---|---|---|---|
-| `Home.jsx` | Hero search, animated stats, category tiles, recent items, top Smart Match pairs, recent claims, campus tips | Composition, `useMemo`, navigation with query strings | Landing page that shows the system at a glance |
-| `LostItems.jsx` / `FoundItems.jsx` | Wrap `ItemsBrowser` for each type | Reusability via props | Same browser, two lists |
-| `ItemDetails.jsx` | Full report, photo lightbox, status, best matches, claim button, DOSS actions (edit / delete / collect / resolve) with confirmation modals, breadcrumbs, recently viewed | `useParams`, conditional rendering by role | One detailed view per report |
-| `ReportLost.jsx` / `ReportFound.jsx` | `ReportLayout` + `ItemForm` | Controlled forms | Data entry |
-| `ClaimItem.jsx` | Item summary + `ClaimForm`; blocked if item not claimable | Guard logic | Proof-of-ownership flow |
-| `MyClaims.jsx` | Claims submitted from this browser with `ClaimTimeline`, look up by claim ID | localStorage, timelines | Students follow their claim |
-| `SmartMatch.jsx` | Choose a lost report → ranked found matches with score ring and factor breakdown; threshold slider | Algorithm visualisation, `range` input | Shows the matching logic |
-| `StudentDashboard.jsx` | My claims, possible matches, campus stats, activity | `reduce`-based stats | Personal overview |
-| `DossDashboard.jsx` | Stat cards, pending claims queue, ready-for-collection list, category bar chart, 7-day trend, recent activity, Reset demo data | Data visualisation without libraries | DOSS overview |
-| `DossClaims.jsx` | Claims grouped in status tabs, search by name/roll/contact/ID | Filtering, tabs | Work queue |
-| `ClaimReview.jsx` | Side-by-side claim vs private details, verification score, accept (note) / reject (reason) / collect / resolve | Business UI, modals | DOSS decision screen |
-| `ResolvedItems.jsx` | History table, filter, avg days to return, return rate % | `filter/reduce/sort`, responsive table | Outcome reporting |
-| `Login.jsx` | Split layout (brand panel with live stats + card). Tabs Student / DOSS staff / Super Admin (ARIA tabs, arrow-key navigation, URL `?role=` synced). Email + password with icons, show/hide, Caps Lock warning, inline field errors, error alert with shake, loading state, "Use demo" per tab. Student **sign-up** (name, roll, email, password + strength meter, confirm). "Continue as guest". Already-signed-in view. Safe `next` redirect (only internal paths). Redirects by role | Controlled forms, `useSearchParams`, accessibility, open-redirect protection | Professional single sign-in for all roles |
-| `AdminUsers.jsx` | Super-admin guard; stat cards per role; filter + search; accounts table (avatar initials, role dropdown, active badge, last sign-in "time ago", enable/disable, delete with confirm modal); "Add an account" form with password generator | CRUD UI, optimistic list updates | Account management |
-| `NotFound.jsx` | 404 with suggestions | Catch-all route | Friendly unknown URLs |
+| `public/Home.jsx` | Hero search, animated stats, category tiles, recent items, top Smart Match pairs, recent claims, campus tips | Composition, `useMemo`, navigation with query strings | Landing page that shows the system at a glance |
+| `public/LostItems.jsx` / `public/FoundItems.jsx` | Wrap `ItemsBrowser` for each type | Reusability via props | Same browser, two lists |
+| `public/ItemDetails.jsx` | Full report, photo lightbox, status, best matches, claim button, DOSS actions (edit / delete / collect / resolve) with confirmation modals, breadcrumbs, recently viewed | `useParams`, conditional rendering by role | One detailed view per report |
+| `student/ReportLost.jsx` / `student/ReportFound.jsx` | `ReportLayout` + `ItemForm` | Controlled forms | Data entry |
+| `student/ClaimItem.jsx` | Item summary + `ClaimForm`; blocked if item not claimable | Guard logic | Proof-of-ownership flow |
+| `student/MyClaims.jsx` | Claims submitted from this browser with `ClaimTimeline`, look up by claim ID | localStorage, timelines | Students follow their claim |
+| `public/SmartMatch.jsx` | Choose a lost report → ranked found matches with score ring and factor breakdown; threshold slider | Algorithm visualisation, `range` input | Shows the matching logic |
+| `student/StudentDashboard.jsx` | My claims, possible matches, campus stats, activity | `reduce`-based stats | Personal overview |
+| `doss/DossDashboard.jsx` | Stat cards, pending claims queue, ready-for-collection list, category bar chart, 7-day trend, recent activity, Reset demo data | Data visualisation without libraries | DOSS overview |
+| `doss/DossClaims.jsx` | Claims grouped in status tabs, search by name/roll/contact/ID | Filtering, tabs | Work queue |
+| `doss/ClaimReview.jsx` | Side-by-side claim vs private details, verification score, accept (note) / reject (reason) / collect / resolve | Business UI, modals | DOSS decision screen |
+| `public/ResolvedItems.jsx` | History table, filter, avg days to return, return rate % | `filter/reduce/sort`, responsive table | Outcome reporting |
+| `auth/Login.jsx` | Split layout (brand panel with live stats + card). Tabs Student / DOSS staff / Super Admin (ARIA tabs, arrow-key navigation, URL `?role=` synced). Email + password with icons, show/hide, Caps Lock warning, inline field errors, error alert with shake, loading state, "Use demo" per tab. Student **sign-up** (name, roll, email, password + strength meter, confirm). "Continue as guest". Already-signed-in view. Safe `next` redirect (only internal paths). Redirects by role | Controlled forms, `useSearchParams`, accessibility, open-redirect protection | Professional single sign-in for all roles |
+| `admin/AdminUsers.jsx` | Super-admin guard; stat cards per role; filter + search; accounts table (avatar initials, role dropdown, active badge, last sign-in "time ago", enable/disable, delete with confirm modal); "Add an account" form with password generator | CRUD UI, optimistic list updates | Account management |
+| `public/NotFound.jsx` | 404 with suggestions | Catch-all route | Friendly unknown URLs |
 
-#### `components/` (reusable UI, grouped into `layout/`, `ui/`, `items/`, `claims/`, `matching/`)
+#### `components/` (reusable UI, grouped by feature)
 
-| Component | Purpose / topics |
-|---|---|
-| `Navbar.jsx` | Links per mode (data-driven arrays), pending-claims badge, mobile hamburger (Escape closes), scroll shadow, DOSS banner with sign-out, **Accounts** link for super admin |
-| `AccountMenu.jsx` | Guest "Sign in" (keeps `next`), avatar dropdown (name, email, role badge, Manage accounts / My claims, Sign out); closes on outside click / Escape (`useRef`, document listeners) |
-| `ModeSwitcher.jsx` | Student/DOSS toggle as ARIA radiogroup |
-| `ModeGate.jsx` | Shows a page only in the right mode, otherwise offers a switch |
-| `Footer.jsx` | DOSS office hours/location, quick links |
-| `ItemsBrowser.jsx` | Search + filters + grid/list toggle + results; filters saved per page; debounced search |
-| `SearchBar.jsx` | "/" to focus, Esc to clear |
-| `FilterPanel.jsx`, `ActiveFilters.jsx` | Dropdown filters; removable filter chips |
-| `ItemCard.jsx`, `ItemImage.jsx`, `StatusBadge.jsx` (`TypeChip`) | Report card, photo or category icon fallback, colour-coded status pill |
-| `Highlight.jsx` | Wraps searched words in `<mark>` (escaped regex) |
-| `ItemForm.jsx` | Lost/found form with validation, photo upload, **auto-saved draft** |
-| `FormField.jsx` | Label + input + hint + error with `aria-describedby` |
-| `ImageUploader.jsx` | Drag & drop, type/size validation, compression preview (FileReader + canvas) |
-| `ClaimForm.jsx` | Proof-of-ownership form, link to own lost report (best match first), **pre-filled for signed-in students** |
-| `ClaimCard.jsx`, `ClaimTimeline.jsx`, `ClaimReview.jsx`, `CollectionInstructions.jsx` | Claim display, progress steps, side-by-side verification, pickup steps |
-| `MatchCard.jsx`, `MatchPairList.jsx`, `ScoreRing.jsx` | Match result, lost↔found pairs, SVG circular score |
-| `StatCard.jsx`, `DashboardCard.jsx`, `BarChart.jsx` | Animated count-up tile (`requestAnimationFrame`), panel card, pure CSS bar chart |
-| `Modal.jsx` | Confirmation dialog via `createPortal`, focus management, Escape/backdrop |
-| `Lightbox.jsx` | Full-screen photo viewer |
-| `Notification.jsx` | Toasts with timer bar |
-| `PageHeader.jsx`, `ReportLayout.jsx`, `Breadcrumbs.jsx`, `EmptyState.jsx`, `LoadingSpinner.jsx` (`SkeletonGrid`, `DashboardSkeleton`) | Layout and feedback states |
-| `TipTicker.jsx` | Fetches `campus-tips.json`, rotates with `setInterval` (cleared on unmount) |
-| `BackToTop.jsx`, `ScrollToTop.jsx`, `KeyboardShortcuts.jsx`, `Icon.jsx` | Scroll helpers, global shortcuts (`h l f m d`, `/`, `?` help), Material icon wrapper |
+| Folder (in `frontend/src/components/`) | File | Contains / topics |
+|---|---|---|
+| `layout/` – around every page | `Navbar.jsx` | Links per mode (data-driven arrays), pending-claims badge, mobile hamburger (Escape closes), scroll shadow, DOSS banner with sign-out, **Accounts** link for super admin |
+| | `AccountMenu.jsx` | Guest "Sign in" (keeps `next`); avatar dropdown (name, email, role badge, Manage accounts / My claims, Sign out); keyboard support (arrows, Home/End, Escape returns focus); closes on outside click (`useRef`, document listeners) |
+| | `ModeSwitcher.jsx` | Student/DOSS toggle as ARIA radiogroup |
+| | `ModeGate.jsx` | Shows a page only in the right mode, otherwise offers a switch |
+| | `Footer.jsx` | DOSS office hours/location, quick links |
+| | `PageHeader.jsx`, `Breadcrumbs.jsx`, `ReportLayout.jsx` | Page title area, "Home › Found › item" trail, report form layout with tips |
+| | `ScrollToTop.jsx`, `BackToTop.jsx`, `KeyboardShortcuts.jsx` | Scroll reset on route change, floating top button, global shortcuts (`h l f m d`, `/`, `?` help dialog) |
+| `ui/` – small building blocks | `Icon.jsx` | Material Symbols wrapper |
+| | `Modal.jsx`, `Lightbox.jsx` | Confirmation dialog via `createPortal` with focus management; full-screen photo viewer |
+| | `Notification.jsx` | Toasts with timer bar |
+| | `EmptyState.jsx`, `LoadingSpinner.jsx` (`SkeletonGrid`, `DashboardSkeleton`) | Empty / error / loading states |
+| | `StatusBadge.jsx` (`TypeChip`) | Colour-coded status pill |
+| | `StatCard.jsx`, `DashboardCard.jsx`, `BarChart.jsx`, `ScoreRing.jsx` | Count-up number (`requestAnimationFrame`), panel card, pure-CSS bar chart, SVG score circle |
+| | `Highlight.jsx` | Wraps searched words in `<mark>` (escaped regex) |
+| | `TipTicker.jsx` | Fetches `campus-tips.json`, rotates with `setInterval` (cleared on unmount) |
+| | `FormField.jsx` | Label + input + hint + error with `aria-describedby` |
+| `items/` – lost & found reports | `ItemsBrowser.jsx` | Search + filters + grid/list toggle + results; filters saved per page; debounced search |
+| | `SearchBar.jsx`, `FilterPanel.jsx`, `ActiveFilters.jsx` | "/" to focus search, dropdown filters, removable filter chips |
+| | `ItemCard.jsx`, `ItemImage.jsx` | Report card; photo or category-icon fallback |
+| | `ItemForm.jsx` | Lost/found form with validation, photo upload, **auto-saved draft** |
+| | `ImageUploader.jsx` | Drag & drop, type/size validation, compression preview (FileReader + canvas) |
+| `claims/` – ownership claims | `ClaimForm.jsx` | Proof-of-ownership form, link to own lost report (best match first), **pre-filled for signed-in students** |
+| | `ClaimCard.jsx`, `ClaimTimeline.jsx` | Claim display; Submitted → Accepted → Collected → Resolved tracker |
+| | `ClaimReview.jsx`, `CollectionInstructions.jsx` | Side-by-side verification panel for DOSS; pickup steps for the student |
+| `matching/` – Smart Match | `MatchCard.jsx`, `MatchPairList.jsx` | One scored match with its factors; list of lost ↔ best found pairs |
 
 **Why components:** single responsibility, reuse across pages, props for configuration, children for composition.
+
+#### `styles/` (CSS, imported in order by `index.css`)
+
+| File | Contains |
+|---|---|
+| `tokens.css` | Design tokens: Google colours, radius, shadows, font (`:root` custom properties) |
+| `base.css` | Element defaults, layout helpers, accessibility helpers, icon sizes |
+| `controls.css` | Buttons, chips, badges, inputs, error and hint text |
+| `components.css` | Navbar, cards, modal, toasts, tabs, segmented buttons, charts |
+| `pages.css` | Home hero, details, claim page, claim review, Smart Match, dashboards, tables |
+| `animations.css` | `fadeUp`, `spin` and other keyframes |
+| `responsive.css` | Tablet and phone breakpoints (1180 / 900 / 640 px) |
+| `enhancements.css` | Ripple, filter chips, lightbox, print styles, tables as cards on phones |
+| `auth.css` | Sign-in page: split layout, role tabs, password strength meter |
+| `admin.css` | Account menu and super admin page |
+
+**Why split:** each file has one job, so a change (e.g. colours → `tokens.css`) is easy to find; the import order keeps the cascade the same.
 
 #### `hooks/` (custom hooks)
 
