@@ -1,9 +1,13 @@
-// Purpose: DOSS staff login calls (/api/auth). Students never need to log in.
+// Purpose: Login, sign-up and session calls (/api/auth).
 // Used by: context/AuthContext.jsx
 import { request } from './apiClient';
 
-// Returns { token, user }
-export const login = (email, password) => request('/auth/login', { method: 'POST', body: { email, password } });
+// portal = the login tab used ('student' | 'doss' | 'superadmin'). Returns { token, user }
+export const login = (email, password, portal) =>
+  request('/auth/login', { method: 'POST', body: { email, password, portal } });
+
+// Student sign-up. Returns { token, user }
+export const register = (fields) => request('/auth/register', { method: 'POST', body: fields });
 
 // Returns { user } – fails with 401 when the saved token has expired
 export const getCurrentUser = () => request('/auth/me');

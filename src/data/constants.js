@@ -95,6 +95,23 @@ export const NEARBY_LOCATIONS = {
 
 export const MODES = { STUDENT: 'student', DOSS: 'doss' };
 
+// Account roles (same as the API). Staff roles can open the DOSS interface.
+export const ROLES = { STUDENT: 'student', DOSS: 'doss', SUPER_ADMIN: 'superadmin' };
+export const STAFF_ROLES = [ROLES.DOSS, ROLES.SUPER_ADMIN];
+
+export const ROLE_META = {
+  student: { label: 'Student', icon: 'school', tone: 'blue' },
+  doss: { label: 'DOSS staff', icon: 'shield_person', tone: 'green' },
+  superadmin: { label: 'Super Admin', icon: 'admin_panel_settings', tone: 'red' },
+};
+
+// Demo accounts created by `npm run seed` (documented in the README – demo data only)
+export const DEMO_ACCOUNTS = {
+  student: { email: 'student@college.edu', password: 'Student@123' },
+  doss: { email: 'doss@college.edu', password: 'Doss@123' },
+  superadmin: { email: 'admin@college.edu', password: 'Admin@123' },
+};
+
 // Every status an item or a claim can have
 export const STATUS = {
   LOST: 'LOST',

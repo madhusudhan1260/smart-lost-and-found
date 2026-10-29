@@ -1,28 +1,24 @@
-// Purpose: DOSS staff login state (JWT token + user) shared with the whole app.
-// Used by: main.jsx, context/ModeContext.jsx, context/ItemContext.jsx, components/Navbar.jsx
+// Purpose: Login state (JWT token + user) shared with the whole app.
+// Used by: main.jsx, context/ModeContext.jsx, context/ItemContext.jsx, components/Navbar.jsx,
+//          pages/Login.jsx, pages/AdminUsers.jsx, components/ClaimForm.jsx
 //
-// Students never log in. Only DOSS actions (reviewing claims, private details) need a token.
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+// Three kinds of account: student, DOSS staff and super admin (see pages/Login.jsx).
+// Browsing, reporting and claiming still work without logging in.
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as authService from '../services/authService';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { STORAGE_KEYS } from '../data/constants';
-import LoginDialog from '../components/LoginDialog';
+import { ROLES, STAFF_ROLES, STORAGE_KEYS } from '../data/constants';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [token, setToken, removeToken] = useLocalStorage(STORAGE_KEYS.TOKEN, null);
   const [user, setUser] = useState(null);
-  const [checking, setChecking] = useState(Boolean(token)); // true while a saved token is verified
-  const [loginOpen, setLoginOpen] = useState(false);
-  const afterLoginRef = useRef(null); // what to do once the user has logged in
+  const [checking, setChecking] = useState(Boolean(token && !user)); // true while a saved token is verified
 
   // On page load: is the saved token still valid? (tokens expire after 8 hours)
   useEffect(() => {
-    if (!token || user) {
-      setChecking(false);
-      return;
-    }
+    if (!token || user) return;
     let cancelled = false;
     authService
       .getCurrentUser()
@@ -32,9 +28,8 @@ export function AuthProvider({ children }) {
     return () => { cancelled = true; };
   }, [token, user, removeToken]);
 
-  const login = useCallback(
-    async (email, password) => {
-      const data = await authService.login(email, password);
+  const startSession = useCallback(
+    (data) => {
       setToken(data.token);
       setUser(data.user);
       return data.user;
@@ -42,34 +37,34 @@ export function AuthProvider({ children }) {
     [setToken],
   );
 
+  const login = useCallback(
+    async (email, password, portal) => startSession(await authService.login(email, password, portal)),
+    [startSession],
+  );
+
+  const register = useCallback(async (fields) => startSession(await authService.register(fields)), [startSession]);
+
   const logout = useCallback(() => {
     removeToken();
     setUser(null);
   }, [removeToken]);
 
-  // Ask for a login, then run `onSuccess` (used when switching to DOSS mode)
-  const requestLogin = useCallback((onSuccess) => {
-    afterLoginRef.current = onSuccess;
-    setLoginOpen(true);
-  }, []);
-
-  const handleLoggedIn = useCallback(() => {
-    setLoginOpen(false);
-    afterLoginRef.current?.();
-    afterLoginRef.current = null;
-  }, []);
-
   const value = useMemo(
-    () => ({ user, isLoggedIn: Boolean(user), checking, login, logout, requestLogin }),
-    [user, checking, login, logout, requestLogin],
+    () => ({
+      user,
+      isLoggedIn: Boolean(user),
+      isStaff: STAFF_ROLES.includes(user?.role),
+      isSuperAdmin: user?.role === ROLES.SUPER_ADMIN,
+      isStudentAccount: user?.role === ROLES.STUDENT,
+      checking,
+      login,
+      register,
+      logout,
+    }),
+    [user, checking, login, register, logout],
   );
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-      <LoginDialog isOpen={loginOpen} onLogin={login} onSuccess={handleLoggedIn} onCancel={() => setLoginOpen(false)} />
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
