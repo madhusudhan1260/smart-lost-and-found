@@ -18,12 +18,31 @@ export default function AccountMenu() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const buttonRef = useRef(null);
 
-  // Close on outside click or Escape
+  // Keyboard support (WAI-ARIA menu pattern): focus the first item on open,
+  // arrows / Home / End move between items, Escape closes and returns focus,
+  // Tab or a click outside closes the menu.
   useEffect(() => {
     if (!open) return undefined;
+    const items = () => [...(menuRef.current?.querySelectorAll('[role="menuitem"]') ?? [])];
+    items()[0]?.focus();
+
     const handleClick = (event) => { if (!menuRef.current?.contains(event.target)) setOpen(false); };
-    const handleKey = (event) => { if (event.key === 'Escape') setOpen(false); };
+    const handleKey = (event) => {
+      const list = items();
+      const index = list.indexOf(document.activeElement);
+      const moves = { ArrowDown: index + 1, ArrowUp: index - 1, Home: 0, End: list.length - 1 };
+      if (event.key === 'Escape') {
+        setOpen(false);
+        buttonRef.current?.focus();
+      } else if (event.key === 'Tab') {
+        setOpen(false);
+      } else if (event.key in moves && list.length) {
+        event.preventDefault();
+        list[(moves[event.key] + list.length) % list.length].focus();
+      }
+    };
     document.addEventListener('mousedown', handleClick);
     document.addEventListener('keydown', handleKey);
     return () => {
@@ -51,7 +70,7 @@ export default function AccountMenu() {
 
   return (
     <div className="account" ref={menuRef}>
-      <button type="button" className={`account__button tone--${meta.tone}`} onClick={() => setOpen((o) => !o)}
+      <button type="button" ref={buttonRef} className={`account__button tone--${meta.tone}`} onClick={() => setOpen((o) => !o)}
         aria-haspopup="menu" aria-expanded={open} aria-label={`Account menu for ${user.name}`}>
         {initials(user.name)}
       </button>
