@@ -16,7 +16,7 @@ import { DEMO_ACCOUNTS, MODES, ROLE_META, ROLES, STATUS } from '../data/constant
 import { getPasswordStrength, validateAccount, validateLogin } from '../utils/authValidation';
 import { cx } from '../utils/helpers';
 import logo from '../assets/logo.svg';
-import Icon from '../components/Icon';
+import Icon from '../components/ui/Icon';
 
 const PORTALS = [
   {

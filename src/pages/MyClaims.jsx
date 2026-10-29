@@ -9,12 +9,12 @@ import { useNotification } from '../context/NotificationContext';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import { MODES, STATUS } from '../data/constants';
 import { cx } from '../utils/helpers';
-import PageHeader from '../components/PageHeader';
-import ClaimCard from '../components/ClaimCard';
-import ModeGate from '../components/ModeGate';
-import EmptyState from '../components/EmptyState';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Icon from '../components/Icon';
+import PageHeader from '../components/layout/PageHeader';
+import ClaimCard from '../components/claims/ClaimCard';
+import ModeGate from '../components/layout/ModeGate';
+import EmptyState from '../components/ui/EmptyState';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import Icon from '../components/ui/Icon';
 
 // Claim IDs look like CL-3001 or CL-ABC12 – checked with a regular expression
 // Filter tabs: name + test function

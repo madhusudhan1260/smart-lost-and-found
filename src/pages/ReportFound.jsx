@@ -2,8 +2,8 @@
 // Purpose: Page /report-found – report a found item (Student mode).
 // Used by: App.jsx
 
-import ReportLayout from '../components/ReportLayout';
-import ModeGate from '../components/ModeGate';
+import ReportLayout from '../components/layout/ReportLayout';
+import ModeGate from '../components/layout/ModeGate';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import { MODES } from '../data/constants';
 

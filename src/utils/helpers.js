@@ -1,8 +1,8 @@
 // File: src/utils/helpers.js
-// Used by: components/ClaimTimeline.jsx, components/Icon.jsx, components/ImageUploader.jsx,
-//          components/ItemForm.jsx, components/ItemImage.jsx, components/ItemsBrowser.jsx,
-//          components/MatchCard.jsx, components/ModeSwitcher.jsx, components/Navbar.jsx,
-//          components/ReportLayout.jsx, context/ItemContext.jsx, pages/DossClaims.jsx,
+// Used by: components/claims/ClaimTimeline.jsx, components/ui/Icon.jsx, components/items/ImageUploader.jsx,
+//          components/items/ItemForm.jsx, components/items/ItemImage.jsx, components/items/ItemsBrowser.jsx,
+//          components/matching/MatchCard.jsx, components/layout/ModeSwitcher.jsx, components/layout/Navbar.jsx,
+//          components/layout/ReportLayout.jsx, context/ItemContext.jsx, pages/DossClaims.jsx,
 //          pages/Home.jsx, pages/ItemDetails.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
 //          services/itemService.js
 // General-purpose helper functions.

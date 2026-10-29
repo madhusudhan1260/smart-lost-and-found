@@ -9,13 +9,13 @@ import useDocumentTitle from '../hooks/useDocumentTitle';
 import { STATUS } from '../data/constants';
 import { formatDateTime } from '../utils/dateUtils';
 import { getPercentage } from '../utils/statistics';
-import StatCard from '../components/StatCard';
+import StatCard from '../components/ui/StatCard';
 import { cx } from '../utils/helpers';
-import PageHeader from '../components/PageHeader';
-import ItemImage from '../components/ItemImage';
-import StatusBadge, { TypeChip } from '../components/StatusBadge';
-import EmptyState from '../components/EmptyState';
-import LoadingSpinner from '../components/LoadingSpinner';
+import PageHeader from '../components/layout/PageHeader';
+import ItemImage from '../components/items/ItemImage';
+import StatusBadge, { TypeChip } from '../components/ui/StatusBadge';
+import EmptyState from '../components/ui/EmptyState';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 const FILTERS = [
   { key: 'all', label: 'All closed' },

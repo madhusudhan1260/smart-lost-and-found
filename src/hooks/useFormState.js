@@ -1,6 +1,6 @@
 // File: src/hooks/useFormState.js
 // Purpose: Custom hook: shared form logic (values, errors, validation, focus).
-// Used by: components/ClaimForm.jsx, components/ItemForm.jsx
+// Used by: components/claims/ClaimForm.jsx, components/items/ItemForm.jsx
 
 import { useRef, useState } from 'react';
 

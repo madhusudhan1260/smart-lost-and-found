@@ -12,16 +12,16 @@ import {
   countBy, getDailyCounts, getDossStats, getPercentage, getRecentActivity, getTopMatchPairs, toSortedEntries,
 } from '../utils/statistics';
 import { formatDate, isWithinHours, timeAgo } from '../utils/dateUtils';
-import PageHeader from '../components/PageHeader';
-import StatCard from '../components/StatCard';
-import DashboardCard from '../components/DashboardCard';
-import ClaimCard from '../components/ClaimCard';
-import MatchPairList from '../components/MatchPairList';
-import BarChart from '../components/BarChart';
-import ItemImage from '../components/ItemImage';
-import Modal from '../components/Modal';
-import { DashboardSkeleton } from '../components/LoadingSpinner';
-import Icon from '../components/Icon';
+import PageHeader from '../components/layout/PageHeader';
+import StatCard from '../components/ui/StatCard';
+import DashboardCard from '../components/ui/DashboardCard';
+import ClaimCard from '../components/claims/ClaimCard';
+import MatchPairList from '../components/matching/MatchPairList';
+import BarChart from '../components/ui/BarChart';
+import ItemImage from '../components/items/ItemImage';
+import Modal from '../components/ui/Modal';
+import { DashboardSkeleton } from '../components/ui/LoadingSpinner';
+import Icon from '../components/ui/Icon';
 
 export default function DossDashboard() {
   useDocumentTitle('DOSS Dashboard');

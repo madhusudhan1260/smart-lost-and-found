@@ -4,9 +4,9 @@
 
 import { Link } from 'react-router-dom';
 import { useMode } from '../context/ModeContext';
-import PageHeader from '../components/PageHeader';
-import ItemsBrowser from '../components/ItemsBrowser';
-import Icon from '../components/Icon';
+import PageHeader from '../components/layout/PageHeader';
+import ItemsBrowser from '../components/items/ItemsBrowser';
+import Icon from '../components/ui/Icon';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 
 export default function FoundItems() {

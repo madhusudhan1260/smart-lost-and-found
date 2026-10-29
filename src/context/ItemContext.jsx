@@ -1,7 +1,7 @@
 // File: src/context/ItemContext.jsx
 // Purpose: Shared items + claims state, loaded from and saved to the Express API.
-// Used by: components/ClaimCard.jsx, components/ClaimForm.jsx, components/ItemForm.jsx,
-//          components/ItemsBrowser.jsx, components/Navbar.jsx, main.jsx, pages/ClaimItem.jsx,
+// Used by: components/claims/ClaimCard.jsx, components/claims/ClaimForm.jsx, components/items/ItemForm.jsx,
+//          components/items/ItemsBrowser.jsx, components/layout/Navbar.jsx, main.jsx, pages/ClaimItem.jsx,
 //          pages/ClaimReview.jsx, pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/Home.jsx,
 //          pages/ItemDetails.jsx, pages/MyClaims.jsx, pages/ResolvedItems.jsx,
 //          pages/SmartMatch.jsx, pages/StudentDashboard.jsx

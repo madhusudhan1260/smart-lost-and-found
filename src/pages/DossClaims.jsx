@@ -9,13 +9,13 @@ import useDocumentTitle from '../hooks/useDocumentTitle';
 import { MODES, STATUS } from '../data/constants';
 import { searchClaims } from '../utils/searchUtils';
 import { cx } from '../utils/helpers';
-import PageHeader from '../components/PageHeader';
-import SearchBar from '../components/SearchBar';
-import ClaimCard from '../components/ClaimCard';
-import ModeGate from '../components/ModeGate';
-import EmptyState from '../components/EmptyState';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Icon from '../components/Icon';
+import PageHeader from '../components/layout/PageHeader';
+import SearchBar from '../components/items/SearchBar';
+import ClaimCard from '../components/claims/ClaimCard';
+import ModeGate from '../components/layout/ModeGate';
+import EmptyState from '../components/ui/EmptyState';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import Icon from '../components/ui/Icon';
 
 // Each tab is a name + a test function (array of objects holding callbacks)
 const TABS = [

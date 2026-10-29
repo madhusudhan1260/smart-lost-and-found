@@ -1,11 +1,11 @@
 // File: src/context/NotificationContext.jsx
 // Purpose: Shared notify() function for toast messages.
-// Used by: components/ClaimForm.jsx, components/ItemForm.jsx, components/ModeSwitcher.jsx,
+// Used by: components/claims/ClaimForm.jsx, components/items/ItemForm.jsx, components/layout/ModeSwitcher.jsx,
 //          main.jsx, pages/ClaimReview.jsx, pages/DossDashboard.jsx, pages/ItemDetails.jsx,
 //          pages/MyClaims.jsx
 
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import Notification from '../components/Notification';
+import Notification from '../components/ui/Notification';
 
 // Toast messages ("Report saved!") that any page can trigger
 const NotificationContext = createContext(null);

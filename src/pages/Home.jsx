@@ -13,18 +13,18 @@ import { countBy, getClaimStats, getItemStats, getRecentItems, getTopMatchPairs 
 import { cx } from '../utils/helpers';
 import { toISODate } from '../utils/dateUtils';
 import logo from '../assets/logo.svg';
-import SearchBar from '../components/SearchBar';
-import StatCard from '../components/StatCard';
-import ItemCard from '../components/ItemCard';
-import ClaimCard from '../components/ClaimCard';
-import StatusBadge from '../components/StatusBadge';
-import TipTicker from '../components/TipTicker';
-import DashboardCard from '../components/DashboardCard';
-import MatchPairList from '../components/MatchPairList';
-import EmptyState from '../components/EmptyState';
-import Icon from '../components/Icon';
-import { SkeletonGrid } from '../components/LoadingSpinner';
-import ItemImage from '../components/ItemImage';
+import SearchBar from '../components/items/SearchBar';
+import StatCard from '../components/ui/StatCard';
+import ItemCard from '../components/items/ItemCard';
+import ClaimCard from '../components/claims/ClaimCard';
+import StatusBadge from '../components/ui/StatusBadge';
+import TipTicker from '../components/ui/TipTicker';
+import DashboardCard from '../components/ui/DashboardCard';
+import MatchPairList from '../components/matching/MatchPairList';
+import EmptyState from '../components/ui/EmptyState';
+import Icon from '../components/ui/Icon';
+import { SkeletonGrid } from '../components/ui/LoadingSpinner';
+import ItemImage from '../components/items/ItemImage';
 
 // Category tiles: how many found items are waiting in each category
 function CategoryTiles({ items }) {

@@ -10,14 +10,14 @@ import { DEFAULT_MATCH_THRESHOLD, STATUS } from '../data/constants';
 import { MATCH_WEIGHTS, findMatches, isOpenForMatching } from '../utils/matching';
 import { formatDate } from '../utils/dateUtils';
 import { cx, pluralize } from '../utils/helpers';
-import PageHeader from '../components/PageHeader';
-import ItemImage from '../components/ItemImage';
-import MatchCard from '../components/MatchCard';
-import ScoreRing from '../components/ScoreRing';
-import StatusBadge from '../components/StatusBadge';
-import LoadingSpinner from '../components/LoadingSpinner';
-import EmptyState from '../components/EmptyState';
-import Icon from '../components/Icon';
+import PageHeader from '../components/layout/PageHeader';
+import ItemImage from '../components/items/ItemImage';
+import MatchCard from '../components/matching/MatchCard';
+import ScoreRing from '../components/ui/ScoreRing';
+import StatusBadge from '../components/ui/StatusBadge';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import EmptyState from '../components/ui/EmptyState';
+import Icon from '../components/ui/Icon';
 
 const WEIGHT_LABELS = {
   category: 'Same category',

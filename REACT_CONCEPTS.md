@@ -16,7 +16,7 @@ Small function components in `components/` (33) and pages in `pages/` (15).
 - `StatusBadge` renders all 8 statuses from the `STATUS_META` table
 
 ### JSX
-HTML-like syntax with `{expressions}`, e.g. `components/ItemCard.jsx`. It uses `className`, `htmlFor`, fragments `<>…</>`, and CSS variables through `style={{ '--delay': … }}`.
+HTML-like syntax with `{expressions}`, e.g. `components/items/ItemCard.jsx`. It uses `className`, `htmlFor`, fragments `<>…</>`, and CSS variables through `style={{ '--delay': … }}`.
 
 ### Props
 - Data in: `<ItemCard item={item} index={index} />`, `<ClaimReview claim={claim} foundItem={foundItem} lostItem={lostItem} />`, `<StatCard label value icon tone to />`
@@ -26,12 +26,12 @@ HTML-like syntax with `{expressions}`, e.g. `components/ItemCard.jsx`. It uses `
 | State | Where |
 |---|---|
 | items, claims, loading, error | `context/ItemContext.jsx` |
-| form values, submitting, saved item / claim | `components/ItemForm.jsx`, `components/ClaimForm.jsx` |
+| form values, submitting, saved item / claim | `components/items/ItemForm.jsx`, `components/claims/ClaimForm.jsx` |
 | errors & touched fields | `hooks/useFormState.js` |
 | which modal is open, busy flag, rejection note | `pages/ClaimReview.jsx`, `pages/ItemDetails.jsx`, `pages/DossDashboard.jsx` |
 | active tab, search text | `pages/DossClaims.jsx` |
 | minimum match score (slider) | `pages/SmartMatch.jsx` |
-| mobile menu open, scrolled | `components/Navbar.jsx` |
+| mobile menu open, scrolled | `components/layout/Navbar.jsx` |
 
 Functional updates such as `setClaims((previous) => [newClaim, ...previous])` avoid stale state.
 
@@ -39,13 +39,13 @@ Functional updates such as `setClaims((previous) => [newClaim, ...previous])` av
 | Purpose | Where |
 |---|---|
 | Load items + claims once on start | `context/ItemContext.jsx` |
-| Scroll listener (with cleanup) | `components/Navbar.jsx` |
-| `fetch` tips, then `setInterval` rotation (with cleanup) | `components/TipTicker.jsx` |
+| Scroll listener (with cleanup) | `components/layout/Navbar.jsx` |
+| `fetch` tips, then `setInterval` rotation (with cleanup) | `components/ui/TipTicker.jsx` |
 | Debounce timer (cleanup = `clearTimeout`) | `hooks/useDebounce.js` |
-| Escape key + page-scroll lock + focus in the modal | `components/Modal.jsx` |
-| `/` keyboard shortcut | `components/SearchBar.jsx` |
-| Read `?q=` from the URL (Home search → list) | `components/ItemsBrowser.jsx` |
-| Cancel the redirect timer on unmount | `components/ItemForm.jsx` |
+| Escape key + page-scroll lock + focus in the modal | `components/ui/Modal.jsx` |
+| `/` keyboard shortcut | `components/items/SearchBar.jsx` |
+| Read `?q=` from the URL (Home search → list) | `components/items/ItemsBrowser.jsx` |
+| Cancel the redirect timer on unmount | `components/items/ItemForm.jsx` |
 | Page title, scroll to top, count-up animation | `useDocumentTitle.js`, `ScrollToTop.jsx`, `StatCard.jsx` |
 
 ### `useContext`
@@ -58,26 +58,26 @@ Functional updates such as `setClaims((previous) => [newClaim, ...previous])` av
 Components use the custom hooks `useItems()`, `useMode()` and `useNotification()`. Each wraps `useContext` and throws a clear error if used outside its provider. The providers wrap the app in `main.jsx`.
 
 ### `useMemo` (cache a computed value)
-- The filtered + sorted list recalculates only when a filter or the debounced search changes: `components/ItemsBrowser.jsx`
+- The filtered + sorted list recalculates only when a filter or the debounced search changes: `components/items/ItemsBrowser.jsx`
 - All dashboard numbers: `pages/DossDashboard.jsx`, `pages/StudentDashboard.jsx`, `pages/Home.jsx`
-- Smart Match results: `pages/SmartMatch.jsx`, `pages/ItemDetails.jsx`, `components/ClaimForm.jsx` (linkable lost reports)
+- Smart Match results: `pages/SmartMatch.jsx`, `pages/ItemDetails.jsx`, `components/claims/ClaimForm.jsx` (linkable lost reports)
 - `myClaims` and the context `value` object: `context/ItemContext.jsx`
 
 ### `useCallback` (cache a function)
 - Every context action: `context/ItemContext.jsx`
 - `notify` / `dismiss`: `context/NotificationContext.jsx`
 - `setValue` / `removeValue`: `hooks/useLocalStorage.js`
-- `handleFilterChange`: `components/ItemsBrowser.jsx`
+- `handleFilterChange`: `components/items/ItemsBrowser.jsx`
 - `closeModal`, passed to `<Modal>` and used in its effect dependencies: `pages/ClaimReview.jsx`, `pages/ItemDetails.jsx`, `pages/DossDashboard.jsx`
 
 ### `useRef`
 | Purpose | Where |
 |---|---|
 | Focus the first invalid field after submit | `hooks/useFormState.js` (`fieldRefs`) |
-| Focus the confirm button when a modal opens | `components/Modal.jsx` |
-| Focus the search box with `/` | `components/SearchBar.jsx` |
-| Reset the hidden file input | `components/ImageUploader.jsx` |
-| Store the redirect timer ID without re-rendering | `components/ItemForm.jsx` |
+| Focus the confirm button when a modal opens | `components/ui/Modal.jsx` |
+| Focus the search box with `/` | `components/items/SearchBar.jsx` |
+| Reset the hidden file input | `components/items/ImageUploader.jsx` |
+| Store the redirect timer ID without re-rendering | `components/items/ItemForm.jsx` |
 | Remember the initial value | `hooks/useLocalStorage.js` |
 
 ### Custom hooks
@@ -149,7 +149,7 @@ Components use the custom hooks `useItems()`, `useMode()` and `useNotification()
 - **Through the URL:** route params and `?q=`
 
 ### Portals
-`createPortal` renders `Modal` into `document.body`, above the whole page (`components/Modal.jsx`).
+`createPortal` renders `Modal` into `document.body`, above the whole page (`components/ui/Modal.jsx`).
 
 ### Strict Mode
 `<StrictMode>` in `main.jsx` helps catch side-effect bugs during development.

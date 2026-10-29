@@ -1,5 +1,5 @@
 // File: src/utils/imageUtils.js
-// Used by: components/ImageUploader.jsx
+// Used by: components/items/ImageUploader.jsx
 // Browser-only image handling (no upload to any server).
 // Images are converted to a Base64 "data URL" so they can be stored in localStorage.
 

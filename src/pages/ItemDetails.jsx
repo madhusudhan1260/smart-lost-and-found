@@ -14,16 +14,16 @@ import { findMatches } from '../utils/matching';
 import { canBeClaimed } from '../utils/claimUtils';
 import { formatDate, formatDateTime, formatTime, timeAgo } from '../utils/dateUtils';
 import { copyToClipboard, pluralize } from '../utils/helpers';
-import ItemImage from '../components/ItemImage';
-import StatusBadge, { TypeChip } from '../components/StatusBadge';
-import ClaimCard from '../components/ClaimCard';
-import Modal from '../components/Modal';
-import LoadingSpinner from '../components/LoadingSpinner';
-import EmptyState from '../components/EmptyState';
-import ScoreRing from '../components/ScoreRing';
-import Icon from '../components/Icon';
-import Breadcrumbs from '../components/Breadcrumbs';
-import Lightbox from '../components/Lightbox';
+import ItemImage from '../components/items/ItemImage';
+import StatusBadge, { TypeChip } from '../components/ui/StatusBadge';
+import ClaimCard from '../components/claims/ClaimCard';
+import Modal from '../components/ui/Modal';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import EmptyState from '../components/ui/EmptyState';
+import ScoreRing from '../components/ui/ScoreRing';
+import Icon from '../components/ui/Icon';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
+import Lightbox from '../components/ui/Lightbox';
 
 // Which DOSS action is possible for the current status (switch on status)
 function getDossAction(item) {

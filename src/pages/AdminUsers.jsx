@@ -12,12 +12,12 @@ import { ROLE_META, ROLES } from '../data/constants';
 import { validateAccount } from '../utils/authValidation';
 import { timeAgo } from '../utils/dateUtils';
 import { cx } from '../utils/helpers';
-import PageHeader from '../components/PageHeader';
-import StatCard from '../components/StatCard';
-import EmptyState from '../components/EmptyState';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Modal from '../components/Modal';
-import Icon from '../components/Icon';
+import PageHeader from '../components/layout/PageHeader';
+import StatCard from '../components/ui/StatCard';
+import EmptyState from '../components/ui/EmptyState';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import Modal from '../components/ui/Modal';
+import Icon from '../components/ui/Icon';
 
 const FILTERS = [
   { key: 'all', label: 'All' },

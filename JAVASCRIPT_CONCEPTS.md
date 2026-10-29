@@ -31,7 +31,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
   ```
 
 ### 3. Operators
-- **File:** `utils/matching.js`, `utils/dateUtils.js`, `components/StatCard.jsx`
+- **File:** `utils/matching.js`, `utils/dateUtils.js`, `components/ui/StatCard.jsx`
 - **Why:** score maths, date maths, the 12-hour clock and the easing curve.
 - **Example:**
   ```js
@@ -128,7 +128,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Why:** helpers that are not exported stay private to their module, and block variables exist only inside their loop.
 
 ### 15. Closures
-- **Files:** `utils/helpers.js → createIdGenerator`, `utils/searchUtils.js → createItemFilter`, `components/TipTicker.jsx` (`cancelled` flag)
+- **Files:** `utils/helpers.js → createIdGenerator`, `utils/searchUtils.js → createItemFilter`, `components/ui/TipTicker.jsx` (`cancelled` flag)
 - **Why:** an inner function remembers variables of the outer function after it returns.
 - **Example:**
   ```js
@@ -145,7 +145,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Example:** `` throw new Error(`Cannot update: ${label} "${id}" does not exist`); `` and `` navigate(`/items/${newItem.id}`) ``
 
 ### 17. Destructuring
-- **Files:** `components/ItemCard.jsx`, `utils/matching.js`, `utils/dateUtils.js`, all hooks
+- **Files:** `components/items/ItemCard.jsx`, `utils/matching.js`, `utils/dateUtils.js`, all hooks
 - **Example:**
   ```js
   const { id, type, name, category, location, date, status } = item;           // object
@@ -155,7 +155,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
   ```
 
 ### 18. Spread operator
-- **Files:** `services/itemService.js → updateRecord`, `context/ItemContext.jsx`, `hooks/useFormState.js`, `components/BarChart.jsx`
+- **Files:** `services/itemService.js → updateRecord`, `context/ItemContext.jsx`, `hooks/useFormState.js`, `components/ui/BarChart.jsx`
 - **Why:** creates updated copies without mutating state (important in React), and merges objects and arrays.
 - **Example:**
   ```js
@@ -173,7 +173,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Example:** `visibleItems.map((item, index) => <ItemCard key={item.id} item={item} index={index} />)`
 
 ### 21. `filter()`
-- **Files:** `components/ItemsBrowser.jsx` (by type), `utils/searchUtils.js` (search/filter), `context/ItemContext.jsx` (competing claims), `pages/DossDashboard.jsx` (pending claims)
+- **Files:** `components/items/ItemsBrowser.jsx` (by type), `utils/searchUtils.js` (search/filter), `context/ItemContext.jsx` (competing claims), `pages/DossDashboard.jsx` (pending claims)
 - **Why:** keeps only the reports/claims that meet a condition.
 - **Example:** `claims.filter((claim) => claim.status === STATUS.CLAIM_PENDING)`
 
@@ -214,7 +214,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Example:** `[STATUS.FOUND, STATUS.CLAIM_PENDING].includes(item.status)`
 
 ### 29. Optional chaining `?.`
-- **Files:** `context/ItemContext.jsx`, `pages/ClaimReview.jsx`, `components/ModeSwitcher.jsx`, `utils/helpers.js`
+- **Files:** `context/ItemContext.jsx`, `pages/ClaimReview.jsx`, `components/layout/ModeSwitcher.jsx`, `utils/helpers.js`
 - **Why:** safely reads values that might be `null` or `undefined`.
 - **Example:** `claim?.lostItemId`, `specific?.icon`, `onSwitch?.()`, `event.dataTransfer.files?.[0]`
 
@@ -249,7 +249,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Why:** keeps items, claims, the mode, "my claims" and drafts after a refresh.
 
 ### 36. sessionStorage
-- **File:** `components/ItemsBrowser.jsx` → `useLocalStorage(key, DEFAULT_FILTERS, 'session')`
+- **File:** `components/items/ItemsBrowser.jsx` → `useLocalStorage(key, DEFAULT_FILTERS, 'session')`
 - **Why:** filters survive opening an item and coming back, but reset when the tab is closed.
 
 ### 37. Regular expressions
@@ -265,7 +265,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 ## Asynchronous JavaScript
 
 ### 38. Promises
-- **Files:** `services/itemService.js → wait`, `utils/imageUtils.js → readFileAsDataURL / loadImage`, `context/ItemContext.jsx` (`Promise.all`), `components/TipTicker.jsx` (`.then().catch()`)
+- **Files:** `services/itemService.js → wait`, `utils/imageUtils.js → readFileAsDataURL / loadImage`, `context/ItemContext.jsx` (`Promise.all`), `components/ui/TipTicker.jsx` (`.then().catch()`)
 - **Example:** `new Promise((resolve, reject) => { reader.onload = () => resolve(reader.result); ... })`
 
 ### 39. `async` / `await`
@@ -279,28 +279,28 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
   ```
 
 ### 40. `fetch()`
-- **File:** `services/itemService.js → getCampusTips` (used by `components/TipTicker.jsx`)
+- **File:** `services/itemService.js → getCampusTips` (used by `components/ui/TipTicker.jsx`)
 - **Why:** a real HTTP request to `public/data/campus-tips.json`, checking `response.ok`.
 
 ### 41. `try / catch / finally`
 | Situation handled | Where |
 |---|---|
 | Loading data | `context/ItemContext.jsx → loadData` (`finally` turns loading off) |
-| Invalid form / save errors | `components/ItemForm.jsx`, `components/ClaimForm.jsx` |
+| Invalid form / save errors | `components/items/ItemForm.jsx`, `components/claims/ClaimForm.jsx` |
 | Invalid claim (already reviewed, cannot be claimed, duplicate) | thrown in `ItemContext`, caught in the pages |
 | Missing item / claim | service throws, and pages show a "not found" state |
 | localStorage errors | `utils/storage.js` |
-| Image errors | `components/ImageUploader.jsx` |
+| Image errors | `components/items/ImageUploader.jsx` |
 
 ### 42. `setTimeout()`
 - **Files:** fake network delay (`itemService.js`), debounce (`useDebounce.js`), redirect after a report (`ItemForm.jsx`). Toasts now close when their countdown animation ends (`Notification.jsx → onAnimationEnd`), so hovering pauses them.
 
 ### 43. `setInterval()`
-- **File:** `components/TipTicker.jsx`
+- **File:** `components/ui/TipTicker.jsx`
 - **Why:** rotates the campus tips every 5 s. `clearInterval` in the effect cleanup stops it when leaving the page.
 
 ### 44. Debouncing
-- **Files:** `hooks/useDebounce.js`, used in `components/ItemsBrowser.jsx` (350 ms) and `pages/DossClaims.jsx` (300 ms)
+- **Files:** `hooks/useDebounce.js`, used in `components/items/ItemsBrowser.jsx` (350 ms) and `pages/DossClaims.jsx` (300 ms)
 - **Why:** filtering runs once after the user pauses typing, not on every key. The list shows "Searching…" in between.
 
 ---
@@ -309,10 +309,10 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 | Concept | Where |
 |---|---|
 | `new Set` to remove duplicates | `utils/matching.js → extractKeywords` |
-| `Object.entries / keys / values / fromEntries` | `utils/statistics.js`, `components/ItemForm.jsx → trimValues`, `hooks/useFormState.js` |
+| `Object.entries / keys / values / fromEntries` | `utils/statistics.js`, `components/items/ItemForm.jsx → trimValues`, `hooks/useFormState.js` |
 | `Array.prototype.flatMap` | `utils/statistics.js → getRecentActivity` |
 | `String.padStart`, `localeCompare`, `toLocaleString` | `utils/dateUtils.js`, `utils/searchUtils.js` |
-| `requestAnimationFrame` | count-up numbers in `components/StatCard.jsx` |
+| `requestAnimationFrame` | count-up numbers in `components/ui/StatCard.jsx` |
 | FileReader + Canvas API | `utils/imageUtils.js` |
 | Event listeners + cleanup | scroll (`Navbar.jsx`), keydown (`SearchBar.jsx`, `Modal.jsx`) |
 

@@ -1,5 +1,5 @@
 // File: src/utils/matching.js
-// Used by: components/ClaimForm.jsx, components/MatchCard.jsx, components/ScoreRing.jsx,
+// Used by: components/claims/ClaimForm.jsx, components/matching/MatchCard.jsx, components/ui/ScoreRing.jsx,
 //          pages/ItemDetails.jsx, pages/SmartMatch.jsx, utils/claimUtils.js, utils/statistics.js
 // SMART MATCH ALGORITHM
 // Compares a LOST item with a FOUND item and gives a score from 0 to 100.

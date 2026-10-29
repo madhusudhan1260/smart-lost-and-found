@@ -8,14 +8,14 @@ import useDocumentTitle from '../hooks/useDocumentTitle';
 import { MODES } from '../data/constants';
 import { canBeClaimed } from '../utils/claimUtils';
 import { formatDate } from '../utils/dateUtils';
-import PageHeader from '../components/PageHeader';
-import ClaimForm from '../components/ClaimForm';
-import ItemImage from '../components/ItemImage';
-import StatusBadge from '../components/StatusBadge';
-import ModeGate from '../components/ModeGate';
-import LoadingSpinner from '../components/LoadingSpinner';
-import EmptyState from '../components/EmptyState';
-import Icon from '../components/Icon';
+import PageHeader from '../components/layout/PageHeader';
+import ClaimForm from '../components/claims/ClaimForm';
+import ItemImage from '../components/items/ItemImage';
+import StatusBadge from '../components/ui/StatusBadge';
+import ModeGate from '../components/layout/ModeGate';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import EmptyState from '../components/ui/EmptyState';
+import Icon from '../components/ui/Icon';
 
 function ClaimPageContent() {
   const { id } = useParams(); // /items/:id/claim
