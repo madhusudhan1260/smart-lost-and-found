@@ -44,3 +44,10 @@ export const PATTERNS = {
   time: /^(|([01]\d|2[0-3]):[0-5]\d)$/,
   imageDataUrl: /^data:image\/(png|jpe?g|webp|gif);base64,/,
 };
+
+// Account roles. Staff roles can open the DOSS interface.
+export const ROLES = ['student', 'doss', 'superadmin'];
+export const STAFF_ROLES = ['doss', 'superadmin'];
+
+// At least 8 characters with a letter and a number
+export const PASSWORD_RULE = /^(?=.*[A-Za-z])(?=.*\d).{8,64}$/;

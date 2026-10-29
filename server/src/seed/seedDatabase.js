@@ -1,4 +1,4 @@
-// Fills MongoDB with the sample reports, claims and the demo DOSS account.
+// Fills MongoDB with the sample reports, claims and the demo accounts.
 // Used by `npm run seed` and by POST /api/admin/reset ("Reset demo data" button).
 import Item from '../models/Item.js';
 import Claim from '../models/Claim.js';
@@ -14,14 +14,18 @@ const highestNumber = (ids, base) => Math.max(0, ...ids.map((id) => Number(id.sp
 // The seed files use "id"; MongoDB stores it as "_id"
 const toDocument = ({ id, ...fields }) => ({ _id: id, ...fields });
 
-export async function ensureDossUser() {
-  const existing = await User.findOne({ email: config.dossEmail });
-  if (existing) return existing;
-  return User.create({
-    name: 'DOSS Office',
-    email: config.dossEmail,
-    passwordHash: await User.hashPassword(config.dossPassword),
-  });
+// One demo account per login tab. Existing accounts are left alone.
+const DEMO_USERS = [
+  { name: 'DOSS Office', email: config.dossEmail, password: config.dossPassword, role: 'doss' },
+  { name: 'Super Admin', email: config.adminEmail, password: config.adminPassword, role: 'superadmin' },
+  { name: 'Rahul Sharma', email: config.studentEmail, password: config.studentPassword, role: 'student', rollNumber: '22CSE031' },
+];
+
+export async function ensureDemoUsers() {
+  for (const { password, ...fields } of DEMO_USERS) {
+    const existing = await User.findOne({ email: fields.email });
+    if (!existing) await User.create({ ...fields, passwordHash: await User.hashPassword(password) });
+  }
 }
 
 export async function seedDatabase() {
@@ -39,6 +43,6 @@ export async function seedDatabase() {
     { _id: 'claim', seq: highestNumber(sampleClaims.map((claim) => claim.id), 3000) },
   ]);
 
-  await ensureDossUser();
+  await ensureDemoUsers();
   return { items: sampleItems.length, claims: sampleClaims.length };
 }

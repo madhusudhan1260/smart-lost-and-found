@@ -9,5 +9,9 @@ export const config = {
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
   dossEmail: process.env.DOSS_EMAIL || 'doss@college.edu',
   dossPassword: process.env.DOSS_PASSWORD || 'Doss@123',
+  adminEmail: process.env.ADMIN_EMAIL || 'admin@college.edu',
+  adminPassword: process.env.ADMIN_PASSWORD || 'Admin@123',
+  studentEmail: process.env.STUDENT_EMAIL || 'student@college.edu',
+  studentPassword: process.env.STUDENT_PASSWORD || 'Student@123',
   isTest: process.env.NODE_ENV === 'test',
 };

@@ -3,7 +3,7 @@ import app from './app.js';
 import { config } from './config/env.js';
 import { connectDB } from './config/db.js';
 import Item from './models/Item.js';
-import { seedDatabase } from './seed/seedDatabase.js';
+import { ensureDemoUsers, seedDatabase } from './seed/seedDatabase.js';
 
 try {
   await connectDB(config.mongoUri);
@@ -13,6 +13,8 @@ try {
     const counts = await seedDatabase();
     console.log(`🌱 Empty database – added ${counts.items} sample reports and ${counts.claims} claims.`);
   }
+  // Older databases only had the DOSS account – add the student and super admin demo logins
+  await ensureDemoUsers();
 
   app.listen(config.port, () => {
     console.log(`🚀 API running at http://localhost:${config.port}/api`);
