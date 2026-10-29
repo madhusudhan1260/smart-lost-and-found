@@ -5,6 +5,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemContext';
+import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import useFormState from '../hooks/useFormState';
 import { LOCATIONS, STATUS } from '../data/constants';
@@ -41,7 +42,13 @@ const VERIFICATION_IDEAS = [
 export default function ClaimForm({ item }) {
   const { items, submitClaim } = useItems();
   const { notify } = useNotification();
-  const [values, setValues] = useState(EMPTY_CLAIM);
+  const { user, isStudentAccount } = useAuth();
+  // Signed-in students get their name, roll number and email filled in
+  const [values, setValues] = useState(() =>
+    isStudentAccount
+      ? { ...EMPTY_CLAIM, claimantName: user.name, rollNumber: user.rollNumber ?? '', contact: user.email }
+      : EMPTY_CLAIM,
+  );
   const [submitting, setSubmitting] = useState(false);
   const [submittedClaim, setSubmittedClaim] = useState(null);
 
@@ -76,7 +83,7 @@ export default function ClaimForm({ item }) {
     try {
       const claim = await submitClaim(item, {
         ...values,
-        rollNumber: values.rollNumber.trim().toUpperCase(),
+        rollNumber: values.rollNumber.replace(/[\s\-_/]/g, '').toUpperCase(),
         lostItemId: values.lostItemId || null,
       });
       setSubmittedClaim(claim);
