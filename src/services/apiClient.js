@@ -1,4 +1,4 @@
-// Purpose: One place that talks HTTP to the Express API.
+// Purpose : One place that talks HTTP to the Express API.
 // Every service function goes through request(), which adds the JSON headers and the
 // DOSS login token, and turns API errors into normal JavaScript Errors.
 import { STORAGE_KEYS } from '../data/constants';
