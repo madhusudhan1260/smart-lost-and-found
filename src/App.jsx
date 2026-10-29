@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useMode } from './context/ModeContext';
 import { useItems } from './context/ItemContext';
@@ -9,23 +10,27 @@ import Footer from './components/layout/Footer';
 import ScrollToTop from './components/layout/ScrollToTop';
 import BackToTop from './components/layout/BackToTop';
 import KeyboardShortcuts from './components/layout/KeyboardShortcuts';
+import LoadingSpinner from './components/ui/LoadingSpinner';
 import Home from './pages/public/Home';
-import LostItems from './pages/public/LostItems';
-import FoundItems from './pages/public/FoundItems';
-import ReportLost from './pages/student/ReportLost';
-import ReportFound from './pages/student/ReportFound';
-import ItemDetails from './pages/public/ItemDetails';
-import ClaimItem from './pages/student/ClaimItem';
-import MyClaims from './pages/student/MyClaims';
-import SmartMatch from './pages/public/SmartMatch';
-import StudentDashboard from './pages/student/StudentDashboard';
-import DossDashboard from './pages/doss/DossDashboard';
-import DossClaims from './pages/doss/DossClaims';
-import ClaimReview from './pages/doss/ClaimReview';
-import ResolvedItems from './pages/public/ResolvedItems';
-import Login from './pages/auth/Login';
-import AdminUsers from './pages/admin/AdminUsers';
-import NotFound from './pages/public/NotFound';
+
+// Code splitting: every other page is downloaded the first time it is opened,
+// so the first visit only loads Home and the shared layout.
+const LostItems = lazy(() => import('./pages/public/LostItems'));
+const FoundItems = lazy(() => import('./pages/public/FoundItems'));
+const ReportLost = lazy(() => import('./pages/student/ReportLost'));
+const ReportFound = lazy(() => import('./pages/student/ReportFound'));
+const ItemDetails = lazy(() => import('./pages/public/ItemDetails'));
+const ClaimItem = lazy(() => import('./pages/student/ClaimItem'));
+const MyClaims = lazy(() => import('./pages/student/MyClaims'));
+const SmartMatch = lazy(() => import('./pages/public/SmartMatch'));
+const StudentDashboard = lazy(() => import('./pages/student/StudentDashboard'));
+const DossDashboard = lazy(() => import('./pages/doss/DossDashboard'));
+const DossClaims = lazy(() => import('./pages/doss/DossClaims'));
+const ClaimReview = lazy(() => import('./pages/doss/ClaimReview'));
+const ResolvedItems = lazy(() => import('./pages/public/ResolvedItems'));
+const Login = lazy(() => import('./pages/auth/Login'));
+const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
+const NotFound = lazy(() => import('./pages/public/NotFound'));
 
 export default function App() {
   const location = useLocation();
@@ -39,7 +44,9 @@ export default function App() {
     return (
       <div className="app">
         <ScrollToTop />
-        <Login />
+        <Suspense fallback={<LoadingSpinner label="Loading sign-in…" />}>
+          <Login />
+        </Suspense>
       </div>
     );
   }
@@ -62,6 +69,7 @@ export default function App() {
       )}
       {/* key on pathname replays the page-enter animation on every navigation */}
       <main id="main" className="page" key={location.pathname}>
+        <Suspense fallback={<LoadingSpinner label="Loading page…" />}>
         <Routes>
           {/* shared */}
           <Route path="/" element={<Home />} />
@@ -88,6 +96,7 @@ export default function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
       <BackToTop />
