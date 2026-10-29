@@ -4,6 +4,7 @@
 
 import { Link, useParams } from 'react-router-dom';
 import { useItems } from '../../context/ItemContext';
+import { useAuth } from '../../context/AuthContext';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 import { MODES } from '../../data/constants';
 import { canBeClaimed } from '../../utils/claimUtils';
@@ -20,6 +21,7 @@ import Icon from '../../components/ui/Icon';
 function ClaimPageContent() {
   const { id } = useParams(); // /items/:id/claim
   const { loading, getItemById } = useItems();
+  const { user } = useAuth();
   const item = getItemById(id);
   useDocumentTitle(item ? `Claim ${item.name}` : 'Claim item');
 
@@ -67,7 +69,9 @@ function ClaimPageContent() {
           <p className="muted">{item.description}</p>
           <p className="hidden-note"><Icon name="visibility_off" /> The finder’s private notes are hidden. Describe what you know – do not guess.</p>
         </aside>
-        <ClaimForm item={item} />
+        {/* key: re-create the form once the saved login is confirmed, so a signed-in
+            student's name, roll number and email are filled in even after a page reload */}
+        <ClaimForm key={user?.id ?? 'guest'} item={item} />
       </div>
     </>
   );
