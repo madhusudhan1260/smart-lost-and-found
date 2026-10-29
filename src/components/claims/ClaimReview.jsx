@@ -1,6 +1,6 @@
 // File: src/components/claims/ClaimReview.jsx
 // Purpose: Side-by-side comparison panel DOSS uses to verify a claim.
-// Used by: pages/ClaimReview.jsx
+// Used by: pages/doss/ClaimReview.jsx
 
 import { verifyClaim } from '../../utils/claimUtils';
 import { formatDate, formatDateTime } from '../../utils/dateUtils';

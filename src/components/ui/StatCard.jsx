@@ -1,6 +1,6 @@
 // File: src/components/ui/StatCard.jsx
 // Purpose: Statistic tile with an animated count-up number.
-// Used by: pages/DossDashboard.jsx, pages/Home.jsx, pages/StudentDashboard.jsx
+// Used by: pages/doss/DossDashboard.jsx, pages/public/Home.jsx, pages/student/StudentDashboard.jsx
 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';

@@ -1,6 +1,6 @@
 // File: src/components/items/ItemCard.jsx
 // Purpose: One lost/found report shown as a card in the lists.
-// Used by: components/items/ItemsBrowser.jsx, pages/Home.jsx
+// Used by: components/items/ItemsBrowser.jsx, pages/public/Home.jsx
 
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';

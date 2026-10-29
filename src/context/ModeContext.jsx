@@ -2,8 +2,8 @@
 // Purpose: Shared Student / DOSS mode (saved in localStorage).
 // Used by: App.jsx, components/items/ItemCard.jsx, components/items/ItemsBrowser.jsx,
 //          components/matching/MatchCard.jsx, components/layout/ModeGate.jsx, components/layout/ModeSwitcher.jsx,
-//          components/layout/Navbar.jsx, main.jsx, pages/FoundItems.jsx, pages/Home.jsx,
-//          pages/ItemDetails.jsx, pages/LostItems.jsx, pages/Login.jsx
+//          components/layout/Navbar.jsx, main.jsx, pages/public/FoundItems.jsx, pages/public/Home.jsx,
+//          pages/public/ItemDetails.jsx, pages/public/LostItems.jsx, pages/auth/Login.jsx
 
 import { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';

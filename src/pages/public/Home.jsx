@@ -1,30 +1,30 @@
-// File: src/pages/Home.jsx
+// File: src/pages/public/Home.jsx
 // Purpose: Page / – hero search, statistics, recent items, matches and claims.
 // Used by: App.jsx
 
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import { useMode } from '../context/ModeContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { CATEGORIES, CATEGORY_META, STATUS, STORAGE_KEYS } from '../data/constants';
-import { countBy, getClaimStats, getItemStats, getRecentItems, getTopMatchPairs } from '../utils/statistics';
-import { cx } from '../utils/helpers';
-import { toISODate } from '../utils/dateUtils';
-import logo from '../assets/logo.svg';
-import SearchBar from '../components/items/SearchBar';
-import StatCard from '../components/ui/StatCard';
-import ItemCard from '../components/items/ItemCard';
-import ClaimCard from '../components/claims/ClaimCard';
-import StatusBadge from '../components/ui/StatusBadge';
-import TipTicker from '../components/ui/TipTicker';
-import DashboardCard from '../components/ui/DashboardCard';
-import MatchPairList from '../components/matching/MatchPairList';
-import EmptyState from '../components/ui/EmptyState';
-import Icon from '../components/ui/Icon';
-import { SkeletonGrid } from '../components/ui/LoadingSpinner';
-import ItemImage from '../components/items/ItemImage';
+import { useItems } from '../../context/ItemContext';
+import { useMode } from '../../context/ModeContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { CATEGORIES, CATEGORY_META, STATUS, STORAGE_KEYS } from '../../data/constants';
+import { countBy, getClaimStats, getItemStats, getRecentItems, getTopMatchPairs } from '../../utils/statistics';
+import { cx } from '../../utils/helpers';
+import { toISODate } from '../../utils/dateUtils';
+import logo from '../../assets/logo.svg';
+import SearchBar from '../../components/items/SearchBar';
+import StatCard from '../../components/ui/StatCard';
+import ItemCard from '../../components/items/ItemCard';
+import ClaimCard from '../../components/claims/ClaimCard';
+import StatusBadge from '../../components/ui/StatusBadge';
+import TipTicker from '../../components/ui/TipTicker';
+import DashboardCard from '../../components/ui/DashboardCard';
+import MatchPairList from '../../components/matching/MatchPairList';
+import EmptyState from '../../components/ui/EmptyState';
+import Icon from '../../components/ui/Icon';
+import { SkeletonGrid } from '../../components/ui/LoadingSpinner';
+import ItemImage from '../../components/items/ItemImage';
 
 // Category tiles: how many found items are waiting in each category
 function CategoryTiles({ items }) {

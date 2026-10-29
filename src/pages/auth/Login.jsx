@@ -1,4 +1,4 @@
-// File: src/pages/Login.jsx
+// File: src/pages/auth/Login.jsx
 // Purpose: Page /login – one sign-in page with a tab for each kind of account:
 //          Student (can also sign up), DOSS staff and Super Admin.
 // Used by: App.jsx
@@ -7,16 +7,16 @@
 
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useMode } from '../context/ModeContext';
-import { useItems } from '../context/ItemContext';
-import { useNotification } from '../context/NotificationContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { DEMO_ACCOUNTS, MODES, ROLE_META, ROLES, STATUS } from '../data/constants';
-import { getPasswordStrength, validateAccount, validateLogin } from '../utils/authValidation';
-import { cx } from '../utils/helpers';
-import logo from '../assets/logo.svg';
-import Icon from '../components/ui/Icon';
+import { useAuth } from '../../context/AuthContext';
+import { useMode } from '../../context/ModeContext';
+import { useItems } from '../../context/ItemContext';
+import { useNotification } from '../../context/NotificationContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { DEMO_ACCOUNTS, MODES, ROLE_META, ROLES, STATUS } from '../../data/constants';
+import { getPasswordStrength, validateAccount, validateLogin } from '../../utils/authValidation';
+import { cx } from '../../utils/helpers';
+import logo from '../../assets/logo.svg';
+import Icon from '../../components/ui/Icon';
 
 const PORTALS = [
   {

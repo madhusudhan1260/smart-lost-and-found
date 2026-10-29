@@ -1,5 +1,5 @@
 // Purpose: Account management for the super admin (/api/users).
-// Used by: pages/AdminUsers.jsx
+// Used by: pages/admin/AdminUsers.jsx
 import { request } from './apiClient';
 
 export const getUsers = () => request('/users');

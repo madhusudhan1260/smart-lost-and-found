@@ -1,21 +1,21 @@
-// File: src/pages/ResolvedItems.jsx
+// File: src/pages/public/ResolvedItems.jsx
 // Purpose: Page /resolved – collected and resolved cases.
 // Used by: App.jsx
 
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { STATUS } from '../data/constants';
-import { formatDateTime } from '../utils/dateUtils';
-import { getPercentage } from '../utils/statistics';
-import StatCard from '../components/ui/StatCard';
-import { cx } from '../utils/helpers';
-import PageHeader from '../components/layout/PageHeader';
-import ItemImage from '../components/items/ItemImage';
-import StatusBadge, { TypeChip } from '../components/ui/StatusBadge';
-import EmptyState from '../components/ui/EmptyState';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { useItems } from '../../context/ItemContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { STATUS } from '../../data/constants';
+import { formatDateTime } from '../../utils/dateUtils';
+import { getPercentage } from '../../utils/statistics';
+import StatCard from '../../components/ui/StatCard';
+import { cx } from '../../utils/helpers';
+import PageHeader from '../../components/layout/PageHeader';
+import ItemImage from '../../components/items/ItemImage';
+import StatusBadge, { TypeChip } from '../../components/ui/StatusBadge';
+import EmptyState from '../../components/ui/EmptyState';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 const FILTERS = [
   { key: 'all', label: 'All closed' },

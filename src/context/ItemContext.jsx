@@ -1,10 +1,10 @@
 // File: src/context/ItemContext.jsx
 // Purpose: Shared items + claims state, loaded from and saved to the Express API.
 // Used by: components/claims/ClaimCard.jsx, components/claims/ClaimForm.jsx, components/items/ItemForm.jsx,
-//          components/items/ItemsBrowser.jsx, components/layout/Navbar.jsx, main.jsx, pages/ClaimItem.jsx,
-//          pages/ClaimReview.jsx, pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/Home.jsx,
-//          pages/ItemDetails.jsx, pages/MyClaims.jsx, pages/ResolvedItems.jsx,
-//          pages/SmartMatch.jsx, pages/StudentDashboard.jsx
+//          components/items/ItemsBrowser.jsx, components/layout/Navbar.jsx, main.jsx, pages/student/ClaimItem.jsx,
+//          pages/doss/ClaimReview.jsx, pages/doss/DossClaims.jsx, pages/doss/DossDashboard.jsx, pages/public/Home.jsx,
+//          pages/public/ItemDetails.jsx, pages/student/MyClaims.jsx, pages/public/ResolvedItems.jsx,
+//          pages/public/SmartMatch.jsx, pages/student/StudentDashboard.jsx
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as itemService from '../services/itemService';

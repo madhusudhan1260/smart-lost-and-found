@@ -1,5 +1,5 @@
 // Purpose: Full-screen photo viewer. Closes with Escape, the X button or a click outside.
-// Used by: pages/ItemDetails.jsx
+// Used by: pages/public/ItemDetails.jsx
 
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';

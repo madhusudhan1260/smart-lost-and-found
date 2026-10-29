@@ -1,7 +1,7 @@
 // File: src/components/layout/ModeGate.jsx
 // Purpose: Shows a page only in the right mode (Student or DOSS).
-// Used by: pages/ClaimItem.jsx, pages/ClaimReview.jsx, pages/DossClaims.jsx, pages/MyClaims.jsx,
-//          pages/ReportFound.jsx, pages/ReportLost.jsx
+// Used by: pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx, pages/doss/DossClaims.jsx, pages/student/MyClaims.jsx,
+//          pages/student/ReportFound.jsx, pages/student/ReportLost.jsx
 
 import { useMode } from '../../context/ModeContext';
 import { useNotification } from '../../context/NotificationContext';

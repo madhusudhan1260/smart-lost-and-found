@@ -1,6 +1,6 @@
 // File: src/components/claims/ClaimForm.jsx
 // Purpose: The "This is my item" form where a student proves ownership.
-// Used by: pages/ClaimItem.jsx
+// Used by: pages/student/ClaimItem.jsx
 
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';

@@ -1,9 +1,9 @@
 // File: src/components/ui/StatusBadge.jsx
 // Purpose: Coloured pill for every item / claim status.
 // Used by: components/claims/ClaimCard.jsx, components/claims/ClaimForm.jsx, components/claims/ClaimReview.jsx,
-//          components/items/ItemCard.jsx, components/matching/MatchCard.jsx, pages/ClaimItem.jsx,
-//          pages/ClaimReview.jsx, pages/Home.jsx, pages/ItemDetails.jsx, pages/ResolvedItems.jsx,
-//          pages/SmartMatch.jsx
+//          components/items/ItemCard.jsx, components/matching/MatchCard.jsx, pages/student/ClaimItem.jsx,
+//          pages/doss/ClaimReview.jsx, pages/public/Home.jsx, pages/public/ItemDetails.jsx, pages/public/ResolvedItems.jsx,
+//          pages/public/SmartMatch.jsx
 
 import { STATUS_META } from '../../data/constants';
 import Icon from './Icon';

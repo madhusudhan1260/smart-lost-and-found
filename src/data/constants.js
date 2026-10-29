@@ -4,10 +4,10 @@
 //          components/layout/Footer.jsx, components/items/ItemForm.jsx, components/items/ItemImage.jsx,
 //          components/items/ItemsBrowser.jsx, components/layout/ModeGate.jsx, components/layout/ModeSwitcher.jsx,
 //          components/layout/Navbar.jsx, components/ui/StatusBadge.jsx, context/ItemContext.jsx,
-//          context/ModeContext.jsx, pages/ClaimItem.jsx, pages/ClaimReview.jsx,
-//          pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/Home.jsx, pages/ItemDetails.jsx,
-//          pages/MyClaims.jsx, pages/ReportFound.jsx, pages/ReportLost.jsx,
-//          pages/ResolvedItems.jsx, pages/SmartMatch.jsx, pages/StudentDashboard.jsx,
+//          context/ModeContext.jsx, pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx,
+//          pages/doss/DossClaims.jsx, pages/doss/DossDashboard.jsx, pages/public/Home.jsx, pages/public/ItemDetails.jsx,
+//          pages/student/MyClaims.jsx, pages/student/ReportFound.jsx, pages/student/ReportLost.jsx,
+//          pages/public/ResolvedItems.jsx, pages/public/SmartMatch.jsx, pages/student/StudentDashboard.jsx,
 //          services/itemService.js, utils/claimUtils.js, utils/helpers.js, utils/matching.js,
 //          utils/statistics.js
 // Shared constants used across the whole app.

@@ -28,9 +28,9 @@ HTML-like syntax with `{expressions}`, e.g. `components/items/ItemCard.jsx`. It 
 | items, claims, loading, error | `context/ItemContext.jsx` |
 | form values, submitting, saved item / claim | `components/items/ItemForm.jsx`, `components/claims/ClaimForm.jsx` |
 | errors & touched fields | `hooks/useFormState.js` |
-| which modal is open, busy flag, rejection note | `pages/ClaimReview.jsx`, `pages/ItemDetails.jsx`, `pages/DossDashboard.jsx` |
-| active tab, search text | `pages/DossClaims.jsx` |
-| minimum match score (slider) | `pages/SmartMatch.jsx` |
+| which modal is open, busy flag, rejection note | `pages/doss/ClaimReview.jsx`, `pages/public/ItemDetails.jsx`, `pages/doss/DossDashboard.jsx` |
+| active tab, search text | `pages/doss/DossClaims.jsx` |
+| minimum match score (slider) | `pages/public/SmartMatch.jsx` |
 | mobile menu open, scrolled | `components/layout/Navbar.jsx` |
 
 Functional updates such as `setClaims((previous) => [newClaim, ...previous])` avoid stale state.
@@ -59,8 +59,8 @@ Components use the custom hooks `useItems()`, `useMode()` and `useNotification()
 
 ### `useMemo` (cache a computed value)
 - The filtered + sorted list recalculates only when a filter or the debounced search changes: `components/items/ItemsBrowser.jsx`
-- All dashboard numbers: `pages/DossDashboard.jsx`, `pages/StudentDashboard.jsx`, `pages/Home.jsx`
-- Smart Match results: `pages/SmartMatch.jsx`, `pages/ItemDetails.jsx`, `components/claims/ClaimForm.jsx` (linkable lost reports)
+- All dashboard numbers: `pages/doss/DossDashboard.jsx`, `pages/student/StudentDashboard.jsx`, `pages/public/Home.jsx`
+- Smart Match results: `pages/public/SmartMatch.jsx`, `pages/public/ItemDetails.jsx`, `components/claims/ClaimForm.jsx` (linkable lost reports)
 - `myClaims` and the context `value` object: `context/ItemContext.jsx`
 
 ### `useCallback` (cache a function)
@@ -68,7 +68,7 @@ Components use the custom hooks `useItems()`, `useMode()` and `useNotification()
 - `notify` / `dismiss`: `context/NotificationContext.jsx`
 - `setValue` / `removeValue`: `hooks/useLocalStorage.js`
 - `handleFilterChange`: `components/items/ItemsBrowser.jsx`
-- `closeModal`, passed to `<Modal>` and used in its effect dependencies: `pages/ClaimReview.jsx`, `pages/ItemDetails.jsx`, `pages/DossDashboard.jsx`
+- `closeModal`, passed to `<Modal>` and used in its effect dependencies: `pages/doss/ClaimReview.jsx`, `pages/public/ItemDetails.jsx`, `pages/doss/DossDashboard.jsx`
 
 ### `useRef`
 | Purpose | Where |
@@ -117,7 +117,7 @@ Components use the custom hooks `useItems()`, `useMode()` and `useNotification()
   - The private-details box appears only in DOSS mode
   - `ModeGate` guards mode-specific pages
 - **Status-based UI:**
-  - The action bar in `pages/ClaimReview.jsx` changes with the claim status
+  - The action bar in `pages/doss/ClaimReview.jsx` changes with the claim status
   - Accepted / pending / rejected / collected messages in `ClaimCard.jsx`
 - The success view replaces the form after a report or claim is submitted
 

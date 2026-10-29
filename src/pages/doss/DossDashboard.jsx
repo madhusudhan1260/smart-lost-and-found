@@ -1,27 +1,27 @@
-// File: src/pages/DossDashboard.jsx
+// File: src/pages/doss/DossDashboard.jsx
 // Purpose: DOSS dashboard: statistics, pending claims, collection and charts.
 // Used by: App.jsx
 
 import { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import { useNotification } from '../context/NotificationContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { CATEGORY_META, STATUS } from '../data/constants';
+import { useItems } from '../../context/ItemContext';
+import { useNotification } from '../../context/NotificationContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { CATEGORY_META, STATUS } from '../../data/constants';
 import {
   countBy, getDailyCounts, getDossStats, getPercentage, getRecentActivity, getTopMatchPairs, toSortedEntries,
-} from '../utils/statistics';
-import { formatDate, isWithinHours, timeAgo } from '../utils/dateUtils';
-import PageHeader from '../components/layout/PageHeader';
-import StatCard from '../components/ui/StatCard';
-import DashboardCard from '../components/ui/DashboardCard';
-import ClaimCard from '../components/claims/ClaimCard';
-import MatchPairList from '../components/matching/MatchPairList';
-import BarChart from '../components/ui/BarChart';
-import ItemImage from '../components/items/ItemImage';
-import Modal from '../components/ui/Modal';
-import { DashboardSkeleton } from '../components/ui/LoadingSpinner';
-import Icon from '../components/ui/Icon';
+} from '../../utils/statistics';
+import { formatDate, isWithinHours, timeAgo } from '../../utils/dateUtils';
+import PageHeader from '../../components/layout/PageHeader';
+import StatCard from '../../components/ui/StatCard';
+import DashboardCard from '../../components/ui/DashboardCard';
+import ClaimCard from '../../components/claims/ClaimCard';
+import MatchPairList from '../../components/matching/MatchPairList';
+import BarChart from '../../components/ui/BarChart';
+import ItemImage from '../../components/items/ItemImage';
+import Modal from '../../components/ui/Modal';
+import { DashboardSkeleton } from '../../components/ui/LoadingSpinner';
+import Icon from '../../components/ui/Icon';
 
 export default function DossDashboard() {
   useDocumentTitle('DOSS Dashboard');

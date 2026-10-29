@@ -1,7 +1,7 @@
 // File: src/components/ui/ScoreRing.jsx
 // Purpose: Circular percentage indicator for match scores.
-// Used by: components/matching/MatchCard.jsx, components/matching/MatchPairList.jsx, pages/ItemDetails.jsx,
-//          pages/SmartMatch.jsx
+// Used by: components/matching/MatchCard.jsx, components/matching/MatchPairList.jsx, pages/public/ItemDetails.jsx,
+//          pages/public/SmartMatch.jsx
 
 import { getMatchLevel } from '../../utils/matching';
 

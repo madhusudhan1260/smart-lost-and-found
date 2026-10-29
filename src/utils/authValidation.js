@@ -1,5 +1,5 @@
 // File: src/utils/authValidation.js
-// Used by: pages/Login.jsx, pages/AdminUsers.jsx
+// Used by: pages/auth/Login.jsx, pages/admin/AdminUsers.jsx
 // Checks for the login, sign-up and "add staff" forms. Same rules as the API.
 import { PATTERNS } from './validation.js';
 

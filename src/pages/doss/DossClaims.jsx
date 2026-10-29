@@ -1,21 +1,21 @@
-// File: src/pages/DossClaims.jsx
+// File: src/pages/doss/DossClaims.jsx
 // Purpose: Page /doss/claims – all claims grouped in status tabs (DOSS mode).
 // Used by: App.jsx
 
 import { useMemo, useState } from 'react';
-import { useItems } from '../context/ItemContext';
-import useDebounce from '../hooks/useDebounce';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { MODES, STATUS } from '../data/constants';
-import { searchClaims } from '../utils/searchUtils';
-import { cx } from '../utils/helpers';
-import PageHeader from '../components/layout/PageHeader';
-import SearchBar from '../components/items/SearchBar';
-import ClaimCard from '../components/claims/ClaimCard';
-import ModeGate from '../components/layout/ModeGate';
-import EmptyState from '../components/ui/EmptyState';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import Icon from '../components/ui/Icon';
+import { useItems } from '../../context/ItemContext';
+import useDebounce from '../../hooks/useDebounce';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { MODES, STATUS } from '../../data/constants';
+import { searchClaims } from '../../utils/searchUtils';
+import { cx } from '../../utils/helpers';
+import PageHeader from '../../components/layout/PageHeader';
+import SearchBar from '../../components/items/SearchBar';
+import ClaimCard from '../../components/claims/ClaimCard';
+import ModeGate from '../../components/layout/ModeGate';
+import EmptyState from '../../components/ui/EmptyState';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import Icon from '../../components/ui/Icon';
 
 // Each tab is a name + a test function (array of objects holding callbacks)
 const TABS = [

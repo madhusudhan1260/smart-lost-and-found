@@ -1,29 +1,29 @@
-// File: src/pages/ItemDetails.jsx
+// File: src/pages/public/ItemDetails.jsx
 // Purpose: Page /items/:id – full report details and actions.
 // Used by: App.jsx
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import { useMode } from '../context/ModeContext';
-import { useNotification } from '../context/NotificationContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { STATUS, STORAGE_KEYS } from '../data/constants';
-import { findMatches } from '../utils/matching';
-import { canBeClaimed } from '../utils/claimUtils';
-import { formatDate, formatDateTime, formatTime, timeAgo } from '../utils/dateUtils';
-import { copyToClipboard, pluralize } from '../utils/helpers';
-import ItemImage from '../components/items/ItemImage';
-import StatusBadge, { TypeChip } from '../components/ui/StatusBadge';
-import ClaimCard from '../components/claims/ClaimCard';
-import Modal from '../components/ui/Modal';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import EmptyState from '../components/ui/EmptyState';
-import ScoreRing from '../components/ui/ScoreRing';
-import Icon from '../components/ui/Icon';
-import Breadcrumbs from '../components/layout/Breadcrumbs';
-import Lightbox from '../components/ui/Lightbox';
+import { useItems } from '../../context/ItemContext';
+import { useMode } from '../../context/ModeContext';
+import { useNotification } from '../../context/NotificationContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { STATUS, STORAGE_KEYS } from '../../data/constants';
+import { findMatches } from '../../utils/matching';
+import { canBeClaimed } from '../../utils/claimUtils';
+import { formatDate, formatDateTime, formatTime, timeAgo } from '../../utils/dateUtils';
+import { copyToClipboard, pluralize } from '../../utils/helpers';
+import ItemImage from '../../components/items/ItemImage';
+import StatusBadge, { TypeChip } from '../../components/ui/StatusBadge';
+import ClaimCard from '../../components/claims/ClaimCard';
+import Modal from '../../components/ui/Modal';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import EmptyState from '../../components/ui/EmptyState';
+import ScoreRing from '../../components/ui/ScoreRing';
+import Icon from '../../components/ui/Icon';
+import Breadcrumbs from '../../components/layout/Breadcrumbs';
+import Lightbox from '../../components/ui/Lightbox';
 
 // Which DOSS action is possible for the current status (switch on status)
 function getDossAction(item) {

@@ -1,23 +1,23 @@
-// File: src/pages/AdminUsers.jsx
+// File: src/pages/admin/AdminUsers.jsx
 // Purpose: Page /admin/users – the super admin adds, disables and removes accounts.
 // Used by: App.jsx
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useNotification } from '../context/NotificationContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import * as userService from '../services/userService';
-import { ROLE_META, ROLES } from '../data/constants';
-import { validateAccount } from '../utils/authValidation';
-import { timeAgo } from '../utils/dateUtils';
-import { cx } from '../utils/helpers';
-import PageHeader from '../components/layout/PageHeader';
-import StatCard from '../components/ui/StatCard';
-import EmptyState from '../components/ui/EmptyState';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import Modal from '../components/ui/Modal';
-import Icon from '../components/ui/Icon';
+import { useAuth } from '../../context/AuthContext';
+import { useNotification } from '../../context/NotificationContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import * as userService from '../../services/userService';
+import { ROLE_META, ROLES } from '../../data/constants';
+import { validateAccount } from '../../utils/authValidation';
+import { timeAgo } from '../../utils/dateUtils';
+import { cx } from '../../utils/helpers';
+import PageHeader from '../../components/layout/PageHeader';
+import StatCard from '../../components/ui/StatCard';
+import EmptyState from '../../components/ui/EmptyState';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import Modal from '../../components/ui/Modal';
+import Icon from '../../components/ui/Icon';
 
 const FILTERS = [
   { key: 'all', label: 'All' },

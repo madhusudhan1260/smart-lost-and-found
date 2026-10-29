@@ -1,22 +1,22 @@
-// File: src/pages/StudentDashboard.jsx
+// File: src/pages/student/StudentDashboard.jsx
 // Purpose: Student dashboard: my claims, possible matches and campus stats.
 // Used by: App.jsx
 
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { CATEGORY_META, STATUS } from '../data/constants';
-import { countBy, getItemStats, getTopMatchPairs, toSortedEntries } from '../utils/statistics';
-import PageHeader from '../components/layout/PageHeader';
-import StatCard from '../components/ui/StatCard';
-import DashboardCard from '../components/ui/DashboardCard';
-import ClaimCard from '../components/claims/ClaimCard';
-import MatchPairList from '../components/matching/MatchPairList';
-import BarChart from '../components/ui/BarChart';
-import EmptyState from '../components/ui/EmptyState';
-import { DashboardSkeleton } from '../components/ui/LoadingSpinner';
-import Icon from '../components/ui/Icon';
+import { useItems } from '../../context/ItemContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { CATEGORY_META, STATUS } from '../../data/constants';
+import { countBy, getItemStats, getTopMatchPairs, toSortedEntries } from '../../utils/statistics';
+import PageHeader from '../../components/layout/PageHeader';
+import StatCard from '../../components/ui/StatCard';
+import DashboardCard from '../../components/ui/DashboardCard';
+import ClaimCard from '../../components/claims/ClaimCard';
+import MatchPairList from '../../components/matching/MatchPairList';
+import BarChart from '../../components/ui/BarChart';
+import EmptyState from '../../components/ui/EmptyState';
+import { DashboardSkeleton } from '../../components/ui/LoadingSpinner';
+import Icon from '../../components/ui/Icon';
 
 export default function StudentDashboard() {
   useDocumentTitle('Student Dashboard');

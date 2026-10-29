@@ -1,9 +1,9 @@
 // File: src/components/items/ItemImage.jsx
 // Purpose: Shows the item photo, or a coloured category icon when there is none.
 // Used by: components/claims/ClaimCard.jsx, components/claims/ClaimReview.jsx, components/items/ItemCard.jsx,
-//          components/matching/MatchCard.jsx, components/matching/MatchPairList.jsx, pages/ClaimItem.jsx,
-//          pages/DossDashboard.jsx, pages/ItemDetails.jsx, pages/ResolvedItems.jsx,
-//          pages/SmartMatch.jsx
+//          components/matching/MatchCard.jsx, components/matching/MatchPairList.jsx, pages/student/ClaimItem.jsx,
+//          pages/doss/DossDashboard.jsx, pages/public/ItemDetails.jsx, pages/public/ResolvedItems.jsx,
+//          pages/public/SmartMatch.jsx
 
 import { useState } from 'react';
 import { CATEGORY_META } from '../../data/constants';

@@ -1,6 +1,6 @@
 // File: src/components/matching/MatchPairList.jsx
 // Purpose: Compact list of "lost item ↔ best found item" pairs.
-// Used by: pages/DossDashboard.jsx, pages/Home.jsx, pages/StudentDashboard.jsx
+// Used by: pages/doss/DossDashboard.jsx, pages/public/Home.jsx, pages/student/StudentDashboard.jsx
 
 import { Link } from 'react-router-dom';
 import ItemImage from '../items/ItemImage';

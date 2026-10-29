@@ -1,7 +1,7 @@
 // File: src/components/claims/ClaimCard.jsx
 // Purpose: Shows one ownership claim (student tracker view or compact DOSS row).
-// Used by: pages/ClaimReview.jsx, pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/Home.jsx,
-//          pages/ItemDetails.jsx, pages/MyClaims.jsx, pages/StudentDashboard.jsx
+// Used by: pages/doss/ClaimReview.jsx, pages/doss/DossClaims.jsx, pages/doss/DossDashboard.jsx, pages/public/Home.jsx,
+//          pages/public/ItemDetails.jsx, pages/student/MyClaims.jsx, pages/student/StudentDashboard.jsx
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';

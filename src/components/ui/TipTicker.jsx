@@ -1,6 +1,6 @@
 // File: src/components/ui/TipTicker.jsx
 // Purpose: Rotating campus tips loaded with fetch() and setInterval().
-// Used by: pages/Home.jsx
+// Used by: pages/public/Home.jsx
 
 import { useEffect, useState } from 'react';
 import { getCampusTips } from '../../services/itemService';

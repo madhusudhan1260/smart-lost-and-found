@@ -1,10 +1,10 @@
 // File: src/hooks/useDocumentTitle.js
 // Purpose: Custom hook: sets the browser tab title for each page.
-// Used by: pages/ClaimItem.jsx, pages/ClaimReview.jsx, pages/DossClaims.jsx,
-//          pages/DossDashboard.jsx, pages/FoundItems.jsx, pages/Home.jsx, pages/ItemDetails.jsx,
-//          pages/LostItems.jsx, pages/MyClaims.jsx, pages/NotFound.jsx, pages/ReportFound.jsx,
-//          pages/ReportLost.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
-//          pages/StudentDashboard.jsx
+// Used by: pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx, pages/doss/DossClaims.jsx,
+//          pages/doss/DossDashboard.jsx, pages/public/FoundItems.jsx, pages/public/Home.jsx, pages/public/ItemDetails.jsx,
+//          pages/public/LostItems.jsx, pages/student/MyClaims.jsx, pages/public/NotFound.jsx, pages/student/ReportFound.jsx,
+//          pages/student/ReportLost.jsx, pages/public/ResolvedItems.jsx, pages/public/SmartMatch.jsx,
+//          pages/student/StudentDashboard.jsx
 
 import { useEffect } from 'react';
 import { useMode } from '../context/ModeContext';

@@ -8,9 +8,9 @@
 //          components/layout/ModeSwitcher.jsx, components/layout/Navbar.jsx, components/ui/Notification.jsx,
 //          components/layout/PageHeader.jsx, components/layout/ReportLayout.jsx, components/items/SearchBar.jsx,
 //          components/ui/StatCard.jsx, components/ui/StatusBadge.jsx, components/ui/TipTicker.jsx,
-//          pages/ClaimItem.jsx, pages/ClaimReview.jsx, pages/DossDashboard.jsx,
-//          pages/FoundItems.jsx, pages/Home.jsx, pages/ItemDetails.jsx, pages/LostItems.jsx,
-//          pages/MyClaims.jsx, pages/SmartMatch.jsx, pages/StudentDashboard.jsx
+//          pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx, pages/doss/DossDashboard.jsx,
+//          pages/public/FoundItems.jsx, pages/public/Home.jsx, pages/public/ItemDetails.jsx, pages/public/LostItems.jsx,
+//          pages/student/MyClaims.jsx, pages/public/SmartMatch.jsx, pages/student/StudentDashboard.jsx
 
 import { cx } from '../../utils/helpers';
 

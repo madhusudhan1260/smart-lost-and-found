@@ -1,6 +1,6 @@
 // File: src/components/ui/DashboardCard.jsx
 // Purpose: White card with a title row, used for every dashboard panel.
-// Used by: pages/DossDashboard.jsx, pages/Home.jsx, pages/StudentDashboard.jsx
+// Used by: pages/doss/DossDashboard.jsx, pages/public/Home.jsx, pages/student/StudentDashboard.jsx
 
 import { Link } from 'react-router-dom';
 import Icon from './Icon';

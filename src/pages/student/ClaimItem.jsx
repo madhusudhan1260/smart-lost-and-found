@@ -1,21 +1,21 @@
-// File: src/pages/ClaimItem.jsx
+// File: src/pages/student/ClaimItem.jsx
 // Purpose: Page /items/:id/claim – item summary + claim form (Student mode).
 // Used by: App.jsx
 
 import { Link, useParams } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { MODES } from '../data/constants';
-import { canBeClaimed } from '../utils/claimUtils';
-import { formatDate } from '../utils/dateUtils';
-import PageHeader from '../components/layout/PageHeader';
-import ClaimForm from '../components/claims/ClaimForm';
-import ItemImage from '../components/items/ItemImage';
-import StatusBadge from '../components/ui/StatusBadge';
-import ModeGate from '../components/layout/ModeGate';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import EmptyState from '../components/ui/EmptyState';
-import Icon from '../components/ui/Icon';
+import { useItems } from '../../context/ItemContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { MODES } from '../../data/constants';
+import { canBeClaimed } from '../../utils/claimUtils';
+import { formatDate } from '../../utils/dateUtils';
+import PageHeader from '../../components/layout/PageHeader';
+import ClaimForm from '../../components/claims/ClaimForm';
+import ItemImage from '../../components/items/ItemImage';
+import StatusBadge from '../../components/ui/StatusBadge';
+import ModeGate from '../../components/layout/ModeGate';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import EmptyState from '../../components/ui/EmptyState';
+import Icon from '../../components/ui/Icon';
 
 function ClaimPageContent() {
   const { id } = useParams(); // /items/:id/claim

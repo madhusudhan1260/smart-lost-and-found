@@ -1,11 +1,11 @@
-// File: src/pages/NotFound.jsx
+// File: src/pages/public/NotFound.jsx
 // Purpose: Page shown for any unknown URL (404).
 // Used by: App.jsx
 
 import { Link } from 'react-router-dom';
-import EmptyState from '../components/ui/EmptyState';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import Icon from '../components/ui/Icon';
+import EmptyState from '../../components/ui/EmptyState';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import Icon from '../../components/ui/Icon';
 
 const SUGGESTIONS = [
   { to: '/found', icon: 'inventory_2', label: 'Browse found items' },

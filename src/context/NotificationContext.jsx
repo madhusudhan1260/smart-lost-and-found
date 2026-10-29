@@ -1,8 +1,8 @@
 // File: src/context/NotificationContext.jsx
 // Purpose: Shared notify() function for toast messages.
 // Used by: components/claims/ClaimForm.jsx, components/items/ItemForm.jsx, components/layout/ModeSwitcher.jsx,
-//          main.jsx, pages/ClaimReview.jsx, pages/DossDashboard.jsx, pages/ItemDetails.jsx,
-//          pages/MyClaims.jsx
+//          main.jsx, pages/doss/ClaimReview.jsx, pages/doss/DossDashboard.jsx, pages/public/ItemDetails.jsx,
+//          pages/student/MyClaims.jsx
 
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import Notification from '../components/ui/Notification';

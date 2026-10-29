@@ -1,6 +1,6 @@
 // File: src/components/matching/MatchCard.jsx
 // Purpose: One Smart Match result with its score and matching factors.
-// Used by: pages/SmartMatch.jsx
+// Used by: pages/public/SmartMatch.jsx
 
 import { Link } from 'react-router-dom';
 import { useMode } from '../../context/ModeContext';

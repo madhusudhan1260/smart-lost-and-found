@@ -1,6 +1,6 @@
 // File: src/components/items/ItemsBrowser.jsx
 // Purpose: Search + filters + results grid shared by the Lost and Found pages.
-// Used by: pages/FoundItems.jsx, pages/LostItems.jsx
+// Used by: pages/public/FoundItems.jsx, pages/public/LostItems.jsx
 
 import { useCallback, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';

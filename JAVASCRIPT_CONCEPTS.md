@@ -52,7 +52,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
   ```
 
 ### 5. `switch`
-- **Files:** `utils/validation.js → validateField / validateClaimField`, `utils/dateUtils.js → isInDateRange`, `utils/statistics.js → getClaimStats`, `pages/ItemDetails.jsx → getDossAction`
+- **Files:** `utils/validation.js → validateField / validateClaimField`, `utils/dateUtils.js → isInDateRange`, `utils/statistics.js → getClaimStats`, `pages/public/ItemDetails.jsx → getDossAction`
 - **Why:** picks one rule per field name, date range or status.
 - **Example:**
   ```js
@@ -166,19 +166,19 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
   ```
 
 ### 19. Arrays & objects
-- **Files:** `data/constants.js` (`CATEGORIES`, `LOCATIONS`, `STATUS_META`, `NEARBY_LOCATIONS` lookup object), `pages/DossClaims.jsx` (`TABS`: an array of objects holding test functions)
+- **Files:** `data/constants.js` (`CATEGORIES`, `LOCATIONS`, `STATUS_META`, `NEARBY_LOCATIONS` lookup object), `pages/doss/DossClaims.jsx` (`TABS`: an array of objects holding test functions)
 
 ### 20. `map()`
 - **Files:** every list render (`ItemsBrowser.jsx`, `DossDashboard.jsx`), `utils/matching.js` (ratio → points), `data/initialItems.js` (build seed items)
 - **Example:** `visibleItems.map((item, index) => <ItemCard key={item.id} item={item} index={index} />)`
 
 ### 21. `filter()`
-- **Files:** `components/items/ItemsBrowser.jsx` (by type), `utils/searchUtils.js` (search/filter), `context/ItemContext.jsx` (competing claims), `pages/DossDashboard.jsx` (pending claims)
+- **Files:** `components/items/ItemsBrowser.jsx` (by type), `utils/searchUtils.js` (search/filter), `context/ItemContext.jsx` (competing claims), `pages/doss/DossDashboard.jsx` (pending claims)
 - **Why:** keeps only the reports/claims that meet a condition.
 - **Example:** `claims.filter((claim) => claim.status === STATUS.CLAIM_PENDING)`
 
 ### 22. `find()`
-- **Files:** `context/ItemContext.jsx → getItemById / getClaimById`, `pages/MyClaims.jsx` (track by ID), `utils/helpers.js → getItemIcon`
+- **Files:** `context/ItemContext.jsx → getItemById / getClaimById`, `pages/student/MyClaims.jsx` (track by ID), `utils/helpers.js → getItemIcon`
 - **Example:** `items.find((item) => item.id === id)`
 
 ### 23. `findIndex()`
@@ -196,7 +196,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Example:** `Object.values(errors).every((message) => !message)`
 
 ### 26. `reduce()`
-- **Files:** `utils/statistics.js → getItemStats, getClaimStats, countBy`, `utils/matching.js → sumPoints`, `utils/claimUtils.js → verifyClaim`, `utils/helpers.js → mergeUpdates`, `pages/StudentDashboard.jsx`
+- **Files:** `utils/statistics.js → getItemStats, getClaimStats, countBy`, `utils/matching.js → sumPoints`, `utils/claimUtils.js → verifyClaim`, `utils/helpers.js → mergeUpdates`, `pages/student/StudentDashboard.jsx`
 - **Why:** turns an array into one value: counters for the dashboard, total points, merged state.
 - **Example:**
   ```js
@@ -205,7 +205,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
   ```
 
 ### 27. `sort()`
-- **Files:** `utils/searchUtils.js → sortItems` (Newest, Oldest, A–Z, Z–A), `utils/matching.js → findMatches` (highest score first), `utils/statistics.js`, `pages/DossDashboard.jsx` (oldest claim first)
+- **Files:** `utils/searchUtils.js → sortItems` (Newest, Oldest, A–Z, Z–A), `utils/matching.js → findMatches` (highest score first), `utils/statistics.js`, `pages/doss/DossDashboard.jsx` (oldest claim first)
 - **Why:** orders lists. We copy the array first (`[...items].sort()`), because `sort()` changes the original.
 - **Example:** `za: (a, b) => b.name.localeCompare(a.name)`
 
@@ -214,12 +214,12 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Example:** `[STATUS.FOUND, STATUS.CLAIM_PENDING].includes(item.status)`
 
 ### 29. Optional chaining `?.`
-- **Files:** `context/ItemContext.jsx`, `pages/ClaimReview.jsx`, `components/layout/ModeSwitcher.jsx`, `utils/helpers.js`
+- **Files:** `context/ItemContext.jsx`, `pages/doss/ClaimReview.jsx`, `components/layout/ModeSwitcher.jsx`, `utils/helpers.js`
 - **Why:** safely reads values that might be `null` or `undefined`.
 - **Example:** `claim?.lostItemId`, `specific?.icon`, `onSwitch?.()`, `event.dataTransfer.files?.[0]`
 
 ### 30. Nullish coalescing `??`
-- **Files:** `utils/matching.js`, `utils/statistics.js`, `pages/ResolvedItems.jsx`
+- **Files:** `utils/matching.js`, `utils/statistics.js`, `pages/public/ResolvedItems.jsx`
 - **Why:** a default only when the value is `null` or `undefined` (unlike `||`, it keeps `0` and `''`).
 - **Example:** `const closedAt = (item) => item.resolvedAt ?? item.collectedAt ?? item.updatedAt ?? item.createdAt;`
 
@@ -253,7 +253,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Why:** filters survive opening an item and coming back, but reset when the tab is closed.
 
 ### 37. Regular expressions
-- **Files:** `utils/validation.js → PATTERNS`, `utils/matching.js → extractKeywords`, `data/constants.js → NAME_ICONS`, `pages/MyClaims.jsx → CLAIM_ID_PATTERN`
+- **Files:** `utils/validation.js → PATTERNS`, `utils/matching.js → extractKeywords`, `data/constants.js → NAME_ICONS`, `pages/student/MyClaims.jsx → CLAIM_ID_PATTERN`
 - **Example:**
   ```js
   phone: /^(\+91)?[6-9]\d{9}$/,
@@ -300,7 +300,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 - **Why:** rotates the campus tips every 5 s. `clearInterval` in the effect cleanup stops it when leaving the page.
 
 ### 44. Debouncing
-- **Files:** `hooks/useDebounce.js`, used in `components/items/ItemsBrowser.jsx` (350 ms) and `pages/DossClaims.jsx` (300 ms)
+- **Files:** `hooks/useDebounce.js`, used in `components/items/ItemsBrowser.jsx` (350 ms) and `pages/doss/DossClaims.jsx` (300 ms)
 - **Why:** filtering runs once after the user pauses typing, not on every key. The list shows "Searching…" in between.
 
 ---

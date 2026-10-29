@@ -1,9 +1,9 @@
 // File: src/components/layout/PageHeader.jsx
 // Purpose: Title area at the top of each page.
-// Used by: components/layout/ReportLayout.jsx, pages/ClaimItem.jsx, pages/ClaimReview.jsx,
-//          pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/FoundItems.jsx,
-//          pages/LostItems.jsx, pages/MyClaims.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
-//          pages/StudentDashboard.jsx
+// Used by: components/layout/ReportLayout.jsx, pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx,
+//          pages/doss/DossClaims.jsx, pages/doss/DossDashboard.jsx, pages/public/FoundItems.jsx,
+//          pages/public/LostItems.jsx, pages/student/MyClaims.jsx, pages/public/ResolvedItems.jsx, pages/public/SmartMatch.jsx,
+//          pages/student/StudentDashboard.jsx
 
 import Icon from '../ui/Icon';
 

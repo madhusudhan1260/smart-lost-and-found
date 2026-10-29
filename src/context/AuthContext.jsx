@@ -1,8 +1,8 @@
 // Purpose: Login state (JWT token + user) shared with the whole app.
 // Used by: main.jsx, context/ModeContext.jsx, context/ItemContext.jsx, components/layout/Navbar.jsx,
-//          pages/Login.jsx, pages/AdminUsers.jsx, components/claims/ClaimForm.jsx
+//          pages/auth/Login.jsx, pages/admin/AdminUsers.jsx, components/claims/ClaimForm.jsx
 //
-// Three kinds of account: student, DOSS staff and super admin (see pages/Login.jsx).
+// Three kinds of account: student, DOSS staff and super admin (see pages/auth/Login.jsx).
 // Browsing, reporting and claiming still work without logging in.
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as authService from '../services/authService';

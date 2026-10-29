@@ -2,8 +2,8 @@
 // Used by: components/claims/ClaimCard.jsx, components/claims/ClaimForm.jsx, components/claims/ClaimReview.jsx,
 //          components/claims/ClaimTimeline.jsx, components/items/ItemCard.jsx, components/items/ItemForm.jsx,
 //          components/matching/MatchCard.jsx,
-//          pages/ClaimItem.jsx, pages/ClaimReview.jsx, pages/DossDashboard.jsx,
-//          pages/ItemDetails.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
+//          pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx, pages/doss/DossDashboard.jsx,
+//          pages/public/ItemDetails.jsx, pages/public/ResolvedItems.jsx, pages/public/SmartMatch.jsx,
 //          utils/claimUtils.js, utils/matching.js, utils/searchUtils.js, utils/statistics.js,
 //          utils/validation.js
 // Small helpers built on the JavaScript Date object.

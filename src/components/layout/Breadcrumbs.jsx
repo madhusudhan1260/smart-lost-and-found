@@ -1,5 +1,5 @@
 // Purpose: "Home › Found items › Black iPhone" trail at the top of detail pages.
-// Used by: pages/ItemDetails.jsx, pages/ClaimItem.jsx
+// Used by: pages/public/ItemDetails.jsx, pages/student/ClaimItem.jsx
 
 import { Link } from 'react-router-dom';
 import Icon from '../ui/Icon';

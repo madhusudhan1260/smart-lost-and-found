@@ -2,8 +2,8 @@
 // Used by: components/claims/ClaimTimeline.jsx, components/ui/Icon.jsx, components/items/ImageUploader.jsx,
 //          components/items/ItemForm.jsx, components/items/ItemImage.jsx, components/items/ItemsBrowser.jsx,
 //          components/matching/MatchCard.jsx, components/layout/ModeSwitcher.jsx, components/layout/Navbar.jsx,
-//          components/layout/ReportLayout.jsx, context/ItemContext.jsx, pages/DossClaims.jsx,
-//          pages/Home.jsx, pages/ItemDetails.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
+//          components/layout/ReportLayout.jsx, context/ItemContext.jsx, pages/doss/DossClaims.jsx,
+//          pages/public/Home.jsx, pages/public/ItemDetails.jsx, pages/public/ResolvedItems.jsx, pages/public/SmartMatch.jsx,
 //          services/itemService.js
 // General-purpose helper functions.
 import { CATEGORY_META, NAME_ICONS } from '../data/constants';

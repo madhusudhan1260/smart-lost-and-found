@@ -1,6 +1,6 @@
 // File: src/components/items/SearchBar.jsx
 // Purpose: Google-style search box ("/" to focus, Esc to clear).
-// Used by: components/items/ItemsBrowser.jsx, pages/DossClaims.jsx, pages/Home.jsx
+// Used by: components/items/ItemsBrowser.jsx, pages/doss/DossClaims.jsx, pages/public/Home.jsx
 
 import { useEffect, useRef } from 'react';
 import Icon from '../ui/Icon';

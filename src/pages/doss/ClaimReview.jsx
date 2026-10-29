@@ -1,23 +1,23 @@
-// File: src/pages/ClaimReview.jsx
+// File: src/pages/doss/ClaimReview.jsx
 // Purpose: Page /doss/claims/:claimId – accept, reject, collect, resolve (DOSS mode).
 // Used by: App.jsx
 
 import { useCallback, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import { useNotification } from '../context/NotificationContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { MODES, STATUS } from '../data/constants';
-import { formatDateTime } from '../utils/dateUtils';
-import PageHeader from '../components/layout/PageHeader';
-import ClaimReviewPanel from '../components/claims/ClaimReview';
-import ClaimCard from '../components/claims/ClaimCard';
-import StatusBadge from '../components/ui/StatusBadge';
-import ModeGate from '../components/layout/ModeGate';
-import Modal from '../components/ui/Modal';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import EmptyState from '../components/ui/EmptyState';
-import Icon from '../components/ui/Icon';
+import { useItems } from '../../context/ItemContext';
+import { useNotification } from '../../context/NotificationContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { MODES, STATUS } from '../../data/constants';
+import { formatDateTime } from '../../utils/dateUtils';
+import PageHeader from '../../components/layout/PageHeader';
+import ClaimReviewPanel from '../../components/claims/ClaimReview';
+import ClaimCard from '../../components/claims/ClaimCard';
+import StatusBadge from '../../components/ui/StatusBadge';
+import ModeGate from '../../components/layout/ModeGate';
+import Modal from '../../components/ui/Modal';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import EmptyState from '../../components/ui/EmptyState';
+import Icon from '../../components/ui/Icon';
 
 const MIN_REASON_LENGTH = 5;
 

@@ -1,23 +1,23 @@
-// File: src/pages/SmartMatch.jsx
+// File: src/pages/public/SmartMatch.jsx
 // Purpose: Page /smart-match – pick a report and see its scored matches.
 // Used by: App.jsx
 
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useItems } from '../context/ItemContext';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { DEFAULT_MATCH_THRESHOLD, STATUS } from '../data/constants';
-import { MATCH_WEIGHTS, findMatches, isOpenForMatching } from '../utils/matching';
-import { formatDate } from '../utils/dateUtils';
-import { cx, pluralize } from '../utils/helpers';
-import PageHeader from '../components/layout/PageHeader';
-import ItemImage from '../components/items/ItemImage';
-import MatchCard from '../components/matching/MatchCard';
-import ScoreRing from '../components/ui/ScoreRing';
-import StatusBadge from '../components/ui/StatusBadge';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import EmptyState from '../components/ui/EmptyState';
-import Icon from '../components/ui/Icon';
+import { useItems } from '../../context/ItemContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { DEFAULT_MATCH_THRESHOLD, STATUS } from '../../data/constants';
+import { MATCH_WEIGHTS, findMatches, isOpenForMatching } from '../../utils/matching';
+import { formatDate } from '../../utils/dateUtils';
+import { cx, pluralize } from '../../utils/helpers';
+import PageHeader from '../../components/layout/PageHeader';
+import ItemImage from '../../components/items/ItemImage';
+import MatchCard from '../../components/matching/MatchCard';
+import ScoreRing from '../../components/ui/ScoreRing';
+import StatusBadge from '../../components/ui/StatusBadge';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import EmptyState from '../../components/ui/EmptyState';
+import Icon from '../../components/ui/Icon';
 
 const WEIGHT_LABELS = {
   category: 'Same category',

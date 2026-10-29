@@ -1,9 +1,9 @@
 // File: src/components/ui/LoadingSpinner.jsx
 // Purpose: Loading spinner and skeleton cards shown while data loads.
-// Used by: components/items/ItemsBrowser.jsx, pages/ClaimItem.jsx, pages/ClaimReview.jsx,
-//          pages/DossClaims.jsx, pages/DossDashboard.jsx, pages/Home.jsx, pages/ItemDetails.jsx,
-//          pages/MyClaims.jsx, pages/ResolvedItems.jsx, pages/SmartMatch.jsx,
-//          pages/StudentDashboard.jsx
+// Used by: components/items/ItemsBrowser.jsx, pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx,
+//          pages/doss/DossClaims.jsx, pages/doss/DossDashboard.jsx, pages/public/Home.jsx, pages/public/ItemDetails.jsx,
+//          pages/student/MyClaims.jsx, pages/public/ResolvedItems.jsx, pages/public/SmartMatch.jsx,
+//          pages/student/StudentDashboard.jsx
 
 export default function LoadingSpinner({ label = 'Loading…' }) {
   return (

@@ -1,7 +1,7 @@
 // File: src/utils/claimUtils.js
 // Used by: components/claims/ClaimReview.jsx, components/claims/ClaimTimeline.jsx, components/items/ItemCard.jsx,
-//          components/matching/MatchCard.jsx, context/ItemContext.jsx, pages/ClaimItem.jsx,
-//          pages/ItemDetails.jsx
+//          components/matching/MatchCard.jsx, context/ItemContext.jsx, pages/student/ClaimItem.jsx,
+//          pages/public/ItemDetails.jsx
 // Business rules for ownership claims.
 // Pure JavaScript – no React – so every rule can be explained on its own.
 import { NEARBY_LOCATIONS, STATUS } from '../data/constants.js';

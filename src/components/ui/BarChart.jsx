@@ -1,5 +1,5 @@
 // File: src/components/ui/BarChart.jsx
-// Used by: pages/DossDashboard.jsx, pages/StudentDashboard.jsx
+// Used by: pages/doss/DossDashboard.jsx, pages/student/StudentDashboard.jsx
 
 import { Link } from 'react-router-dom';
 

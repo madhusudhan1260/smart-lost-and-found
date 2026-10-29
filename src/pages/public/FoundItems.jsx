@@ -1,13 +1,13 @@
-// File: src/pages/FoundItems.jsx
+// File: src/pages/public/FoundItems.jsx
 // Purpose: Page /found – list of all found reports.
 // Used by: App.jsx
 
 import { Link } from 'react-router-dom';
-import { useMode } from '../context/ModeContext';
-import PageHeader from '../components/layout/PageHeader';
-import ItemsBrowser from '../components/items/ItemsBrowser';
-import Icon from '../components/ui/Icon';
-import useDocumentTitle from '../hooks/useDocumentTitle';
+import { useMode } from '../../context/ModeContext';
+import PageHeader from '../../components/layout/PageHeader';
+import ItemsBrowser from '../../components/items/ItemsBrowser';
+import Icon from '../../components/ui/Icon';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 export default function FoundItems() {
   useDocumentTitle('Found Items');
