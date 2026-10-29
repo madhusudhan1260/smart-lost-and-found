@@ -3,8 +3,8 @@
 [← Back to README](../README.md) · [Architecture](ARCHITECTURE.md) · [API details](API.md) · [Team roles](TEAM_ROLES.md)
 
 - **Database:** `smart_lost_found` (tests use `smart_lost_found_test`)
-- **ODM:** Mongoose 9 – schemas in `server/src/models/`
-- **Connection:** `MONGODB_URI` in `server/.env` (default `mongodb://127.0.0.1:27017/smart_lost_found`)
+- **ODM:** Mongoose 9 – schemas in `backend/src/models/`
+- **Connection:** `MONGODB_URI` in `backend/.env` (default `mongodb://127.0.0.1:27017/smart_lost_found`)
 
 ## Collections and relationships
 
@@ -149,10 +149,10 @@ Student accounts are optional – guests can still report and claim.
 ## Seeding
 
 ```bash
-npm run seed     # from the project root (or `npm run seed` inside server/)
+npm run seed     # from the project root (or `npm run seed` inside backend/)
 ```
 
-`server/src/seed/seedDatabase.js` clears the collections and inserts 25 sample reports, 7 claims in different stages, the counters and one demo account per role (`student@college.edu` / `Student@123`, `doss@college.edu` / `Doss@123`, `admin@college.edu` / `Admin@123`). The API also seeds automatically when it starts with an empty database. **DOSS dashboard → Reset demo data** calls `POST /api/admin/reset`, which runs the same function.
+`backend/src/seed/seedDatabase.js` clears the collections and inserts 25 sample reports, 7 claims in different stages, the counters and one demo account per role (`student@college.edu` / `Student@123`, `doss@college.edu` / `Doss@123`, `admin@college.edu` / `Admin@123`). The API also seeds automatically when it starts with an empty database. **DOSS dashboard → Reset demo data** calls `POST /api/admin/reset`, which runs the same function.
 
 ## Useful mongosh commands for the demo
 

@@ -2,7 +2,7 @@
 
 [← Back to README](README.md) · [JavaScript concepts](JAVASCRIPT_CONCEPTS.md) · [React concepts](REACT_CONCEPTS.md)
 
-Paths are relative to `src/`.
+Paths are relative to `frontend/src/`.
 
 ---
 

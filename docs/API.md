@@ -246,8 +246,8 @@ curl -X POST http://localhost:5050/api/claims/CL-3001/accept -H "Authorization: 
 
 ## Automated tests
 
-`server/test/api.test.js` (17 tests, Node test runner + supertest) covers health, login, CRUD, validation, privacy and the full claim workflow, using a separate test database:
+`backend/tests/api.test.js` (25 tests, Node test runner + supertest) covers health, login, CRUD, validation, privacy and the full claim workflow, using a separate test database:
 
 ```bash
-npm run test:server
+npm run test:backend
 ```

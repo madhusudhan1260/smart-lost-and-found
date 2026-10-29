@@ -18,11 +18,11 @@ Fill in the names before submission. Every member should be able to explain thei
 **Responsible for:** every screen, reusable components, routing, client-side validation, Smart Match, and the Google-inspired responsive design.
 
 **Main files:**
-- `src/pages/{public,student,doss,auth,admin}/*` – Home, Lost/Found lists, report forms, item details, claim form, My Claims, Smart Match, both dashboards, Claim Review, Login, Manage accounts
-- `src/components/{layout,ui,items,claims,matching}/*` – Navbar, Modal, StatCard, ItemCard, ItemForm, ClaimForm, ClaimReview, MatchCard …
-- `src/hooks/*` – useLocalStorage, useDebounce, useFormState
-- `src/utils/matching.js` (Smart Match), `validation.js`, `searchUtils.js`, `statistics.js`
-- `src/styles/*.css` (imported by `src/index.css`), `src/App.jsx` (lazy-loaded routes)
+- `frontend/src/pages/{public,student,doss,auth,admin}/*` – Home, Lost/Found lists, report forms, item details, claim form, My Claims, Smart Match, both dashboards, Claim Review, Login, Manage accounts
+- `frontend/src/components/{layout,ui,items,claims,matching}/*` – Navbar, Modal, StatCard, ItemCard, ItemForm, ClaimForm, ClaimReview, MatchCard …
+- `frontend/src/hooks/*` – useLocalStorage, useDebounce, useFormState
+- `frontend/src/utils/matching.js` (Smart Match), `validation.js`, `searchUtils.js`, `statistics.js`
+- `frontend/src/styles/*.css` (imported by `frontend/src/index.css`), `frontend/src/App.jsx` (lazy-loaded routes)
 
 **Demo:** search and filters, the report form with live validation and photo upload, Smart Match scores, mobile layout.
 
@@ -35,12 +35,12 @@ Fill in the names before submission. Every member should be able to explain thei
 **Responsible for:** the Express server, REST endpoints, controllers, the claim workflow rules and error handling.
 
 **Main files:**
-- `server/src/app.js` – middleware order (CORS → JSON → routes → 404 → error handler)
-- `server/src/index.js` – connect to MongoDB, then `listen(5050)`
-- `server/src/routes/*` – URL + HTTP method → controller
-- `server/src/controllers/*` – items, claims, auth, stats, admin
-- `server/src/services/claimWorkflow.js` – submit / accept / reject / collect / resolve
-- `server/src/middleware/errorHandler.js`, `server/src/utils/HttpError.js`, `pick.js`
+- `backend/src/app.js` – middleware order (CORS → JSON → routes → 404 → error handler)
+- `backend/src/index.js` – connect to MongoDB, then `listen(5050)`
+- `backend/src/routes/*` – URL + HTTP method → controller
+- `backend/src/controllers/*` – items, claims, auth, stats, admin
+- `backend/src/services/claimWorkflow.js` – submit / accept / reject / collect / resolve
+- `backend/src/middleware/errorHandler.js`, `backend/src/utils/HttpError.js`, `pick.js`
 
 **Demo:** `curl` or Thunder Client/Postman calls from [API.md](API.md): a 201 create, a 400 with field errors, a 409 duplicate claim, a 404.
 
@@ -53,10 +53,10 @@ Fill in the names before submission. Every member should be able to explain thei
 **Responsible for:** the database design, Mongoose schemas and validation, indexes, relationships, seeding and aggregation.
 
 **Main files:**
-- `server/src/models/Item.js`, `Claim.js`, `User.js`, `Counter.js`
-- `server/src/config/db.js` – connection
-- `server/src/seed/*` – sample data and `seedDatabase()`
-- `server/src/controllers/statsController.js` – `aggregate` + `$group`
+- `backend/src/models/Item.js`, `Claim.js`, `User.js`, `Counter.js`
+- `backend/src/config/db.js` – connection
+- `backend/src/seed/*` – sample data and `seedDatabase()`
+- `backend/src/controllers/statsController.js` – `aggregate` + `$group`
 - [DATABASE.md](DATABASE.md) – ER diagram and field tables
 
 **Demo:** open `mongosh` (or MongoDB Compass), run `db.items.find(...)`, show a claim document change from `CLAIM_PENDING` to `RESOLVED` after the UI workflow, and show `db.users` storing only a bcrypt hash.
@@ -70,15 +70,15 @@ Fill in the names before submission. Every member should be able to explain thei
 **Responsible for:** DOSS staff login, protecting routes, connecting React to the API, and automated tests.
 
 **Main files:**
-- `server/src/middleware/auth.js` – `signToken`, `requireDoss`, `optionalAuth`
-- `server/src/controllers/authController.js`, `server/src/models/User.js` (bcrypt)
-- `src/services/apiClient.js` – `fetch` wrapper, adds `Authorization: Bearer <token>`, `ApiError`
-- `src/services/itemService.js`, `authService.js`
-- `src/context/AuthContext.jsx`, `src/pages/auth/Login.jsx`, `src/pages/admin/AdminUsers.jsx`, `src/context/ModeContext.jsx`, `server/src/middleware/loginLimiter.js`
+- `backend/src/middleware/auth.js` – `signToken`, `requireDoss`, `optionalAuth`
+- `backend/src/controllers/authController.js`, `backend/src/models/User.js` (bcrypt)
+- `frontend/src/services/apiClient.js` – `fetch` wrapper, adds `Authorization: Bearer <token>`, `ApiError`
+- `frontend/src/services/itemService.js`, `authService.js`
+- `frontend/src/context/AuthContext.jsx`, `frontend/src/pages/auth/Login.jsx`, `frontend/src/pages/admin/AdminUsers.jsx`, `frontend/src/context/ModeContext.jsx`, `backend/src/middleware/loginLimiter.js`
 - `vite.config.js` (`/api` proxy), root `package.json` (`npm run dev` starts both)
-- `server/test/api.test.js` (17 API tests), `test/*.test.js` (frontend unit tests)
+- `backend/tests/api.test.js` (25 API tests), `frontend/tests/*.test.js` (frontend unit tests)
 
-**Demo:** wrong password → error; correct login → DOSS dashboard; refresh stays logged in; logout; calling a DOSS route without a token returns 401; run `npm run test:server` and `npm test`.
+**Demo:** wrong password → error; correct login → DOSS dashboard; refresh stays logged in; logout; calling a DOSS route without a token returns 401; run `npm run test:backend` and `npm test`.
 
 **Be ready to explain:** JWT (header.payload.signature, expiry), hashing vs encryption (bcrypt), why the frontend hiding something is not security, CORS, the Vite proxy, how an error from MongoDB reaches a toast in React, what the tests check.
 

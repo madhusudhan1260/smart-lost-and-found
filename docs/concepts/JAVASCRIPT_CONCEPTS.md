@@ -2,7 +2,7 @@
 
 [← Back to README](README.md) · [JavaScript concepts](JAVASCRIPT_CONCEPTS.md) · [React concepts](REACT_CONCEPTS.md)
 
-Each concept lists **1. File**, **2. Why it is used** and **3. an example from this project**. Paths are relative to `src/`. Functions are named so you can find them quickly with Ctrl/Cmd+F.
+Each concept lists **1. File**, **2. Why it is used** and **3. an example from this project**. Paths are relative to `frontend/src/`. Functions are named so you can find them quickly with Ctrl/Cmd+F.
 
 > 💡 Most pure-JavaScript logic lives in `utils/` and `services/`. Those files do **not** import React, so you can explain them as plain JavaScript.
 
@@ -321,7 +321,7 @@ Each concept lists **1. File**, **2. Why it is used** and **3. an example from t
 ## Testing Strategy & Pure Functions
 
 ### 45. Pure Functions & Deterministic Unit Testing
-- **Files:** `src/utils/matching.js`, `src/utils/validation.js`, `src/utils/dateUtils.js`, `src/utils/helpers.js`, `src/utils/statistics.js`
+- **Files:** `frontend/src/utils/matching.js`, `frontend/src/utils/validation.js`, `frontend/src/utils/dateUtils.js`, `frontend/src/utils/helpers.js`, `frontend/src/utils/statistics.js`
 - **Why:** The codebase isolates business logic into pure JavaScript functions with zero DOM or React dependencies. A pure function always produces the same output for identical inputs and causes no side effects.
 - **Key Testable Modules:**
   1. **Matching Logic (`utils/matching.js`):**

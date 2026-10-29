@@ -81,7 +81,7 @@ Demo accounts (seed data only): Student `student@college.edu / Student@123`, DOS
 | jsonwebtoken | 9 | Creates and verifies JWT tokens (8 h expiry) | Stateless authentication – the server stores no sessions |
 | bcryptjs | 3 | Password hashing (10 salt rounds) | Passwords are never stored in plain text |
 | cors | 2 | Allows the React origin to call the API | Browser security (Same-Origin Policy) |
-| dotenv | – | Reads `server/.env` | Secrets and settings kept out of the code |
+| dotenv | – | Reads `backend/.env` | Secrets and settings kept out of the code |
 | morgan | 1 | Request logging (`GET /api/items 200 4 ms`) | Debugging and monitoring |
 | supertest (dev) | 7 | HTTP integration tests | Calls the Express app in tests without starting a real server |
 | node:test (built in) | – | Test runner for frontend utils and API | No Jest/Mocha dependency needed |
@@ -118,7 +118,7 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  subgraph Frontend [src/ – React]
+  subgraph Frontend [frontend/src/ – React]
     main[main.jsx] --> providers[context/ providers]
     providers --> app[App.jsx routes]
     app --> pages[pages/]
@@ -127,7 +127,7 @@ flowchart TB
     components --> utils[utils/ pure JS logic]
     providers --> services[services/ apiClient + *Service]
   end
-  subgraph Backend [server/src – Express]
+  subgraph Backend [backend/src – Express]
     index[index.js] --> appjs[app.js]
     appjs --> routes[routes/]
     routes --> middleware[middleware/]
@@ -229,49 +229,59 @@ flowchart LR
 
 ```
 lost_and_found/
-├── index.html                # Vite HTML entry (root div)
-├── vite.config.js            # React plugin + /api proxy to :5050
-├── package.json              # Frontend deps + scripts for the whole stack
-├── .oxlintrc.json            # Lint rules
-├── .gitignore                # node_modules, dist, server/.env (keeps .env.example)
-├── LICENSE                   # MIT
-├── README.md                 # Setup, features, demo logins, viva questions
-├── JAVASCRIPT_CONCEPTS.md    # Where each JS concept is used
-├── REACT_CONCEPTS.md         # Where each React concept is used
-├── CONTRIBUTION_NOTES.md, file.md, file.docx   # Team notes / report drafts
-├── public/
-│   ├── favicon.svg
-│   └── data/campus-tips.json # Tips loaded with fetch() by TipTicker
-├── docs/
-│   ├── ARCHITECTURE.md  DATABASE.md  API.md  TEAM_ROLES.md  SCREENSHOTS.md
-│   ├── PROJECT_PROMPT.md     # this file
-│   └── screenshots/01–16 *.png
-├── src/                      # React frontend
-│   ├── README.md             # guide: which folder to open for each change
-│   ├── main.jsx  App.jsx (lazy routes)  index.css (imports styles/)
-│   ├── styles/    (10) tokens, base, controls, components, pages, animations, responsive, enhancements, auth, admin
-│   ├── assets/logo.svg
-│   ├── context/   (4)  AuthContext, ModeContext, ItemContext, NotificationContext
-│   ├── services/  (4)  apiClient, authService, itemService, userService
-│   ├── pages/     (17) public/ student/ doss/ auth/ admin/
-│   ├── components/(40) layout/ ui/ items/ claims/ matching/
-│   ├── hooks/     (6)  custom hooks
-│   ├── utils/     (10) pure JavaScript logic
-│   └── data/constants.js
-├── test/                     # Frontend unit tests (node:test) – 7 files
-└── server/                   # Node.js + Express backend
-    ├── package.json  .env.example  (.env – not committed)
-    ├── src/
-    │   ├── index.js  app.js
-    │   ├── config/      env.js, db.js, constants.js
-    │   ├── models/      Item, Claim, User, Counter
-    │   ├── controllers/ item, claim, auth, user, stats, admin
-    │   ├── services/    claimWorkflow.js
-    │   ├── routes/      index, itemRoutes, claimRoutes, userRoutes
-    │   ├── middleware/  auth.js, errorHandler.js, loginLimiter.js
-    │   ├── seed/        seed.js, seedDatabase.js, sampleItems.js, sampleClaims.js
-    │   └── utils/       HttpError.js, pick.js, dates.js
-    └── test/api.test.js      # API integration tests (supertest)
+│
+├── README.md                ← start here
+├── package.json             ← "run everything" commands (npm run dev, npm test …)
+│
+├── frontend/                ← 1. WHAT THE USER SEES (React + Vite)
+│   ├── index.html
+│   ├── vite.config.js       ← dev server; sends /api calls to the backend
+│   ├── public/              ← favicon, campus-tips.json
+│   ├── tests/               ← unit tests for src/utils (npm run test:frontend)
+│   └── src/                 ← see frontend/src/README.md for a guide
+│       ├── main.jsx         ← starts React (router + providers)
+│       ├── App.jsx          ← every URL → page
+│       ├── pages/           ← one file per screen
+│       │   ├── public/      Home  LostItems  FoundItems  ItemDetails  SmartMatch  ResolvedItems  NotFound
+│       │   ├── student/     ReportLost  ReportFound  ClaimItem  MyClaims  StudentDashboard
+│       │   ├── doss/        DossDashboard  DossClaims  ClaimReview
+│       │   ├── auth/        Login
+│       │   └── admin/       AdminUsers
+│       ├── components/      ← reusable pieces used by the pages
+│       │   ├── layout/      Navbar  Footer  AccountMenu  ModeSwitcher  ModeGate  PageHeader …
+│       │   ├── ui/          Icon  Modal  StatCard  EmptyState  LoadingSpinner  FormField …
+│       │   ├── items/       ItemCard  ItemsBrowser  ItemForm  SearchBar  FilterPanel …
+│       │   ├── claims/      ClaimForm  ClaimCard  ClaimTimeline  ClaimReview …
+│       │   └── matching/    MatchCard  MatchPairList
+│       ├── context/         ← shared state: Auth, Mode, Item, Notification
+│       ├── services/        ← talks to the backend: apiClient, authService, itemService, userService
+│       ├── hooks/           ← custom hooks: useLocalStorage, useDebounce, useFormState …
+│       ├── utils/           ← plain JS logic: matching, validation, statistics, dates …
+│       ├── data/            ← constants (categories, locations, statuses, roles)
+│       ├── styles/          ← CSS: tokens, base, controls, components, pages … (index.css imports them)
+│       └── assets/          ← logo
+│
+├── backend/                 ← 2. SERVER + DATABASE (Node.js + Express + MongoDB)
+│   ├── .env.example         ← copy to .env (PORT, MONGODB_URI, JWT_SECRET …)
+│   ├── tests/               ← API integration tests (npm run test:backend)
+│   └── src/
+│       ├── index.js         ← connect to MongoDB → start the API on :5050
+│       ├── app.js           ← Express app: CORS, JSON, routes, errors
+│       ├── routes/          ← URLs: /api/items, /api/claims, /api/auth, /api/users
+│       ├── middleware/      ← auth (JWT + roles), login limiter, error handler
+│       ├── controllers/     ← what each URL does: item, claim, auth, user, stats, admin
+│       ├── services/        ← claimWorkflow.js – the claim rules
+│       ├── models/          ← DATABASE: MongoDB collections Item, Claim, User, Counter
+│       ├── seed/            ← DATABASE: sample data + demo accounts
+│       ├── config/          ← settings, database connection, allowed values
+│       └── utils/           ← small helpers
+│
+└── docs/                    ← 3. DOCUMENTATION
+    ├── PROJECT_PROMPT.md    ← everything about the project in one file
+    ├── ARCHITECTURE.md  API.md  DATABASE.md  TEAM_ROLES.md  SCREENSHOTS.md
+    ├── concepts/            ← JAVASCRIPT_CONCEPTS.md, REACT_CONCEPTS.md
+    ├── team-notes/          ← CONTRIBUTION_NOTES.md, file.md, file.docx
+    └── screenshots/
 ```
 
 ---
@@ -284,14 +294,15 @@ Format: **File – what it contains · topics used · why**
 
 | File | Contains | Topics used | Why |
 |---|---|---|---|
-| `index.html` | `<div id="root">`, script `src/main.jsx`, meta tags | HTML5, SPA entry | Vite serves one page; React renders everything inside `#root` |
-| `vite.config.js` | `@vitejs/plugin-react`, `server.proxy: { '/api': 'http://localhost:5050' }`, `open: true` | Build tooling, reverse proxy | Same-origin calls in development – no CORS issues, no hard-coded backend URL |
-| `package.json` | Deps; scripts `dev` (concurrently api+web), `setup`, `seed`, `build`, `lint`, `test`, `test:server` | npm scripts, ES modules (`"type": "module"`) | One command to install, seed, run and test the whole stack |
+| `frontend/index.html` | `<div id="root">`, script `frontend/src/main.jsx`, meta tags | HTML5, SPA entry | Vite serves one page; React renders everything inside `#root` |
+| `frontend/vite.config.js` | `@vitejs/plugin-react`, `server.proxy: { '/api': 'http://localhost:5050' }`, `open: true` | Build tooling, reverse proxy | Same-origin calls in development – no CORS issues, no hard-coded backend URL |
+| `package.json` (root) | Only run scripts: `setup`, `dev` (concurrently backend + frontend), `seed`, `build`, `lint`, `test`, `test:frontend`, `test:backend` | npm scripts, `--prefix` | One command to install, seed, run and test the whole stack |
+| `frontend/package.json`, `backend/package.json` | Each side's own dependencies and scripts | ES modules (`"type": "module"`) | Frontend and backend can be installed, run and deployed separately |
 | `.gitignore` | Ignores `node_modules`, `dist`, `.env*` but keeps `.env.example` | Secret management | Never push secrets (JWT secret, DB URI) |
-| `.oxlintrc.json` | Lint configuration | Static analysis | Catch bugs and bad React patterns early |
+| `frontend/.oxlintrc.json` | Lint configuration | Static analysis | Catch bugs and bad React patterns early |
 | `README.md` | Overview, features, setup, demo accounts, testing checklist, viva Q&A | Documentation | Required by FSD guidelines; helps evaluators run it |
-| `JAVASCRIPT_CONCEPTS.md`, `REACT_CONCEPTS.md` | Concept → file mapping | Documentation | Viva preparation |
-| `public/data/campus-tips.json` | Array of campus tips | Static JSON | Demonstrates `fetch()` of a static file + `setInterval` rotation |
+| `docs/concepts/JAVASCRIPT_CONCEPTS.md`, `REACT_CONCEPTS.md` | Concept → file mapping | Documentation | Viva preparation |
+| `frontend/public/data/campus-tips.json` | Array of campus tips | Static JSON | Demonstrates `fetch()` of a static file + `setInterval` rotation |
 
 ### 5.2 `docs/`
 
@@ -305,16 +316,16 @@ Format: **File – what it contains · topics used · why**
 
 ---
 
-### 5.3 Backend – `server/`
+### 5.3 Backend – `backend/`
 
 #### Entry and app
 
 | File | Contains | Topics | Why |
 |---|---|---|---|
-| `server/package.json` | Express, Mongoose, jsonwebtoken, bcryptjs, cors, dotenv, morgan, supertest; scripts `start`, `dev` (`node --watch`), `seed`, `test` | Dependency management | Backend is an independent package |
-| `server/.env.example` | `PORT=5050`, `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN=8h`, `CLIENT_ORIGIN`, demo account emails/passwords | Environment variables | Configuration without changing code; real `.env` is git-ignored |
-| `src/index.js` | Connects to MongoDB, seeds if the DB is empty, ensures demo accounts, `app.listen(5050)`; exits with a clear message if MongoDB is down | Top-level `await`, process lifecycle | Separates *starting* the server from *defining* it |
-| `src/app.js` | `express()`; middleware in order: `cors(clientOrigin)` → `express.json({ limit: '2mb' })` → `morgan` (not in tests) → `/api` routes → `notFound` → `errorHandler` | Middleware pipeline, CORS, body parsing | Exported separately so tests can import the app without opening a port |
+| `backend/package.json` | Express, Mongoose, jsonwebtoken, bcryptjs, cors, dotenv, morgan, supertest; scripts `start`, `dev` (`node --watch`), `seed`, `test` | Dependency management | Backend is an independent package |
+| `backend/.env.example` | `PORT=5050`, `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN=8h`, `CLIENT_ORIGIN`, demo account emails/passwords | Environment variables | Configuration without changing code; real `.env` is git-ignored |
+| `backend/src/index.js` | Connects to MongoDB, seeds if the DB is empty, ensures demo accounts, `app.listen(5050)`; exits with a clear message if MongoDB is down | Top-level `await`, process lifecycle | Separates *starting* the server from *defining* it |
+| `backend/src/app.js` | `express()`; middleware in order: `cors(clientOrigin)` → `express.json({ limit: '2mb' })` → `morgan` (not in tests) → `/api` routes → `notFound` → `errorHandler` | Middleware pipeline, CORS, body parsing | Exported separately so tests can import the app without opening a port |
 
 #### `config/`
 
@@ -384,13 +395,13 @@ Format: **File – what it contains · topics used · why**
 | `pick.js` | `pick(source, fields)` whitelist | Mass-assignment protection |
 | `dates.js` | `toISODate`, `daysAgoISO`, `isoHoursAgo`, `daysBetween`, `isFutureDate` (local-date parsing) | Date rules without time-zone bugs |
 
-#### `server/test/api.test.js`
+#### `backend/tests/api.test.js`
 
 25 integration tests with `node:test` + `supertest` against `smart_lost_found_test`: health, 404 JSON, wrong password 401, JWT never returns the hash, DOSS-only 401, role tabs (student on DOSS tab → 403, admin on DOSS tab OK), student sign-up can't become staff, duplicate email 409, weak password 400, student token can't accept claims (403) or see private details, super admin manages users and disabled accounts can't log in, admin can't lock themselves out, public list hides private details, search, validation 400 with `details`, server ignores client `status`, update/delete need DOSS, full claim workflow, duplicate claim 409, public claims hide personal data, reject needs reason, accept → collect → resolve, resolved item can't be claimed, competing claims auto-rejected, `populate`, aggregation stats, admin reset. **Why:** proves the backend rules work and protects against regressions.
 
 ---
 
-### 5.4 Frontend – `src/`
+### 5.4 Frontend – `frontend/src/`
 
 #### Entry
 
@@ -516,7 +527,7 @@ Format: **File – what it contains · topics used · why**
 
 Categories, locations, nearby-locations map (for matching), `MODES`, `ROLES`, `STAFF_ROLES`, `ROLE_META` (label/icon/colour), `DEMO_ACCOUNTS`, `STATUS`, `STATUS_META`, status options per list, `STORAGE_KEYS`, DOSS office details, demo claim IDs. **Why:** no "magic strings" spread around the code.
 
-#### `test/` (frontend unit tests – 53 tests)
+#### `frontend/tests/` (frontend unit tests – 53 tests)
 
 `authValidation.test.js`, `claimUtils.test.js`, `dateUtils.test.js`, `matching.test.js`, `searchUtils.test.js`, `statistics.test.js`, `validation.test.js` – run with `npm test` (`node --test`). **Why:** pure functions are easy to test and are the core logic of the app.
 
@@ -646,7 +657,7 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 | REST API design | routes/ | Standard client–server contract |
 | Middleware pipeline | app.js, auth.js, errorHandler.js, loginLimiter.js | Cross-cutting concerns in order |
 | Router modules | routes/*.js | Modular endpoints |
-| MVC-style layering (routes → controllers → services → models) | server/src | Separation of concerns, testability |
+| MVC-style layering (routes → controllers → services → models) | backend/src | Separation of concerns, testability |
 | Centralised error handling | errorHandler.js | Consistent JSON errors |
 | Environment configuration | env.js, .env | Secrets out of code |
 | CORS | app.js | Allow React origin |
@@ -692,8 +703,8 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 ### Testing & tooling
 | Topic | Where | Why |
 |---|---|---|
-| Unit tests (`node:test`, `assert`) | `test/` – 53 tests | Verify pure logic |
-| Integration tests (`supertest`, separate DB) | `server/test/` – 25 tests | Verify API + DB + auth together |
+| Unit tests (`node:test`, `assert`) | `frontend/tests/` – 53 tests | Verify pure logic |
+| Integration tests (`supertest`, separate DB) | `backend/tests/` – 25 tests | Verify API + DB + auth together |
 | Linting (oxlint) | `npm run lint` | Code quality |
 | Vite proxy, HMR, production build | vite.config.js | Fast development, optimised output |
 | concurrently, `node --watch` | package.json | One-command full-stack dev with auto-restart |
@@ -706,9 +717,8 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 ```bash
 npm run setup        # install frontend + server packages and seed MongoDB
 npm run dev          # API on http://localhost:5050, React on http://localhost:5173
-npm test             # 53 frontend unit tests
-npm run test:server  # 25 API integration tests (MongoDB must be running)
-npm run build        # production build into dist/
+npm test             # all tests: 53 frontend + 25 backend (MongoDB must be running)
+npm run build        # production build into frontend/dist/
 ```
 
 Sign in at `http://localhost:5173/login` with the demo accounts listed in section 1.

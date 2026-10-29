@@ -22,7 +22,7 @@ A full-stack **React.js → Node.js/Express.js → MongoDB** project (3rd-year B
 - [7. Architecture](#7-architecture)
   - [Privacy Boundary & Field Exposure](#privacy-boundary--field-exposure)
 - [8. Folder structure](#8-folder-structure)
-- [9. Smart Match algorithm (`src/utils/matching.js`)](#9-smart-match-algorithm-srcutilsmatchingjs)
+- [9. Smart Match algorithm (`frontend/src/utils/matching.js`)](#9-smart-match-algorithm-srcutilsmatchingjs)
 - [10. Data flow example: "Accept claim"](#10-data-flow-example-accept-claim)
 - [11. Data storage](#11-data-storage)
 - [12. JavaScript & React concepts](#12-javascript--react-concepts)
@@ -164,10 +164,10 @@ Items and claims each have their own status. `CLAIM_ACCEPTED` / `CLAIM_REJECTED`
 |---|---|---|
 | Frontend | **React 19**, React Router 7, Vite | Pages, components, hooks, routing, dev server |
 | Frontend | JavaScript ES6+, HTML5, CSS3 | All logic (no TypeScript), Google-inspired design system |
-| Backend | **Node.js + Express 5** | REST API, middleware, business rules (`server/`) |
+| Backend | **Node.js + Express 5** | REST API, middleware, business rules (`backend/`) |
 | Database | **MongoDB 8 + Mongoose 9** | Collections `items`, `claims`, `users`, `counters` |
 | Auth | JSON Web Tokens + bcrypt | DOSS staff login; students need no account |
-| Testing | Node test runner + supertest | 17 API tests (`server/test`) + frontend unit tests (`test/`) |
+| Testing | Node test runner + supertest | 25 API tests (`backend/tests`) + frontend unit tests (`frontend/tests/`) |
 | Tooling | concurrently, dotenv, morgan, oxlint | One `npm run dev`, config in `.env`, request logs, linting |
 | Assets | `material-symbols`, `@fontsource/roboto` | Icons and font bundled locally (work offline) |
 
@@ -179,9 +179,9 @@ flowchart LR
     B -- "Mongoose" --> C[("MongoDB<br/>items · claims · users")]
 ```
 
-- **React** (`src/`) only shows data and collects input. `src/services/apiClient.js` is the one place that calls the API.
-- **Express** (`server/src/`) exposes the REST API, checks the JWT for DOSS routes, validates input and runs the claim workflow (`services/claimWorkflow.js`).
-- **MongoDB** stores everything; the Mongoose schemas in `server/src/models/` define the database design and validation.
+- **React** (`frontend/src/`) only shows data and collects input. `frontend/src/services/apiClient.js` is the one place that calls the API.
+- **Express** (`backend/src/`) exposes the REST API, checks the JWT for DOSS routes, validates input and runs the claim workflow (`services/claimWorkflow.js`).
+- **MongoDB** stores everything; the Mongoose schemas in `backend/src/models/` define the database design and validation.
 
 Full diagrams (layers and a request sequence): **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
 
@@ -200,57 +200,63 @@ These rules are enforced by the **server**: `privateDetails` has `select: false`
 
 ## 8. Folder structure
 
+Three folders – **frontend**, **backend** (with the database code) and **docs**:
+
 ```
 lost_and_found/
-├── index.html
-├── public/
-│   ├── favicon.svg
-│   └── data/campus-tips.json          ← loaded with fetch()
-└── src/                               ← see src/README.md for a full guide
-    ├── main.jsx                       ← Router + providers + fonts
-    ├── App.jsx                        ← all routes (pages load on demand with React.lazy)
-    ├── index.css                      ← imports the files in styles/ in order
-    ├── styles/      tokens  base  controls  components  pages  animations
-    │                responsive  enhancements  auth  admin
-    ├── assets/logo.svg
-    ├── components/
-    │   ├── layout/   Navbar  Footer  AccountMenu  ModeSwitcher  ModeGate  PageHeader
-    │   │             Breadcrumbs  ReportLayout  ScrollToTop  BackToTop  KeyboardShortcuts
-    │   ├── ui/       Icon  Modal  Lightbox  Notification  EmptyState  LoadingSpinner  FormField
-    │   │             StatusBadge  StatCard  DashboardCard  BarChart  ScoreRing  Highlight  TipTicker
-    │   ├── items/    ItemCard  ItemImage  ItemsBrowser  SearchBar  FilterPanel  ActiveFilters
-    │   │             ItemForm  ImageUploader
-    │   ├── claims/   ClaimForm  ClaimCard  ClaimTimeline  ClaimReview  CollectionInstructions
-    │   └── matching/ MatchCard  MatchPairList
-    ├── pages/
-    │   ├── public/   Home  LostItems  FoundItems  ItemDetails  SmartMatch  ResolvedItems  NotFound
-    │   ├── student/  ReportLost  ReportFound  ClaimItem  MyClaims  StudentDashboard
-    │   ├── doss/     DossDashboard  DossClaims  ClaimReview
-    │   ├── auth/     Login
-    │   └── admin/    AdminUsers
-    ├── context/     ItemContext.jsx  AuthContext.jsx  ModeContext.jsx  NotificationContext.jsx
-    ├── hooks/       useLocalStorage  useDebounce  useFormState  useDocumentTitle  useOnlineStatus  useRipple
-    ├── services/    apiClient.js  itemService.js  authService.js  userService.js
-    ├── utils/       matching.js  claimUtils.js  validation.js  authValidation.js  searchUtils.js
-    │                statistics.js  dateUtils.js  storage.js  imageUtils.js  helpers.js
-    └── data/        constants.js
-
-server/                                ← Node.js + Express + MongoDB API
-├── .env.example                       ← copy to .env (PORT, MONGODB_URI, JWT_SECRET …)
-├── src/
-│   ├── index.js                       ← connect MongoDB → listen on 5050
-│   ├── app.js                         ← Express app: CORS, JSON, routes, errors
-│   ├── config/      env.js  db.js  constants.js
-│   ├── models/      Item.js  Claim.js  User.js  Counter.js
-│   ├── routes/      index.js  itemRoutes.js  claimRoutes.js  userRoutes.js
-│   ├── controllers/ itemController  claimController  authController  statsController  adminController
-│   ├── services/    claimWorkflow.js   ← claim lifecycle rules
-│   ├── middleware/  auth.js (JWT)  errorHandler.js
-│   ├── seed/        seed.js  seedDatabase.js  sampleItems.js (25)  sampleClaims.js (7)
-│   └── utils/       dates.js  HttpError.js  pick.js
-└── test/api.test.js                   ← 17 API integration tests
-
-docs/   ARCHITECTURE.md  DATABASE.md  API.md  TEAM_ROLES.md  SCREENSHOTS.md
+│
+├── README.md                ← start here
+├── package.json             ← "run everything" commands (npm run dev, npm test …)
+│
+├── frontend/                ← 1. WHAT THE USER SEES (React + Vite)
+│   ├── index.html
+│   ├── vite.config.js       ← dev server; sends /api calls to the backend
+│   ├── public/              ← favicon, campus-tips.json
+│   ├── tests/               ← unit tests for src/utils (npm run test:frontend)
+│   └── src/                 ← see frontend/src/README.md for a guide
+│       ├── main.jsx         ← starts React (router + providers)
+│       ├── App.jsx          ← every URL → page
+│       ├── pages/           ← one file per screen
+│       │   ├── public/      Home  LostItems  FoundItems  ItemDetails  SmartMatch  ResolvedItems  NotFound
+│       │   ├── student/     ReportLost  ReportFound  ClaimItem  MyClaims  StudentDashboard
+│       │   ├── doss/        DossDashboard  DossClaims  ClaimReview
+│       │   ├── auth/        Login
+│       │   └── admin/       AdminUsers
+│       ├── components/      ← reusable pieces used by the pages
+│       │   ├── layout/      Navbar  Footer  AccountMenu  ModeSwitcher  ModeGate  PageHeader …
+│       │   ├── ui/          Icon  Modal  StatCard  EmptyState  LoadingSpinner  FormField …
+│       │   ├── items/       ItemCard  ItemsBrowser  ItemForm  SearchBar  FilterPanel …
+│       │   ├── claims/      ClaimForm  ClaimCard  ClaimTimeline  ClaimReview …
+│       │   └── matching/    MatchCard  MatchPairList
+│       ├── context/         ← shared state: Auth, Mode, Item, Notification
+│       ├── services/        ← talks to the backend: apiClient, authService, itemService, userService
+│       ├── hooks/           ← custom hooks: useLocalStorage, useDebounce, useFormState …
+│       ├── utils/           ← plain JS logic: matching, validation, statistics, dates …
+│       ├── data/            ← constants (categories, locations, statuses, roles)
+│       ├── styles/          ← CSS: tokens, base, controls, components, pages … (index.css imports them)
+│       └── assets/          ← logo
+│
+├── backend/                 ← 2. SERVER + DATABASE (Node.js + Express + MongoDB)
+│   ├── .env.example         ← copy to .env (PORT, MONGODB_URI, JWT_SECRET …)
+│   ├── tests/               ← API integration tests (npm run test:backend)
+│   └── src/
+│       ├── index.js         ← connect to MongoDB → start the API on :5050
+│       ├── app.js           ← Express app: CORS, JSON, routes, errors
+│       ├── routes/          ← URLs: /api/items, /api/claims, /api/auth, /api/users
+│       ├── middleware/      ← auth (JWT + roles), login limiter, error handler
+│       ├── controllers/     ← what each URL does: item, claim, auth, user, stats, admin
+│       ├── services/        ← claimWorkflow.js – the claim rules
+│       ├── models/          ← DATABASE: MongoDB collections Item, Claim, User, Counter
+│       ├── seed/            ← DATABASE: sample data + demo accounts
+│       ├── config/          ← settings, database connection, allowed values
+│       └── utils/           ← small helpers
+│
+└── docs/                    ← 3. DOCUMENTATION
+    ├── PROJECT_PROMPT.md    ← everything about the project in one file
+    ├── ARCHITECTURE.md  API.md  DATABASE.md  TEAM_ROLES.md  SCREENSHOTS.md
+    ├── concepts/            ← JAVASCRIPT_CONCEPTS.md, REACT_CONCEPTS.md
+    ├── team-notes/          ← CONTRIBUTION_NOTES.md, file.md, file.docx
+    └── screenshots/
 ```
 
 ### Routes
@@ -269,7 +275,7 @@ docs/   ARCHITECTURE.md  DATABASE.md  API.md  TEAM_ROLES.md  SCREENSHOTS.md
 | `/doss/claims` | Claims queue | DOSS |
 | `/doss/claims/:claimId` | Claim Review | DOSS |
 
-## 9. Smart Match algorithm (`src/utils/matching.js`)
+## 9. Smart Match algorithm (`frontend/src/utils/matching.js`)
 
 `calculateMatchScore(lostItem, foundItem)` returns **0–100**. Each factor gives a ratio from 0 to 1, which is multiplied by its weight:
 
@@ -311,7 +317,7 @@ docs/   ARCHITECTURE.md  DATABASE.md  API.md  TEAM_ROLES.md  SCREENSHOTS.md
 
 `findMatches(item, allItems, minScore)` works from either side (lost → found, found → lost). It only compares **open** reports: `filter → map(score) → filter(≥ threshold) → sort(desc)`.
 
-### Claim verification helper (`src/utils/claimUtils.js → verifyClaim`)
+### Claim verification helper (`frontend/src/utils/claimUtils.js → verifyClaim`)
 
 This helps DOSS decide; it never decides automatically. It checks:
 
@@ -355,8 +361,8 @@ The **browser** keeps only small per-user settings with `useLocalStorage` (JSON 
 
 ## 12. JavaScript & React concepts
 
-- **[JAVASCRIPT_CONCEPTS.md](JAVASCRIPT_CONCEPTS.md)**: every concept, with the file, why it is used, and a small example.
-- **[REACT_CONCEPTS.md](REACT_CONCEPTS.md)**: every React concept and exactly where it is used.
+- **[JAVASCRIPT_CONCEPTS.md](docs/concepts/JAVASCRIPT_CONCEPTS.md)**: every concept, with the file, why it is used, and a small example.
+- **[REACT_CONCEPTS.md](docs/concepts/REACT_CONCEPTS.md)**: every React concept and exactly where it is used.
 
 ## 13. Installation & running
 
@@ -366,11 +372,11 @@ Requirements: **Node.js 18+**, npm, and **MongoDB** running locally (or a MongoD
 git clone https://github.com/madhusudhan1260/smart-lost-and-found.git
 cd smart-lost-and-found
 
-npm run setup      # installs frontend + server packages and seeds MongoDB
+npm run setup      # installs root, frontend and backend packages and seeds MongoDB
 npm run dev        # starts the API (http://localhost:5050) and React (http://localhost:5173)
 ```
 
-Optional: copy `server/.env.example` to `server/.env` to change the port, the MongoDB URI (e.g. Atlas), the JWT secret or the DOSS account.
+Optional: copy `backend/.env.example` to `backend/.env` to change the port, the MongoDB URI (e.g. Atlas), the JWT secret or the DOSS account.
 
 **Sign in** at http://localhost:5173/login – one page with a tab for each role (each tab has a *Use demo* button):
 
@@ -385,31 +391,31 @@ Guests can still browse, report and claim without signing in.
 | Command (project root) | Purpose |
 |---|---|
 | `npm run dev` | API + React together (`concurrently`) |
-| `npm run dev:server` / `npm run dev:client` | Only one of them |
+| `npm run dev:backend` / `npm run dev:frontend` | Only one of them |
 | `npm run seed` | Reset MongoDB to the sample data |
-| `npm run test:server` | 17 API integration tests (needs MongoDB) |
-| `npm test` | Frontend unit tests |
-| `npm run build` | Production build of the React app into `dist/` |
+| `npm test` | All tests: 53 frontend + 25 backend (needs MongoDB) |
+| `npm run test:frontend` / `npm run test:backend` | One side only |
+| `npm run build` | Production build of the React app into `frontend/dist/` |
 | `npm run lint` | oxlint |
 
-Installing MongoDB on macOS: `brew tap mongodb/brew && brew install mongodb-community && brew services start mongodb-community`. On Windows use the MongoDB Community installer, or use a free MongoDB Atlas cluster and put its URI in `server/.env`.
+Installing MongoDB on macOS: `brew tap mongodb/brew && brew install mongodb-community && brew services start mongodb-community`. On Windows use the MongoDB Community installer, or use a free MongoDB Atlas cluster and put its URI in `backend/.env`.
 
 ### Troubleshooting
 
 - **"Cannot reach the server" banner:** the API is not running. Start everything with `npm run dev` and check the `[api]` lines.
-- **`Could not start the API … Is MongoDB running?`:** start MongoDB (`brew services start mongodb-community`) or fix `MONGODB_URI` in `server/.env`.
-- **Port 5050 in use:** set `PORT=5051` in `server/.env` and change the proxy in `vite.config.js`.
+- **`Could not start the API … Is MongoDB running?`:** start MongoDB (`brew services start mongodb-community`) or fix `MONGODB_URI` in `backend/.env`.
+- **Port 5050 in use:** set `PORT=5051` in `backend/.env` and change the proxy in `frontend/vite.config.js`.
 
 - **Port in use (`EADDRINUSE: 5173`):** Vite will automatically select the next available port (e.g., `5174`). You can force a specific port using `npx vite --port 3000`.
 - **Odd browser state:** Open Developer Tools (`F12`) → Application → Local Storage → Clear all entries (this only clears settings; data is in MongoDB), or click **Reset demo data** on the DOSS Dashboard.
 - **Node version mismatch:** Ensure `node -v` prints `v18.0.0` or higher. Use `nvm use 18` or `nvm use 20` if installed.
-- **Build cache clean:** If changes are not reflected, run `rm -rf node_modules/.vite dist` and restart with `npm run dev`.
+- **Build cache clean:** If changes are not reflected, run `rm -rf frontend/node_modules/.vite frontend/dist` and restart with `npm run dev`.
 
 ### Contributing & Development Guidelines
 
 1. **Pure ES6+ JavaScript:** All app and business logic is written in plain JavaScript with modern ES6+ features (destructuring, arrow functions, async/await).
-2. **Modular Architecture:** Keep business rules in `src/utils/` as standalone pure functions without React dependencies.
-3. **No Heavy UI Libraries:** UI styling relies on hand-crafted Google-inspired CSS tokens in `src/styles/tokens.css`.
+2. **Modular Architecture:** Keep business rules in `frontend/src/utils/` as standalone pure functions without React dependencies.
+3. **No Heavy UI Libraries:** UI styling relies on hand-crafted Google-inspired CSS tokens in `frontend/src/styles/tokens.css`.
 4. **Conventional Commits:** Prefix all commit messages with conventional types (`docs:`, `fix:`, `feat:`, `refactor:`, `test:`, `a11y:`, `perf:`).
 5. **Quality Verification:** Always run `npm run lint` and `npm run build` to confirm zero errors and successful production build before submitting changes.
 
@@ -523,4 +529,4 @@ The `counters` collection: `findOneAndUpdate({ _id: 'lost' }, { $inc: { seq: 1 }
 The aggregation pipeline: `$group` by type/status and by category with `$sum: 1`, like `GROUP BY` in SQL, computed inside the database.
 
 **Q30. How did you test the backend?**
-`server/test/api.test.js` uses Node's test runner and supertest to call the real Express app against a separate test database: login, CRUD, validation errors, privacy of public responses, and the whole claim lifecycle (17 tests).
+`backend/tests/api.test.js` uses Node's test runner and supertest to call the real Express app against a separate test database: login, CRUD, validation errors, privacy of public responses, and the whole claim lifecycle, roles and account management (25 tests).
