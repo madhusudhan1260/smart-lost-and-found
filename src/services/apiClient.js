@@ -36,7 +36,7 @@ export async function request(path, { method = 'GET', body } = {}) {
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch {
-    // fetch only rejects when the network request itself fails
+    // fetch only rejects when the network request itself failss
     throw new ApiError('Cannot reach the server. Is the API running? (npm run dev starts both)', 0);
   }
 
