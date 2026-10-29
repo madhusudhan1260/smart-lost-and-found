@@ -15,6 +15,9 @@ export function errorHandler(error, _req, res, _next) {
   }
   // Duplicate unique key (e.g. same email twice)
   if (error.code === 11000) {
+    if (error.keyValue?.email) {
+      return res.status(409).json({ error: 'An account with this email already exists.', details: { email: 'This email is already registered' } });
+    }
     return res.status(409).json({ error: 'That record already exists.' });
   }
   // Malformed JSON body
