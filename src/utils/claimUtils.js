@@ -4,9 +4,9 @@
 //          pages/ItemDetails.jsx
 // Business rules for ownership claims.
 // Pure JavaScript – no React – so every rule can be explained on its own.
-import { NEARBY_LOCATIONS, STATUS } from '../data/constants';
-import { daysBetween } from './dateUtils';
-import { calculateMatchScore, extractKeywords, getCommonKeywords, keywordSimilarity } from './matching';
+import { NEARBY_LOCATIONS, STATUS } from '../data/constants.js';
+import { daysBetween } from './dateUtils.js';
+import { calculateMatchScore, extractKeywords, getCommonKeywords, keywordSimilarity } from './matching.js';
 
 // Only found items that nobody has collected yet can be claimed
 export const canBeClaimed = (item) =>

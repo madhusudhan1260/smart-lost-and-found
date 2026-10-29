@@ -1,7 +1,7 @@
 // File: src/utils/searchUtils.js
 // Used by: components/ItemsBrowser.jsx, pages/DossClaims.jsx
 // Search, filter and sort logic for the Lost Items / Found Items pages.
-import { isInDateRange } from './dateUtils';
+import { isInDateRange } from './dateUtils.js';
 
 export const DEFAULT_FILTERS = {
   search: '',

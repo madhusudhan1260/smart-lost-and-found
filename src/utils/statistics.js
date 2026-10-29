@@ -1,9 +1,9 @@
 // File: src/utils/statistics.js
 // Used by: pages/DossDashboard.jsx, pages/Home.jsx, pages/StudentDashboard.jsx
 // Dashboard statistics calculated with filter(), map(), reduce() and sort().
-import { STATUS, DEFAULT_MATCH_THRESHOLD } from '../data/constants';
-import { daysAgoISO, parseLocalDate } from './dateUtils';
-import { findMatches, isOpenForMatching } from './matching';
+import { STATUS, DEFAULT_MATCH_THRESHOLD } from '../data/constants.js';
+import { daysAgoISO, parseLocalDate } from './dateUtils.js';
+import { findMatches, isOpenForMatching } from './matching.js';
 
 // One pass with reduce() builds all the item counters at once
 export function getItemStats(items) {
