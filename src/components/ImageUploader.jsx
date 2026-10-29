@@ -1,6 +1,6 @@
 // File: src/components/ImageUploader.jsx
 // Purpose: Photo picker with drag & drop, validation and preview.
-// Used by: components/ItemForm.jsx
+
 
 import { useRef, useState } from 'react';
 import { compressImage } from '../utils/imageUtils';
