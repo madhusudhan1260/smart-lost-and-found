@@ -6,8 +6,10 @@
 // Browsing, reporting and claiming still work without logging in.
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as authService from '../services/authService';
+import { SESSION_EXPIRED_EVENT } from '../services/apiClient';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { ROLES, STAFF_ROLES, STORAGE_KEYS } from '../data/constants';
+import { useNotification } from './NotificationContext';
 
 const AuthContext = createContext(null);
 
@@ -27,6 +29,19 @@ export function AuthProvider({ children }) {
       .finally(() => { if (!cancelled) setChecking(false); });
     return () => { cancelled = true; };
   }, [token, user, removeToken]);
+
+  // Any API call answered with 401 while signed in → the session is over
+  const { notify } = useNotification();
+  useEffect(() => {
+    const handleExpired = () => {
+      if (!user) return;
+      removeToken();
+      setUser(null);
+      notify('Your session has ended. Please sign in again.', 'info', 4000);
+    };
+    window.addEventListener(SESSION_EXPIRED_EVENT, handleExpired);
+    return () => window.removeEventListener(SESSION_EXPIRED_EVENT, handleExpired);
+  }, [user, removeToken, notify]);
 
   const startSession = useCallback(
     (data) => {

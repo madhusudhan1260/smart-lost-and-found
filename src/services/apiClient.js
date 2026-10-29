@@ -17,6 +17,11 @@ export class ApiError extends Error {
   }
 }
 
+// Fired when the server rejects a saved token (expired after 8 hours, or the account was
+// disabled). AuthContext listens for it, signs the user out and explains why.
+export const SESSION_EXPIRED_EVENT = 'lf:session-expired';
+const isSignInCall = (path) => path.startsWith('/auth/login') || path.startsWith('/auth/register');
+
 export async function request(path, { method = 'GET', body } = {}) {
   const token = readFromStorage(STORAGE_KEYS.TOKEN);
   const headers = { Accept: 'application/json' };
@@ -39,6 +44,9 @@ export async function request(path, { method = 'GET', body } = {}) {
   // 502/503/504 without a JSON body = the dev proxy could not reach the API
   if (!data && response.status >= 502) {
     throw new ApiError('Cannot reach the server. Is the API running? (npm run dev starts both)', response.status);
+  }
+  if (response.status === 401 && token && !isSignInCall(path)) {
+    window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT));
   }
   if (!response.ok) {
     throw new ApiError(data?.error ?? `Request failed (HTTP ${response.status})`, response.status, data?.details);
