@@ -11,8 +11,9 @@ You are a senior full-stack engineer and a B.Tech CSE project guide. Below is th
 1. Explain the project end to end in simple, exam-ready language.
 2. For every folder and file, explain what it contains, which topics/concepts it uses, and why those topics were chosen.
 3. Redraw and explain the flowcharts (system architecture, request lifecycle, authentication, claim workflow).
-4. Explain the frontend, backend and database technologies and how they talk to each other.
-5. Prepare likely viva questions with short answers for each layer.
+4. Explain what was built in each development stage (section 10).
+5. Explain the frontend, backend and database technologies and how they talk to each other.
+6. Prepare likely viva questions with short answers for each layer.
 
 Do not invent features that are not listed here.
 
@@ -744,7 +745,27 @@ Sign in at `http://localhost:5173/login` with the demo accounts listed in sectio
 
 ---
 
-## 10. Expected output from you
+## 10. What was done (development history)
+
+The project was built in stages. Each stage kept everything from the previous one.
+
+| Stage | What was built | Main topics learned |
+|---|---|---|
+| 1. React microproject | Report lost/found items, lists with search and filters, item details, Smart Match scoring, dashboard. Data saved in the browser with `localStorage` | Components, props, `useState`, `useEffect`, lists and keys, controlled forms, regex validation, array methods |
+| 2. Student + DOSS modes | Two interfaces in one app (mode switch), ownership **claim workflow** (submit → accept/reject → collect → resolve), private verification details, claim timeline, DOSS dashboard and claim review, Google-inspired design | Context API, custom hooks, React Router params, conditional rendering, business rules as pure functions |
+| 3. Frontend polish | Material ripple, keyboard shortcuts, skeleton loaders, toasts with timers, photo lightbox, auto-saved drafts, filter chips, grid/list toggle, offline banner, breadcrumbs, back-to-top, print styles, phone layouts | Event delegation, `requestAnimationFrame`, `setInterval` cleanup, media queries, accessibility |
+| 4. Full-stack conversion (FSD guidelines) | **Node.js + Express REST API** and **MongoDB (Mongoose)** replaced `localStorage`: CRUD for items, claims workflow on the server, statistics with aggregation, readable IDs with an atomic counter, seed data, JWT login for DOSS, central error handling, NoSQL-injection protection, API integration tests, Vite proxy, one-command `npm run dev`. Docs: architecture, database design, API, team roles, screenshots, viva questions | REST, middleware, MVC layering, schemas and validation, references + `populate()`, aggregation, bcrypt, JWT, CORS, `.env`, supertest |
+| 5. Professional login for every role | `/login` page with **Student / DOSS staff / Super Admin** tabs, student sign-up with password strength meter, show/hide password, Caps Lock warning, demo-account buttons, safe redirect. Server: `student`/`doss`/`superadmin` roles, `requireRole()` middleware, wrong-tab and disabled-account checks, login rate limiting (5 tries / 15 min), **Super Admin "Manage accounts" page** and `/api/users` API, account menu in the navbar, claim form pre-filled for signed-in students | Role-based access control, rate limiting, account enumeration protection, privilege-escalation protection, ARIA tabs |
+| 6. Easier to learn and change | Components grouped into `layout/ ui/ items/ claims/ matching/`, pages grouped into `public/ student/ doss/ auth/ admin/`, the 1,000-line CSS split into 10 files in `styles/`, `frontend/src/README.md` guide. Improvements: pages load on demand (`React.lazy`, main bundle 417 kB → 252 kB), automatic sign-out with a message when the session expires, claim form pre-fill that survives reloads, keyboard-accessible account menu | Code splitting, `Suspense`, custom events, `key` to reset components, WAI-ARIA menu pattern |
+| 7. Clear repository layout | Repository split into **`frontend/`**, **`backend/`** and **`docs/`**; root `package.json` only runs both sides; concept guides and team notes moved into `docs/`; old build output removed | Monorepo layout, npm `--prefix` scripts |
+
+**Quality at the end:** 53 frontend unit tests + 25 backend API tests pass, production build succeeds, lint has no errors.
+
+**Team:** four members – React frontend; Express/Node backend & APIs; MongoDB & database; authentication, integration & testing (see `docs/TEAM_ROLES.md`). All work is in Git on GitHub.
+
+---
+
+## 11. Expected output from you
 
 1. A clear project explanation (abstract, problem, objectives, modules, conclusion).
 2. A folder-by-folder and file-by-file explanation using sections 4–5.
@@ -752,3 +773,4 @@ Sign in at `http://localhost:5173/login` with the demo accounts listed in sectio
 4. Frontend vs backend vs database responsibilities and how data flows between them.
 5. A table of every topic (section 8) with "where used" and "why used".
 6. 40+ viva questions with short answers (React, Node/Express, MongoDB, security, testing, the Smart Match algorithm, the claim workflow, roles and login).
+7. A short "what was built in each stage" summary using section 10.
