@@ -32,14 +32,14 @@ export const acceptClaim = (claimId, reviewNote = '') =>
   request(`/claims/${encodeURIComponent(claimId)}/accept`, { method: 'POST', body: { reviewNote } });
 
 export const rejectClaim = (claimId, reviewNote) =>
-  request(`/claims/${encodeURIComponent(claimId)}/reject`, { method: 'POST', body: { reviewNote } });
+  request(`/claims/${encodeURIComponent(claimId)}/reject`, { method: 'POST', body: { reviewNote } }); 
 
 // ---------- OTHER ----------
 
 export const getStats = () => request('/stats');
 
 // DOSS only: put the sample data back into MongoDB
-export const resetAllData = () => request('/admin/reset', { method: 'POST' }); 
+export const resetAllData = () => request('/admin/reset', { method: 'POST' });  
 
 // A static file (not the API): campus tips from /public/data/campus-tips.json
 export async function getCampusTips() {
