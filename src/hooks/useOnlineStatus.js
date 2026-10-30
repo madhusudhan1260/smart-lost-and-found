@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-// Purpose: Tells the UI whether the browser currently has an internet connection.
+// Purpose: Tells the UI whether the browser currently has an internet connection. 
 export default function useOnlineStatus() {
   const [online, setOnline] = useState(() => navigator.onLine);
 
