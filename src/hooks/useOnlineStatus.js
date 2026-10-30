@@ -6,7 +6,7 @@ export default function useOnlineStatus() {
 
   useEffect(() => {  
     const goOnline = () => setOnline(true);
-    const goOffline = () => setOnline(false);
+    const goOffline = () => setOnline(false); 
     window.addEventListener('online', goOnline);
     window.addEventListener('offline', goOffline);
     return () => { 
