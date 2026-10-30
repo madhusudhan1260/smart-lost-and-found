@@ -21,7 +21,7 @@ export const markCollected = (itemId) => request(`/items/${encodeURIComponent(it
 
 export const markResolved = (itemId) => request(`/items/${encodeURIComponent(itemId)}/resolve`, { method: 'POST' });
 
- ---------- CLAIMS  (/api/claims) ----------
+ //---------- CLAIMS  (/api/claims) ----------
 
 export const getClaims = () => request('/claims');
 
