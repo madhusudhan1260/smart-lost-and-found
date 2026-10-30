@@ -1,4 +1,4 @@
-// File: src/hooks/useDocumentTitle.js
+ // File: src/hooks/useDocumentTitle.js
 // Purpose: Custom hook: sets the browser tab title for each page.
 // Used by: pages/student/ClaimItem.jsx, pages/doss/ClaimReview.jsx, pages/doss/DossClaims.jsx,
 //          pages/doss/DossDashboard.jsx, pages/public/FoundItems.jsx, pages/public/Home.jsx, pages/public/ItemDetails.jsx,
