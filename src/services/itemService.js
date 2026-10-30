@@ -5,7 +5,7 @@
 // Each function returns a Promise – the React code awaits them with async/await.
 import { request } from './apiClient';
 
-/ ---------- ITEMS  (/api/items) ----------
+ ---------- ITEMS  (/api/items) ----------
 
 export const getItems = () => request('/items');
 
