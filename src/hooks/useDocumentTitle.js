@@ -8,7 +8,7 @@
 
 import { useEffect } from 'react'; 
 import { useMode } from '../context/ModeContext';
-import { useItems } from '../context/ItemContext';
+import { useItems } from '../context/ItemContext'; 
 import { STATUS } from '../data/constants'; 
 
 // Updates the browser tab title for each page.
