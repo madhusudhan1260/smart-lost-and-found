@@ -197,14 +197,26 @@ export default function ItemDetails() {
             <p className="hidden-note"><Icon name="visibility_off" /> Some identifying details are hidden to protect the owner.</p>
           )}
 
-          <div className="contact-card">
-            <span className="contact-card__avatar" aria-hidden="true">{(contactName ?? '?').charAt(0)}</span>
-            <div>
-              <p className="muted small">{type === 'lost' ? 'Reported by the owner' : 'Reported by the finder'}</p>
-              <p><strong>{contactName ?? 'Anonymous'}</strong></p>
-              <p className="contact-card__value">{contact}</p>
+          {/* The reporter's name and contact are private: the API only sends them to DOSS staff */}
+          {isDoss ? (
+            <div className="contact-card">
+              <span className="contact-card__avatar" aria-hidden="true">{(contactName ?? '?').charAt(0)}</span>
+              <div>
+                <p className="muted small">{type === 'lost' ? 'Reported by the owner' : 'Reported by the finder'} (DOSS only)</p>
+                <p><strong>{contactName ?? 'Anonymous'}</strong></p>
+                <p className="contact-card__value">{contact}</p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="contact-card contact-card--private">
+              <span className="contact-card__avatar" aria-hidden="true"><Icon name="lock" /></span>
+              <div>
+                <p className="muted small">{type === 'lost' ? 'Reported by the owner' : 'Reported by the finder'}</p>
+                <p><strong>Contact details are private</strong></p>
+                <p className="muted small">Only the DOSS office can see who reported this item. All contact goes through the DOSS office.</p>
+              </div>
+            </div>
+          )}
 
           <div className="details__actions">
             {isStudent && canBeClaimed(item) && (

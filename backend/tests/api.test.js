@@ -172,6 +172,19 @@ describe('items (CRUD)', () => {
     assert.ok(dossRes.body.privateDetails.length > 0);
   });
 
+  test("the reporter's name and contact are only sent to DOSS staff", async () => {
+    const hidden = (item) => item.contactName === undefined && item.contact === undefined;
+
+    // Guests and students: list, single item and the response to their own report
+    assert.ok((await api.get('/api/items')).body.every(hidden));
+    assert.ok(hidden((await api.get('/api/items/LF-2001')).body));
+    assert.ok(hidden((await api.post('/api/items').send(validLostItem())).body));
+
+    // DOSS staff see who reported it
+    const dossItem = (await api.get('/api/items/LF-2001').set('Authorization', `Bearer ${token}`)).body;
+    assert.ok(dossItem.contactName && dossItem.contact);
+  });
+
   test('search filters by text', async () => {
     const res = await api.get('/api/items?search=iphone');
     assert.ok(res.body.every((item) => /iphone/i.test(`${item.name} ${item.description}`)));
@@ -218,6 +231,8 @@ describe('claim workflow', () => {
     claimId = res.body.claim.id;
     assert.equal(res.body.claim.status, 'CLAIM_PENDING');
     assert.equal(res.body.claim.rollNumber, '22CSE031'); // stored in upper case
+    // The claimant never receives the finder's name, contact or private details
+    assert.ok(res.body.items.every((item) => item.contact === undefined && item.contactName === undefined && item.privateDetails === undefined));
     assert.ok(res.body.items.some((item) => item.id === 'LF-2001' && item.status === 'CLAIM_PENDING'));
   });
 

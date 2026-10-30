@@ -1,5 +1,6 @@
 // Handlers for /api/claims
 import Claim, { PUBLIC_CLAIM_FIELDS } from '../models/Claim.js';
+import { STAFF_ITEM_FIELDS, toPublicItem } from '../models/Item.js';
 import { isDoss } from '../middleware/auth.js';
 import HttpError from '../utils/HttpError.js';
 import { acceptClaim, rejectClaim, submitClaim } from '../services/claimWorkflow.js';
@@ -20,7 +21,7 @@ export async function getClaim(req, res) {
     query.select(PUBLIC_CLAIM_FIELDS);
   } else if (req.query.populate === 'items') {
     // populate() replaces the stored item IDs with the item documents themselves
-    query.populate({ path: 'itemId', select: '+privateDetails' }).populate({ path: 'lostItemId', select: '+privateDetails' });
+    query.populate({ path: 'itemId', select: STAFF_ITEM_FIELDS }).populate({ path: 'lostItemId', select: STAFF_ITEM_FIELDS });
   }
   const claim = await query;
   if (!claim) throw new HttpError(404, `Claim "${req.params.id}" was not found.`);
@@ -30,9 +31,9 @@ export async function getClaim(req, res) {
 // POST /api/claims  – "This is my item"
 export async function createClaim(req, res) {
   const { claim, items } = await submitClaim(req.body);
-  // Send back only public fields of the items (no private details for students)
-  const publicItems = items.map(({ privateDetails: _hidden, ...item }) => item);
-  res.status(201).json({ claim, items: publicItems });
+  // Send back only public fields of the items: the claimant never sees the
+  // finder's private details, name or contact – only DOSS staff do
+  res.status(201).json({ claim, items: items.map(toPublicItem) });
 }
 
 // POST /api/claims/:id/accept  { reviewNote }

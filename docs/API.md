@@ -36,7 +36,7 @@
 
 **DOSS** routes accept DOSS staff *and* super admins.
 
-\* **Public\*** = anyone can call it, but logged-in DOSS staff receive extra fields: `privateDetails` on items, and names/roll numbers/contacts/answers on claims.
+\* **Public\*** = anyone can call it, but logged-in DOSS staff receive extra fields: `privateDetails`, `contactName` and `contact` on items, and names/roll numbers/contacts/answers on claims.
 
 ## Status codes used
 
@@ -106,8 +106,6 @@ GET /api/items?type=found&search=black
     "location": "Library",
     "date": "2026-10-10",
     "time": "16:10",
-    "contactName": "Divya Menon",
-    "contact": "divya.menon@college.edu",
     "image": null,
     "handedTo": "Handed over to DOSS Office",
     "status": "FOUND",
@@ -116,7 +114,7 @@ GET /api/items?type=found&search=black
   }
 ]
 ```
-With a DOSS token each item also has `"privateDetails": "The back case has a few scratches…"`.
+With a DOSS token each item also has the private fields: `"privateDetails": "The back case has a few scratches…"`, `"contactName": "Divya Menon"`, `"contact": "divya.menon@college.edu"`. Students and guests never receive who reported an item.
 
 ### `POST /api/items`
 ```json
@@ -135,7 +133,7 @@ With a DOSS token each item also has `"privateDetails": "The back case has a few
   "image": "data:image/jpeg;base64,/9j/4AAQ..."
 }
 ```
-**201** – the created report with its new `id` (e.g. `LF-1013`) and `status: "LOST"`. Fields such as `status` or `id` sent by the client are ignored. `privateDetails` is not echoed back.
+**201** – the created report with its new `id` (e.g. `LF-1013`) and `status: "LOST"`. Fields such as `status` or `id` sent by the client are ignored. `privateDetails`, `contactName` and `contact` are not echoed back.
 
 **400**
 ```json
@@ -246,7 +244,7 @@ curl -X POST http://localhost:5050/api/claims/CL-3001/accept -H "Authorization: 
 
 ## Automated tests
 
-`backend/tests/api.test.js` (25 tests, Node test runner + supertest) covers health, login, CRUD, validation, privacy and the full claim workflow, using a separate test database:
+`backend/tests/api.test.js` (26 tests, Node test runner + supertest) covers health, login, CRUD, validation, privacy and the full claim workflow, using a separate test database:
 
 ```bash
 npm run test:backend

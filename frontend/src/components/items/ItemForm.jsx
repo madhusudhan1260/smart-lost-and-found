@@ -230,6 +230,9 @@ export default function ItemForm({ type }) {
 
       <fieldset className="form-section">
         <legend><Icon name="contact_mail" /> Contact information</legend>
+        <p className="hidden-note form-section__note">
+          <Icon name="lock" /> Only DOSS staff can see your name and contact. Students who claim this item never see them.
+        </p>
         <div className="form-grid">
           <FormField id="contactName" label="Your name" required error={errors.contactName}>
             <input type="text" placeholder="e.g. Rahul Sharma" autoComplete="name" {...fieldProps('contactName')} />

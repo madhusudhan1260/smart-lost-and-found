@@ -39,6 +39,7 @@ Do not invent features that are not listed here.
 | Report a lost / found item | ✅ | ✅ | ✅ | ✅ |
 | Submit an ownership claim | ✅ | ✅ (form pre-filled) | – | – |
 | See private verification details | ❌ | ❌ | ✅ | ✅ |
+| See who reported an item (name, email/phone) | ❌ | ❌ | ✅ | ✅ |
 | Accept / reject claims, mark collected / resolved, edit / delete reports | ❌ | ❌ | ✅ | ✅ |
 | Reset demo data | ❌ | ❌ | ✅ | ✅ |
 | Manage accounts (create, disable, change role, delete) | ❌ | ❌ | ❌ | ✅ |
@@ -340,7 +341,7 @@ Format: **File – what it contains · topics used · why**
 
 | File | Contains | Topics | Why |
 |---|---|---|---|
-| `Item.js` | Fields: `_id` (LF-xxxx), `type` (lost/found), `name`, `category`, `color`, `description`, `location`, `date`, `time`, `privateDetails` (**`select: false`**), `additionalInfo`, `contactName`, `contact`, `image` (base64 data URL), `handedTo`, `status`, `claimId`, `collectedAt`, `resolvedAt`, timestamps. Validators: required, enum, regex `match`, min/max length, custom "date not in future". Indexes `{type, status}`, `{createdAt: -1}`. `toJSON` maps `_id → id` | Schema, validation, indexes, projection, transforms | Data integrity in the database layer; private details hidden by default so they never leak to students |
+| `Item.js` | Fields: `_id` (LF-xxxx), `type` (lost/found), `name`, `category`, `color`, `description`, `location`, `date`, `time`, `privateDetails`, `contactName`, `contact` (all three **`select: false`** – DOSS only), `additionalInfo`, `image` (base64 data URL), `handedTo`, `status`, `claimId`, `collectedAt`, `resolvedAt`, timestamps. Validators: required, enum, regex `match`, min/max length, custom "date not in future". Indexes `{type, status}`, `{createdAt: -1}`. `toJSON` maps `_id → id`. Exports `PRIVATE_ITEM_FIELDS`, `STAFF_ITEM_FIELDS` (`+privateDetails +contactName +contact`) and `toPublicItem()` | Schema, validation, indexes, projection, transforms | Data integrity in the database layer; private details and the reporter's name/contact are hidden by default, so a student who claims an item never sees who reported it |
 | `Claim.js` | Fields: `_id` (CL-xxxx), `itemId` & `lostItemId` (**refs to Item**), `status`, `claimantName`, `rollNumber` (setter normalises `22-cse-045 → 22CSE045`), `contact` (email or Indian mobile custom validator), `reason`, `uniqueFeature`, `lostLocation`, `lostDate`, `additionalProof`, `reviewNote`, `reviewedAt`, `acceptedAt`, `collectedAt`, `resolvedAt`. Exports `PUBLIC_CLAIM_FIELDS`. Indexes `{status, createdAt}`, `{itemId}` | References (relationships), setters, custom validators | Referencing instead of embedding: one item can have many claims; DOSS queries claims by status |
 | `User.js` | `name`, unique `email` (lower-case), `passwordHash` (**`select: false`**), `role` (`student`/`doss`/`superadmin`), `rollNumber` (students), `active`, `lastLoginAt`. Static `hashPassword()` (bcrypt), method `checkPassword()`; `toJSON` removes the hash | Statics vs methods, hashing, unique index | Secure authentication; role-based access |
 | `Counter.js` | `{ _id: 'lost'|'found'|'claim', seq }`; `nextId(kind)` uses `findOneAndUpdate({$inc:{seq:1}}, {upsert:true, returnDocument:'after'})` | Atomic operations | Readable sequential IDs without duplicates even with simultaneous requests |
@@ -398,7 +399,7 @@ Format: **File – what it contains · topics used · why**
 
 #### `backend/tests/api.test.js`
 
-25 integration tests with `node:test` + `supertest` against `smart_lost_found_test`: health, 404 JSON, wrong password 401, JWT never returns the hash, DOSS-only 401, role tabs (student on DOSS tab → 403, admin on DOSS tab OK), student sign-up can't become staff, duplicate email 409, weak password 400, student token can't accept claims (403) or see private details, super admin manages users and disabled accounts can't log in, admin can't lock themselves out, public list hides private details, search, validation 400 with `details`, server ignores client `status`, update/delete need DOSS, full claim workflow, duplicate claim 409, public claims hide personal data, reject needs reason, accept → collect → resolve, resolved item can't be claimed, competing claims auto-rejected, `populate`, aggregation stats, admin reset. **Why:** proves the backend rules work and protects against regressions.
+26 integration tests with `node:test` + `supertest` against `smart_lost_found_test`: health, 404 JSON, reporter name/contact hidden from non-DOSS, wrong password 401, JWT never returns the hash, DOSS-only 401, role tabs (student on DOSS tab → 403, admin on DOSS tab OK), student sign-up can't become staff, duplicate email 409, weak password 400, student token can't accept claims (403) or see private details, super admin manages users and disabled accounts can't log in, admin can't lock themselves out, public list hides private details, search, validation 400 with `details`, server ignores client `status`, update/delete need DOSS, full claim workflow, duplicate claim 409, public claims hide personal data, reject needs reason, accept → collect → resolve, resolved item can't be claimed, competing claims auto-rejected, `populate`, aggregation stats, admin reset. **Why:** proves the backend rules work and protects against regressions.
 
 ---
 
@@ -706,7 +707,7 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 | Role never taken from sign-up body | register | No privilege escalation |
 | NoSQL-injection protection (`String()` casting) & regex escaping | itemController | Safe queries |
 | Field whitelisting (`pick`) | controllers, workflow | No mass assignment |
-| Private-field hiding | models/controllers | Privacy of verification details and personal data |
+| Private-field hiding (`PRIVATE_ITEM_FIELDS`, `toPublicItem`, `PUBLIC_CLAIM_FIELDS`) | models/controllers | The reporter's name/contact, the owner's secret details and claimants' personal data reach only DOSS staff |
 | Safe redirect (`next` must start with `/`, not `//`) | Login.jsx | Open-redirect protection |
 | Body size limit (2 MB) | app.js | Abuse protection |
 | Secrets in `.env`, git-ignored | backend | No leaked credentials |
@@ -724,7 +725,7 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 | Topic | Where | Why |
 |---|---|---|
 | Unit tests (`node:test`, `assert`) | `frontend/tests/` – 53 tests | Verify pure logic |
-| Integration tests (`supertest`, separate DB) | `backend/tests/` – 25 tests | Verify API + DB + auth together |
+| Integration tests (`supertest`, separate DB) | `backend/tests/` – 26 tests | Verify API + DB + auth together |
 | Linting (oxlint) | `npm run lint` | Code quality |
 | Vite proxy, HMR, production build | vite.config.js | Fast development, optimised output |
 | concurrently, `node --watch` | package.json | One-command full-stack dev with auto-restart |
@@ -737,7 +738,7 @@ Design choices: **referencing** claims to items (one item → many claims, claim
 ```bash
 npm run setup        # install root, frontend and backend packages and seed MongoDB
 npm run dev          # API on http://localhost:5050, React on http://localhost:5173
-npm test             # all tests: 53 frontend + 25 backend (MongoDB must be running)
+npm test             # all tests: 53 frontend + 26 backend (MongoDB must be running)
 npm run build        # production build into frontend/dist/
 ```
 
@@ -759,7 +760,7 @@ The project was built in stages. Each stage kept everything from the previous on
 | 6. Easier to learn and change | Components grouped into `layout/ ui/ items/ claims/ matching/`, pages grouped into `public/ student/ doss/ auth/ admin/`, the 1,000-line CSS split into 10 files in `styles/`, `frontend/src/README.md` guide. Improvements: pages load on demand (`React.lazy`, main bundle 417 kB → 252 kB), automatic sign-out with a message when the session expires, claim form pre-fill that survives reloads, keyboard-accessible account menu | Code splitting, `Suspense`, custom events, `key` to reset components, WAI-ARIA menu pattern |
 | 7. Clear repository layout | Repository split into **`frontend/`**, **`backend/`** and **`docs/`**; root `package.json` only runs both sides; concept guides and team notes moved into `docs/`; old build output removed | Monorepo layout, npm `--prefix` scripts |
 
-**Quality at the end:** 53 frontend unit tests + 25 backend API tests pass, production build succeeds, lint has no errors.
+**Quality at the end:** 53 frontend unit tests + 26 backend API tests pass, production build succeeds, lint has no errors.
 
 **Team:** four members – React frontend; Express/Node backend & APIs; MongoDB & database; authentication, integration & testing (see `docs/TEAM_ROLES.md`). All work is in Git on GitHub.
 

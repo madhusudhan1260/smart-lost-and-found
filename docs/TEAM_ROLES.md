@@ -76,7 +76,7 @@ Fill in the names before submission. Every member should be able to explain thei
 - `frontend/src/services/itemService.js`, `authService.js`
 - `frontend/src/context/AuthContext.jsx`, `frontend/src/pages/auth/Login.jsx`, `frontend/src/pages/admin/AdminUsers.jsx`, `frontend/src/context/ModeContext.jsx`, `backend/src/middleware/loginLimiter.js`
 - `vite.config.js` (`/api` proxy), root `package.json` (`npm run dev` starts both)
-- `backend/tests/api.test.js` (25 API tests), `frontend/tests/*.test.js` (frontend unit tests)
+- `backend/tests/api.test.js` (26 API tests), `frontend/tests/*.test.js` (frontend unit tests)
 
 **Demo:** wrong password → error; correct login → DOSS dashboard; refresh stays logged in; logout; calling a DOSS route without a token returns 401; run `npm run test:backend` and `npm test`.
 

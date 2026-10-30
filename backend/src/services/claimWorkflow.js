@@ -2,7 +2,7 @@
 //   submit → CLAIM_PENDING → accept (READY_FOR_COLLECTION) or reject → collect → resolve
 // Every function returns { items, claims } containing the documents that changed,
 // so the React app can update its state without reloading everything.
-import Item from '../models/Item.js';
+import Item, { STAFF_ITEM_FIELDS } from '../models/Item.js';
 import Claim from '../models/Claim.js';
 import { nextId } from '../models/Counter.js';
 import { STATUS } from '../config/constants.js';
@@ -16,7 +16,7 @@ const CLAIM_FIELDS = [
 ];
 
 const findItem = async (id) => {
-  const item = await Item.findById(id).select('+privateDetails');
+  const item = await Item.findById(id).select(STAFF_ITEM_FIELDS);
   if (!item) throw new HttpError(404, `Report "${id}" was not found.`);
   return item;
 };
@@ -81,10 +81,10 @@ export async function acceptClaim(claimId, reviewNote = '') {
 
   const now = new Date();
   const item = await findItem(claim.itemId);
-  const lostItem = claim.lostItemId ? await Item.findById(claim.lostItemId).select('+privateDetails') : null;
+  const lostItem = claim.lostItemId ? await Item.findById(claim.lostItemId).select(STAFF_ITEM_FIELDS) : null;
   const competing = await Claim.find({ itemId: claim.itemId, _id: { $ne: claim._id }, status: STATUS.CLAIM_PENDING });
   const competingLost = await Item.find({ _id: { $in: competing.map((entry) => entry.lostItemId).filter(Boolean) } })
-    .select('+privateDetails');
+    .select(STAFF_ITEM_FIELDS);
 
   Object.assign(claim, { status: STATUS.CLAIM_ACCEPTED, reviewedAt: now, acceptedAt: now, reviewNote: String(reviewNote).trim() });
   competing.forEach((entry) => Object.assign(entry, {
@@ -109,7 +109,7 @@ export async function rejectClaim(claimId, reviewNote = '') {
   if (claim.status !== STATUS.CLAIM_PENDING) throw new HttpError(409, 'This claim has already been reviewed.');
 
   const item = await findItem(claim.itemId);
-  const lostItem = claim.lostItemId ? await Item.findById(claim.lostItemId).select('+privateDetails') : null;
+  const lostItem = claim.lostItemId ? await Item.findById(claim.lostItemId).select(STAFF_ITEM_FIELDS) : null;
   const othersPending = await Claim.exists({ itemId: claim.itemId, _id: { $ne: claim._id }, status: STATUS.CLAIM_PENDING });
 
   Object.assign(claim, { status: STATUS.CLAIM_REJECTED, reviewedAt: new Date(), reviewNote: note });
@@ -126,7 +126,7 @@ export async function markCollected(itemId) {
   if (!claim) throw new HttpError(409, 'There is no accepted claim for this item.');
 
   const now = new Date();
-  const lostItem = claim.lostItemId ? await Item.findById(claim.lostItemId).select('+privateDetails') : null;
+  const lostItem = claim.lostItemId ? await Item.findById(claim.lostItemId).select(STAFF_ITEM_FIELDS) : null;
   Object.assign(claim, { status: STATUS.COLLECTED, collectedAt: now });
   Object.assign(item, { status: STATUS.COLLECTED, collectedAt: now });
   if (lostItem) Object.assign(lostItem, { status: STATUS.COLLECTED, collectedAt: now });
@@ -145,7 +145,7 @@ export async function markResolved(itemId) {
   const now = new Date();
   const claim = await Claim.findOne({ $or: [{ itemId }, { lostItemId: itemId }], status: STATUS.COLLECTED });
   const linkedId = claim && (claim.itemId === itemId ? claim.lostItemId : claim.itemId);
-  const linked = linkedId ? await Item.findById(linkedId).select('+privateDetails') : null;
+  const linked = linkedId ? await Item.findById(linkedId).select(STAFF_ITEM_FIELDS) : null;
 
   Object.assign(item, { status: STATUS.RESOLVED, resolvedAt: now });
   if (claim) Object.assign(claim, { status: STATUS.RESOLVED, resolvedAt: now });

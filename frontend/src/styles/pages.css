@@ -152,6 +152,9 @@
 .contact-card p { margin: 0; }
 .contact-card__avatar { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; border-radius: 50%; background: var(--blue-dark); color: #fff; font-size: 1.2rem; font-weight: 500; }
 .contact-card__value { color: var(--blue-dark); word-break: break-all; }
+.contact-card--private { background: var(--bg-2); border-style: dashed; }
+.contact-card--private .contact-card__avatar { background: var(--grey-soft); color: var(--text-2); }
+.form-section__note { margin: 0 0 12px; }
 .details__actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .mini-matches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .mini-match { display: flex; align-items: center; gap: 12px; padding: 12px; color: inherit; text-decoration: none !important; transition: box-shadow 0.2s, border-color 0.2s; }

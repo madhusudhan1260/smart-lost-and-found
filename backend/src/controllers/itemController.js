@@ -1,5 +1,5 @@
 // Handlers for /api/items  (CRUD for lost and found reports)
-import Item from '../models/Item.js';
+import Item, { STAFF_ITEM_FIELDS, toPublicItem } from '../models/Item.js';
 import Claim from '../models/Claim.js';
 import { nextId } from '../models/Counter.js';
 import { STATUS } from '../config/constants.js';
@@ -33,9 +33,9 @@ export async function listItems(req, res) {
     filter.$or = [{ name: pattern }, { description: pattern }, { color: pattern }, { location: pattern }, { category: pattern }];
   }
 
-  // Private verification details only for logged-in DOSS staff
+  // Private details and the reporter's name/contact only for logged-in DOSS staff
   const query = Item.find(filter).sort({ createdAt: -1 });
-  if (isDoss(req)) query.select('+privateDetails');
+  if (isDoss(req)) query.select(STAFF_ITEM_FIELDS);
   const items = await query;
   res.json(items);
 }
@@ -43,7 +43,7 @@ export async function listItems(req, res) {
 // GET /api/items/:id
 export async function getItem(req, res) {
   const query = Item.findById(req.params.id);
-  if (isDoss(req)) query.select('+privateDetails');
+  if (isDoss(req)) query.select(STAFF_ITEM_FIELDS);
   const item = await query;
   if (!item) throw new HttpError(404, `Report "${req.params.id}" was not found.`);
   res.json(item);
@@ -58,16 +58,15 @@ export async function createItem(req, res) {
   item._id = await nextId(item.type === 'found' ? 'found' : 'lost');
   await item.save();
 
-  // The response never contains privateDetails
-  const { privateDetails: _hidden, ...publicItem } = item.toJSON();
-  res.status(201).json(publicItem);
+  // The response never contains the private details or the reporter's name and contact
+  res.status(201).json(toPublicItem(item));
 }
 
 // PATCH /api/items/:id  – DOSS corrects a report's details
 export async function updateItem(req, res) {
   const changes = pick(req.body, UPDATE_FIELDS);
   if (Object.keys(changes).length === 0) throw new HttpError(400, 'Nothing to update.');
-  const item = await Item.findById(req.params.id).select('+privateDetails');
+  const item = await Item.findById(req.params.id).select(STAFF_ITEM_FIELDS);
   if (!item) throw new HttpError(404, `Report "${req.params.id}" was not found.`);
   item.set(changes);
   await item.save();

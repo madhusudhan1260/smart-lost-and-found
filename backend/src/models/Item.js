@@ -40,12 +40,13 @@ const itemSchema = new mongoose.Schema(
     // PRIVATE: never returned unless a query asks for it with .select('+privateDetails') (DOSS only)
     privateDetails: { type: String, trim: true, default: '', maxlength: 500, select: false },
     additionalInfo: { type: String, trim: true, default: '', maxlength: 500 },
+    // PRIVATE: who reported the item – only DOSS staff may see it (select: false like privateDetails)
     contactName: {
-      type: String, trim: true, required: [true, 'Your name is required'],
+      type: String, trim: true, required: [true, 'Your name is required'], select: false,
       match: [PATTERNS.personName, 'Name should contain letters only'],
     },
     contact: {
-      type: String, trim: true, required: [true, 'Contact information is required'],
+      type: String, trim: true, required: [true, 'Contact information is required'], select: false,
       validate: { validator: isContact, message: 'Enter a valid email or 10-digit mobile number' },
     },
     image: {
@@ -84,5 +85,17 @@ itemSchema.index({ createdAt: -1 });
 itemSchema.path('privateDetails').validate(function requireForLost(value) {
   return this.type !== 'lost' || (value && value.trim().length >= 10);
 }, 'Add at least one private detail (10+ characters) so DOSS can verify the owner');
+
+// Fields only DOSS staff may see: the owner's secret details and the reporter's name and contact.
+export const PRIVATE_ITEM_FIELDS = ['privateDetails', 'contactName', 'contact'];
+// Use with .select(STAFF_ITEM_FIELDS) when DOSS staff should get the full report
+export const STAFF_ITEM_FIELDS = PRIVATE_ITEM_FIELDS.map((field) => `+${field}`).join(' ');
+
+// Plain object without the private fields – safe to send to students and guests
+export function toPublicItem(item) {
+  const plain = typeof item?.toJSON === 'function' ? item.toJSON() : { ...item };
+  PRIVATE_ITEM_FIELDS.forEach((field) => delete plain[field]);
+  return plain;
+}
 
 export default mongoose.model('Item', itemSchema);

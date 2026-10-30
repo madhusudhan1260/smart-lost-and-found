@@ -167,7 +167,7 @@ Items and claims each have their own status. `CLAIM_ACCEPTED` / `CLAIM_REJECTED`
 | Backend | **Node.js + Express 5** | REST API, middleware, business rules (`backend/`) |
 | Database | **MongoDB 8 + Mongoose 9** | Collections `items`, `claims`, `users`, `counters` |
 | Auth | JSON Web Tokens + bcrypt | DOSS staff login; students need no account |
-| Testing | Node test runner + supertest | 25 API tests (`backend/tests`) + frontend unit tests (`frontend/tests/`) |
+| Testing | Node test runner + supertest | 26 API tests (`backend/tests`) + frontend unit tests (`frontend/tests/`) |
 | Tooling | concurrently, dotenv, morgan, oxlint | One `npm run dev`, config in `.env`, request logs, linting |
 | Assets | `material-symbols`, `@fontsource/roboto` | Icons and font bundled locally (work offline) |
 
@@ -187,13 +187,13 @@ Full diagrams (layers and a request sequence): **[docs/ARCHITECTURE.md](docs/ARC
 
 ### Privacy Boundary & Field Exposure
 
-These rules are enforced by the **server**: `privateDetails` has `select: false` in MongoDB, and public claim responses leave out personal fields.
+These rules are enforced by the **server**: `privateDetails`, `contactName` and `contact` have `select: false` in MongoDB and are only sent to DOSS staff, and public claim responses leave out personal fields. So when you report an item, a student who claims it never sees your name or phone/email – only the DOSS office does.
 
 | Field | Public Cards & Lists | Search Engine (`SEARCHABLE_FIELDS`) | Student Details View | DOSS Staff View |
 |---|---|---|---|---|
 | `name`, `category`, `color`, `location` | Yes | Yes | Yes | Yes |
 | `description` | Yes | Yes | Yes | Yes |
-| `contactName`, `contact` | No | No | Yes | Yes |
+| `contactName`, `contact` (who reported it) | No | No | **Hidden** | Yes |
 | `privateDetails` | **Never** | **Never** | **Hidden** | **Visible for Verification** |
 | `claimantName`, `rollNumber` | No | No | Owner Only (My Claims) | Yes (DOSS Queue) |
 | `uniqueFeature` | No | No | Owner Only | Yes (Side-by-side Review) |
@@ -393,7 +393,7 @@ Guests can still browse, report and claim without signing in.
 | `npm run dev` | API + React together (`concurrently`) |
 | `npm run dev:backend` / `npm run dev:frontend` | Only one of them |
 | `npm run seed` | Reset MongoDB to the sample data |
-| `npm test` | All tests: 53 frontend + 25 backend (needs MongoDB) |
+| `npm test` | All tests: 53 frontend + 26 backend (needs MongoDB) |
 | `npm run test:frontend` / `npm run test:backend` | One side only |
 | `npm run build` | Production build of the React app into `frontend/dist/` |
 | `npm run lint` | oxlint |
@@ -529,4 +529,4 @@ The `counters` collection: `findOneAndUpdate({ _id: 'lost' }, { $inc: { seq: 1 }
 The aggregation pipeline: `$group` by type/status and by category with `$sum: 1`, like `GROUP BY` in SQL, computed inside the database.
 
 **Q30. How did you test the backend?**
-`backend/tests/api.test.js` uses Node's test runner and supertest to call the real Express app against a separate test database: login, CRUD, validation errors, privacy of public responses, and the whole claim lifecycle, roles and account management (25 tests).
+`backend/tests/api.test.js` uses Node's test runner and supertest to call the real Express app against a separate test database: login, CRUD, validation errors, privacy of public responses, and the whole claim lifecycle, roles and account management (26 tests).

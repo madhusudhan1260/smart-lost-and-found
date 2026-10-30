@@ -28,7 +28,7 @@ erDiagram
         string time "HH:MM"
         string privateDetails "select:false – DOSS only"
         string additionalInfo
-        string contactName
+        string contactName "select:false – DOSS only"
         string contact "email or mobile"
         string image "data URL or null"
         string handedTo "found items only"
@@ -89,8 +89,8 @@ erDiagram
 | `time` | String | optional `HH:MM` |
 | `privateDetails` | String | **`select: false`**; required (10+ chars) for lost reports, optional for found |
 | `additionalInfo` | String | optional, ≤ 500 |
-| `contactName` | String | required, letters only |
-| `contact` | String | required, email **or** Indian mobile (custom validator) |
+| `contactName` | String | **`select: false`** (DOSS only); required, letters only |
+| `contact` | String | **`select: false`** (DOSS only); required, email **or** Indian mobile (custom validator) |
 | `image` | String | `null` or a PNG/JPG/WEBP/GIF data URL (resized in the browser) |
 | `handedTo` | String | found items: `Handed over to DOSS Office` \| `With the finder` |
 | `status` | String | `LOST`, `FOUND`, `CLAIM_PENDING`, `READY_FOR_COLLECTION`, `COLLECTED`, `RESOLVED` – **set by the server only** |
