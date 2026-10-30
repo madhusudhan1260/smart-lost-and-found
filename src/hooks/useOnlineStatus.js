@@ -9,7 +9,7 @@ export default function useOnlineStatus() {
     const goOffline = () => setOnline(false);
     window.addEventListener('online', goOnline);
     window.addEventListener('offline', goOffline);
-    return () => {
+    return () => { 
       window.removeEventListener('online', goOnline);
       window.removeEventListener('offline', goOffline);
     };
