@@ -8,7 +8,7 @@ import { request } from './apiClient';
 
 export const getItems = () => request('/items');
 
-export const getItem = (id) => request(`/items/${encodeURIComponent(id)}`);
+export const getItem = (id) => request(`/items/${encodeURIComponent(id)}`); 
 
 export const addItem = (itemData) => request('/items', { method: 'POST', body: itemData });
 
