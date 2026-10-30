@@ -39,7 +39,7 @@ export const rejectClaim = (claimId, reviewNote) =>
 export const getStats = () => request('/stats');
 
 // DOSS only: put the sample data back into MongoDB
-export const resetAllData = () => request('/admin/reset', { method: 'POST' });
+export const resetAllData = () => request('/admin/reset', { method: 'POST' }); 
 
 // A static file (not the API): campus tips from /public/data/campus-tips.json
 export async function getCampusTips() {
