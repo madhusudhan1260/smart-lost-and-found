@@ -14,6 +14,10 @@
 
 .hero__greeting { margin: 0 0 4px; font-size: 1.05rem; font-weight: 500; color: var(--text); animation: fadeUp 0.4s var(--ease); }
 
+.hero__popular { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 10px; margin: 10px 0 2px; }
+.link-chip { border: none; background: none; padding: 2px 4px; color: var(--blue-dark); font-size: 0.85rem; cursor: pointer; border-radius: 4px; }
+.link-chip:hover { text-decoration: underline; }
+
 /* Tip ticker */
 .tip-ticker { display: flex; align-items: center; gap: 12px; max-width: 640px; width: 100%; padding: 10px 16px; border-radius: var(--radius-pill); background: var(--bg-2); color: var(--text-2); font-size: 0.88rem; animation: fadeUp 0.5s var(--ease) 0.25s both; }
 .tip-ticker__icon { color: var(--blue-dark); }

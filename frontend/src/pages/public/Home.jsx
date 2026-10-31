@@ -70,6 +70,9 @@ function RecentSection({ title, icon, type, items, loading }) {
   );
 }
 
+// Quick searches shown under the home search box
+const POPULAR_SEARCHES = ['phone', 'ID card', 'wallet', 'keys', 'charger', 'bottle'];
+
 // "Good morning" / "Good afternoon" / "Good evening" from the current hour
 const greetingFor = (hour) => (hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening');
 
@@ -116,6 +119,12 @@ export default function Home() {
           <div className="hero__search">
             <SearchBar id="home-search" large value={query} onChange={setQuery} onSubmit={handleSearch}
               placeholder={`Search ${searchIn} items – e.g. “black phone library”`} />
+            <div className="hero__popular" aria-label="Popular searches">
+              <span className="muted small">Popular:</span>
+              {POPULAR_SEARCHES.map((term) => (
+                <button key={term} type="button" className="link-chip" onClick={() => handleSearch(term)}>{term}</button>
+              ))}
+            </div>
             <div className="hero__search-scope" role="group" aria-label="Search in">
               {['found', 'lost'].map((type) => (
                 <button key={type} type="button" className={cx('chip chip--toggle', searchIn === type && 'is-active')}
