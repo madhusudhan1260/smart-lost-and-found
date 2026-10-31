@@ -142,6 +142,8 @@ export default function ItemForm({ type }) {
 
   // ---------- FORM ----------
   const descriptionLength = values.description?.length ?? 0;
+  const privateLength = values.privateDetails?.length ?? 0;
+  const extraLength = values.additionalInfo?.length ?? 0;
   // How many required fields are already filled in correctly (for the progress bar)
   const requiredFields = ['name', 'category', 'color', 'description', 'location', 'date', 'contactName', 'contact',
     ...(type === 'lost' ? ['privateDetails'] : [])];
@@ -224,8 +226,8 @@ export default function ItemForm({ type }) {
           <p>Only DOSS staff can see this section. It is never shown on public pages or in search.</p>
         </div>
         <FormField id="privateDetails" label={text.privateLabel} required={type === 'lost'} full
-          error={errors.privateDetails} hint={text.privateHint}>
-          <textarea rows={3} placeholder="e.g. There are three small scratches on the bottom-right corner of the back case." {...fieldProps('privateDetails')} />
+          error={errors.privateDetails} hint={`${text.privateHint} ${privateLength}/500 characters`}>
+          <textarea rows={3} maxLength={500} placeholder="e.g. There are three small scratches on the bottom-right corner of the back case." {...fieldProps('privateDetails')} />
         </FormField>
       </fieldset>
 
@@ -246,8 +248,8 @@ export default function ItemForm({ type }) {
           <FormField id="contact" label="Email or mobile" required error={errors.contact}>
             <input type="text" placeholder="name@college.edu or 9876543210" {...fieldProps('contact')} />
           </FormField>
-          <FormField id="additionalInfo" label="Additional information" full hint="Optional, public.">
-            <textarea rows={2} placeholder="Anything else that could help" {...fieldProps('additionalInfo')} />
+          <FormField id="additionalInfo" label="Additional information" full hint={`Optional, public. ${extraLength}/500 characters`}>
+            <textarea rows={2} maxLength={500} placeholder="Anything else that could help" {...fieldProps('additionalInfo')} />
           </FormField>
         </div>
       </fieldset>
