@@ -58,3 +58,6 @@ kbd { font-family: inherit; }
 .icon { font-size: 20px; line-height: 1; vertical-align: middle; user-select: none; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 .icon--filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 .spin { animation: spin 1s linear infinite; }
+
+/* Set by the mobile menu and dialogs so the page behind them stays still */
+body.no-scroll { overflow: hidden; }

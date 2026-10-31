@@ -63,6 +63,13 @@ export default function Navbar({ theme }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // While the mobile menu is open the page behind it should not scroll
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    document.body.classList.add('no-scroll');
+    return () => document.body.classList.remove('no-scroll');
+  }, [menuOpen]);
+
   useEffect(() => {
     if (!menuOpen) return undefined;
     const handleKeyDown = (event) => {
