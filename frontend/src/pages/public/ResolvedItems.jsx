@@ -16,6 +16,22 @@ import ItemImage from '../../components/items/ItemImage';
 import StatusBadge, { TypeChip } from '../../components/ui/StatusBadge';
 import EmptyState from '../../components/ui/EmptyState';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import Icon from '../../components/ui/Icon';
+
+// Quote a value for CSV: wrap in quotes and double any quotes inside
+const csvCell = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+
+// Download the visible rows as a spreadsheet-friendly CSV file (for DOSS records)
+function downloadCsv(rows, claimantFor) {
+  const header = ['Report ID', 'Item', 'Type', 'Location', 'Returned to', 'Collected', 'Resolved', 'Status'];
+  const lines = rows.map((item) => [item.id, item.name, item.type, item.location, claimantFor(item),
+    item.collectedAt ? formatDateTime(item.collectedAt) : '', item.resolvedAt ? formatDateTime(item.resolvedAt) : '', item.status]);
+  const csv = [header, ...lines].map((line) => line.map(csvCell).join(',')).join('\n');
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  const link = Object.assign(document.createElement('a'), { href: url, download: `resolved-cases-${new Date().toISOString().slice(0, 10)}.csv` });
+  link.click();
+  URL.revokeObjectURL(url);
+}
 
 const FILTERS = [
   { key: 'all', label: 'All closed' },
@@ -62,7 +78,13 @@ export default function ResolvedItems() {
   return (
     <>
       <PageHeader icon="task_alt" tone="green" eyebrow="History" title="Resolved cases"
-        subtitle="Items that were collected by their owners, and cases DOSS has closed." />
+        subtitle="Items that were collected by their owners, and cases DOSS has closed.">
+        {closedItems.length > 0 && (
+          <button type="button" className="btn btn--outline" onClick={() => downloadCsv(closedItems, claimantFor)}>
+            <Icon name="download" /> Export CSV
+          </button>
+        )}
+      </PageHeader>
       <div className="container page-body">
         <section className="stat-grid resolved-stats" aria-label="Summary">
           <StatCard label="Cases closed" value={summary.closed} icon="task_alt" tone="green" />
