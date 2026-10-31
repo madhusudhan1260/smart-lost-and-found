@@ -53,7 +53,17 @@ function DossClaimsContent() {
         subtitle="Open a claim to compare the claimant’s answers with the private details of the reports." />
       <div className="container page-body">
         <div className="claims-toolbar card">
-          <div className="tabs" role="tablist" aria-label="Claim status">
+          <div className="tabs" role="tablist" aria-label="Claim status"
+            // Arrow keys / Home / End move between tabs (WAI-ARIA tabs pattern)
+            onKeyDown={(event) => {
+              const index = TABS.findIndex((entry) => entry.key === activeTab);
+              const target = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: TABS.length - 1 }[event.key];
+              if (target === undefined) return;
+              event.preventDefault();
+              const nextTab = TABS[(target + TABS.length) % TABS.length];
+              setActiveTab(nextTab.key);
+              document.getElementById(`claim-tab-${nextTab.key}`)?.focus();
+            }}>
             {TABS.map(({ key, label, test }) => (
               <button
                 key={key}
@@ -62,6 +72,7 @@ function DossClaimsContent() {
                 role="tab"
                 aria-selected={activeTab === key}
                 aria-controls="claims-tabpanel"
+                tabIndex={activeTab === key ? 0 : -1}
                 className={cx('tab', activeTab === key && 'is-active')}
                 onClick={() => setActiveTab(key)}
               >
