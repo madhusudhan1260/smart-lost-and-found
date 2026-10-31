@@ -77,7 +77,7 @@ export default function App() {
       <div className="app">
         <ScrollToTop />
         <Suspense fallback={<LoadingSpinner label="Loading sign-in…" />}>
-          <Login />
+          <Login theme={theme} />
         </Suspense>
       </div>
     );

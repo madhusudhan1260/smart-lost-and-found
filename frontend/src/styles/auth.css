@@ -34,6 +34,8 @@
   width: min(460px, 100%); background: var(--bg); border: 1px solid var(--border-light); border-radius: 20px;
   padding: 28px 32px 32px; box-shadow: 0 12px 40px rgba(60, 64, 67, 0.12); animation: fadeUp 0.4s var(--ease);
 }
+.auth__topline { display: flex; align-items: center; justify-content: space-between; margin: -8px -8px 10px 0; }
+.auth__topline .auth__back { margin-bottom: 0; }
 .auth__back { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--text-2); margin-bottom: 18px; }
 .auth__back .icon { font-size: 18px; }
 

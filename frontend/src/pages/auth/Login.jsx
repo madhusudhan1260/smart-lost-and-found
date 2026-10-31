@@ -18,6 +18,7 @@ import { readFromStorage, writeToStorage } from '../../utils/storage';
 import { cx } from '../../utils/helpers';
 import logo from '../../assets/logo.svg';
 import Icon from '../../components/ui/Icon';
+import ThemeToggle from '../../components/layout/ThemeToggle';
 
 const PORTALS = [
   {
@@ -45,7 +46,7 @@ const EMPTY_SIGNUP = { name: '', rollNumber: '', email: '', password: '', confir
 // Only allow returning to a page inside this app (never an outside URL)
 const safeNext = (value) => (value && value.startsWith('/') && !value.startsWith('//') && value !== '/login' ? value : null);
 
-export default function Login() {
+export default function Login({ theme }) {
   const [params, setParams] = useSearchParams();
   // Remembered from the last successful sign-in on this device: the tab and the email (never the password)
   const lastLogin = readFromStorage(STORAGE_KEYS.LAST_LOGIN, null);
@@ -208,7 +209,10 @@ export default function Login() {
       {/* ---------- Sign-in card ---------- */}
       <main className="auth__main">
         <div className="auth__card">
-          <Link to="/" className="auth__back"><Icon name="arrow_back" /> Back to home</Link>
+          <div className="auth__topline">
+            <Link to="/" className="auth__back"><Icon name="arrow_back" /> Back to home</Link>
+            {theme && <ThemeToggle preference={theme.preference} onChange={theme.setPreference} />}
+          </div>
 
           {user ? (
             <div className="auth__signed-in">
