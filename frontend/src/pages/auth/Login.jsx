@@ -309,7 +309,7 @@ export default function Login() {
                       <label htmlFor="auth-email">Email</label>
                       <div className="auth__input-icon">
                         <Icon name="mail" />
-                        <input {...bind(credentials, setCredentials, 'email')} type="email" autoComplete="username" autoFocus placeholder="name@college.edu" />
+                        <input {...bind(credentials, setCredentials, 'email')} type="email" autoComplete="username" autoFocus={!credentials.email} placeholder="name@college.edu" />
                       </div>
                       {fieldError('email')}
                     </div>
@@ -321,6 +321,7 @@ export default function Login() {
                           {...bind(credentials, setCredentials, 'password')}
                           type={showPassword ? 'text' : 'password'}
                           autoComplete="current-password"
+                          autoFocus={Boolean(credentials.email)} // email already remembered → start with the password
                           onKeyUp={detectCapsLock}
                         />
                         <PasswordToggle shown={showPassword} onToggle={() => setShowPassword((s) => !s)} />
