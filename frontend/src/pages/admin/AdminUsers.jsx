@@ -26,6 +26,13 @@ const FILTERS = [
   { key: ROLES.SUPER_ADMIN, label: 'Super Admins' },
 ];
 
+// How the accounts table can be ordered
+const SORTERS = {
+  newest: (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+  name: (a, b) => a.name.localeCompare(b.name),
+  lastLogin: (a, b) => new Date(b.lastLoginAt ?? 0) - new Date(a.lastLoginAt ?? 0),
+};
+
 const EMPTY_ACCOUNT = { name: '', email: '', role: ROLES.DOSS, rollNumber: '', password: '' };
 
 // A readable random password for new staff accounts, e.g. "Kite-4821-Moon"
@@ -43,6 +50,7 @@ export default function AdminUsers() {
   const [loadError, setLoadError] = useState('');
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [sortBy, setSortBy] = useState('newest');
   const [form, setForm] = useState(EMPTY_ACCOUNT);
   const [formErrors, setFormErrors] = useState({});
   const [saving, setSaving] = useState(false);
@@ -82,8 +90,9 @@ export default function AdminUsers() {
     const text = search.trim().toLowerCase();
     return users
       .filter((account) => filter === 'all' || account.role === filter)
-      .filter((account) => !text || [account.name, account.email, account.rollNumber].some((v) => v?.toLowerCase().includes(text)));
-  }, [users, filter, search]);
+      .filter((account) => !text || [account.name, account.email, account.rollNumber].some((v) => v?.toLowerCase().includes(text)))
+      .sort(SORTERS[sortBy]);
+  }, [users, filter, search, sortBy]);
 
   if (checking) return <LoadingSpinner />;
   if (!isSuperAdmin) {
@@ -183,6 +192,14 @@ export default function AdminUsers() {
                     aria-pressed={filter === key} onClick={() => setFilter(key)}>{label}</button>
                 ))}
               </div>
+              <label className="admin-users__sort">
+                <span className="sr-only">Sort accounts</span>
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                  <option value="newest">Newest first</option>
+                  <option value="name">Name A–Z</option>
+                  <option value="lastLogin">Last signed in</option>
+                </select>
+              </label>
               <label className="admin-users__search">
                 <span className="sr-only">Search accounts</span>
                 <Icon name="search" />

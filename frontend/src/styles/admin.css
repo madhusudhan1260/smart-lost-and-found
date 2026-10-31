@@ -46,3 +46,5 @@
 .new-credentials p { display: flex; align-items: center; gap: 6px; margin: 0; }
 .new-credentials code { justify-self: start; background: var(--bg); }
 .new-credentials__actions { display: flex; gap: 6px; }
+.admin-users__sort { margin: 0; }
+.admin-users__sort select { min-height: 36px; padding: 6px 10px; width: auto; font-size: 0.85rem; border-radius: var(--radius-pill); }
