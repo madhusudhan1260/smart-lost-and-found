@@ -37,7 +37,7 @@ export default function App() {
   const location = useLocation();
   const { isDoss } = useMode();
   useRipple(); // Material ripple on every button
-  useTheme(); // applies light / dark colours
+  const theme = useTheme(); // applies light / dark colours
   const online = useOnlineStatus();
   const { error: dataError, reload } = useItems();
 
@@ -57,7 +57,7 @@ export default function App() {
     <div className="app">
       <a href="#main" className="skip-link">Skip to content</a>
       <ScrollToTop />
-      <Navbar />
+      <Navbar theme={theme} />
       {!online && (
         <div className="offline-banner" role="status">
           <Icon name="cloud_off" /> You are offline. Reports are saved on the server, so reconnect to see the latest data.

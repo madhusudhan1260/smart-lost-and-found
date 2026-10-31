@@ -13,6 +13,7 @@ import { cx } from '../../utils/helpers';
 import logo from '../../assets/logo.svg';
 import ModeSwitcher from './ModeSwitcher';
 import AccountMenu from './AccountMenu';
+import ThemeToggle from './ThemeToggle';
 import Icon from '../ui/Icon';
 
 // Different links for each mode (conditional rendering driven by data)
@@ -34,7 +35,7 @@ const DOSS_LINKS = [
   { to: '/dashboard', label: 'Dashboard', icon: 'space_dashboard' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ theme }) {
   const { isDoss } = useMode();
   const { user, logout, isSuperAdmin } = useAuth();
   const { notify } = useNotification();
@@ -104,6 +105,7 @@ export default function Navbar() {
           <div className="navbar__mode-desktop">
             <ModeSwitcher />
           </div>
+          {theme && <ThemeToggle preference={theme.preference} onChange={theme.setPreference} />}
           <AccountMenu />
           <button
             type="button"
