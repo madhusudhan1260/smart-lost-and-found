@@ -158,7 +158,14 @@ export default function ItemForm({ type }) {
   const progress = Math.round((doneCount / requiredFields.length) * 100);
 
   return (
-    <form className="item-form card" onSubmit={handleSubmit} aria-busy={submitting} noValidate>
+    <form className="item-form card" onSubmit={handleSubmit} aria-busy={submitting} noValidate
+      // Ctrl+Enter (⌘+Enter on Mac) submits from any field, like most web apps
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' && (event.ctrlKey || event.metaKey) && !submitting) {
+          event.preventDefault();
+          event.currentTarget.requestSubmit();
+        }
+      }}>
       <div className="form-progress" aria-live="polite">
         <div className="form-progress__label">
           <span>{doneCount} of {requiredFields.length} required fields complete</span>
@@ -262,7 +269,7 @@ export default function ItemForm({ type }) {
       </fieldset>
 
       <div className="form-actions">
-        <p className="muted form-actions__note"><Icon name="cloud_done" /> Draft saved automatically</p>
+        <p className="muted form-actions__note"><Icon name="cloud_done" /> Draft saved automatically · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to submit</p>
         <button type="button" className="btn btn--text" onClick={askReset} disabled={submitting}>Reset</button>
         <button type="submit" className={cx('btn', 'btn--primary')} disabled={submitting}>
           {submitting ? <><span className="spinner spinner--sm" aria-hidden="true" /> Saving…</> : text.submit}
