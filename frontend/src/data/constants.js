@@ -149,6 +149,7 @@ export const ITEM_LOCATIONS_NOW = ['Handed over to DOSS Office', 'With the finde
 export const STORAGE_KEYS = {
   TOKEN: 'lf_v2_token',
   THEME: 'lf_v2_theme',
+  LAST_LOGIN: 'lf_v2_last_login', // { role, email } of the last successful sign-in (never the password)
   MODE: 'lf_v2_mode',
   MY_CLAIMS: 'lf_v2_my_claims',
   DRAFT_PREFIX: 'lf_v2_draft_',

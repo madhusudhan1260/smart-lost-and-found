@@ -12,8 +12,9 @@ import { useMode } from '../../context/ModeContext';
 import { useItems } from '../../context/ItemContext';
 import { useNotification } from '../../context/NotificationContext';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import { DEMO_ACCOUNTS, MODES, ROLE_META, ROLES, STATUS } from '../../data/constants';
+import { DEMO_ACCOUNTS, MODES, ROLE_META, ROLES, STATUS, STORAGE_KEYS } from '../../data/constants';
 import { getPasswordStrength, validateAccount, validateLogin } from '../../utils/authValidation';
+import { readFromStorage, writeToStorage } from '../../utils/storage';
 import { cx } from '../../utils/helpers';
 import logo from '../../assets/logo.svg';
 import Icon from '../../components/ui/Icon';
@@ -46,7 +47,10 @@ const safeNext = (value) => (value && value.startsWith('/') && !value.startsWith
 
 export default function Login() {
   const [params, setParams] = useSearchParams();
-  const initialRole = PORTALS.some((p) => p.role === params.get('role')) ? params.get('role') : ROLES.STUDENT;
+  // Remembered from the last successful sign-in on this device: the tab and the email (never the password)
+  const lastLogin = readFromStorage(STORAGE_KEYS.LAST_LOGIN, null);
+  const isPortal = (value) => PORTALS.some((p) => p.role === value);
+  const initialRole = isPortal(params.get('role')) ? params.get('role') : isPortal(lastLogin?.role) ? lastLogin.role : ROLES.STUDENT;
   const next = safeNext(params.get('next'));
 
   const { user, login, register, logout } = useAuth();
@@ -57,7 +61,10 @@ export default function Login() {
 
   const [role, setRole] = useState(initialRole);
   const [signingUp, setSigningUp] = useState(params.get('mode') === 'signup' && initialRole === ROLES.STUDENT);
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [credentials, setCredentials] = useState({
+    email: lastLogin?.role === initialRole ? lastLogin.email ?? '' : '',
+    password: '',
+  });
   const [signup, setSignup] = useState(EMPTY_SIGNUP);
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState('');
@@ -117,6 +124,7 @@ export default function Login() {
     setBusy(true);
     try {
       const signedIn = await login(credentials.email.trim(), credentials.password, role);
+      writeToStorage(STORAGE_KEYS.LAST_LOGIN, { role, email: signedIn.email });
       finish(signedIn, `Welcome back, ${signedIn.name.split(' ')[0]}`);
     } catch (err) {
       setFormError(err.message);
