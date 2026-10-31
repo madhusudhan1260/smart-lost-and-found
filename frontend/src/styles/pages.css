@@ -301,3 +301,7 @@
 .table-item { display: flex; align-items: center; gap: 10px; color: var(--text); }
 .table-item span { display: grid; }
 .table-item__image { width: 40px; height: 40px; border-radius: var(--radius-sm); flex-shrink: 0; }
+
+/* Claim ID with a copy button on the "Claim submitted" screen */
+.claim-id-copy { display: inline-flex; align-items: center; gap: 8px; margin: 12px 0 4px; }
+.claim-id-copy code { font-size: 1.05rem; padding: 4px 10px; }

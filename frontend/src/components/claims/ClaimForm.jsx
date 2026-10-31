@@ -15,6 +15,7 @@ import { formatDate, toISODate } from '../../utils/dateUtils';
 import FormField from '../ui/FormField';
 import StatusBadge from '../ui/StatusBadge';
 import Icon from '../ui/Icon';
+import { copyToClipboard } from '../../utils/helpers';
 
 const EMPTY_CLAIM = {
   claimantName: '',
@@ -105,8 +106,15 @@ export default function ClaimForm({ item }) {
         <span className="form-success__check form-success__check--pending"><Icon name="hourglass_top" /></span>
         <h2>Claim submitted</h2>
         <StatusBadge status={STATUS.CLAIM_PENDING} />
+        <p className="claim-id-copy">
+          <code>{submittedClaim.id}</code>
+          <button type="button" className="btn btn--text btn--sm"
+            onClick={async () => notify(await copyToClipboard(submittedClaim.id) ? `Claim ID ${submittedClaim.id} copied` : 'Could not copy – please note it down', 'info', 2500)}>
+            <Icon name="content_copy" /> Copy claim ID
+          </button>
+        </p>
         <p className="muted">
-          Your claim <code>{submittedClaim.id}</code> is waiting for DOSS to verify it. You will see the result on the
+          Keep this ID – the DOSS office asks for it when you collect the item. Your claim is waiting for DOSS to verify it. You will see the result on the
           My Claims page. Claims are never approved automatically.
         </p>
         <div className="form-success__actions">
