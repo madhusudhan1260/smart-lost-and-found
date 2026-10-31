@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useItems } from '../../context/ItemContext';
 import { useNotification } from '../../context/NotificationContext';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import { MODES, STATUS } from '../../data/constants';
+import { DOSS_OFFICE, MODES, STATUS } from '../../data/constants';
 import { cx } from '../../utils/helpers';
 import PageHeader from '../../components/layout/PageHeader';
 import ClaimCard from '../../components/claims/ClaimCard';
@@ -75,6 +75,19 @@ function MyClaimsContent() {
           </EmptyState>
         ) : (
           <>
+            {(() => {
+              // Accepted claims mean the student should go to the DOSS office now
+              const ready = myClaims.filter((claim) => claim.status === STATUS.CLAIM_ACCEPTED);
+              return ready.length > 0 && (
+                <div className="notice notice--green ready-notice" role="status">
+                  <Icon name="storefront" />
+                  <div>
+                    <strong>{ready.length === 1 ? 'Your item is ready to collect!' : `${ready.length} items are ready to collect!`}</strong>
+                    <p>Bring your student ID and claim ID ({ready.map((claim) => claim.id).join(', ')}) to the {DOSS_OFFICE.place} · {DOSS_OFFICE.hours}.</p>
+                  </div>
+                </div>
+              );
+            })()}
             <div className="segmented" role="group" aria-label="Filter claims">
               {CLAIM_FILTERS.map(({ key, label, test }) => (
                 <button key={key} type="button" className={cx('segmented__item', filterKey === key && 'is-active')}

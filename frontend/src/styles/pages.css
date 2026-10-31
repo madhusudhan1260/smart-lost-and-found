@@ -318,3 +318,5 @@
 .details__pager { display: flex; gap: 4px; margin-left: auto; }
 .notfound-search { max-width: 520px; margin: 0 auto 20px; }
 .review-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.ready-notice { margin-bottom: 16px; }
+.ready-notice p { margin: 2px 0 0; }
