@@ -58,6 +58,7 @@
 .search-bar:hover, .search-bar:focus-within { border-color: transparent; box-shadow: var(--shadow-1); }
 .search-bar input { flex: 1; min-height: 0; height: 100%; border: none; padding: 0 8px; background: transparent; box-shadow: none !important; }
 .search-bar__icon { color: var(--text-2); }
+@media (hover: none) { .search-bar__hint { display: none; } } /* no keyboard shortcut hint on touch screens */
 .search-bar__hint { padding: 1px 8px; border: 1px solid var(--border); border-radius: 4px; color: var(--text-2); font-size: 0.78rem; margin-right: 8px; }
 .search-bar--large { height: 56px; }
 .search-bar--large input { font-size: 1.05rem; }
