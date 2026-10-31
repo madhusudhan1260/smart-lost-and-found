@@ -175,8 +175,8 @@ export default function ClaimForm({ item }) {
           </FormField>
 
           <FormField id="additionalProof" label="Additional proof / details" full
-            hint="e.g. purchase bill, a photo of you with it, what the lock screen shows.">
-            <textarea rows={2} {...fieldProps('additionalProof')} />
+            hint={`e.g. purchase bill, a photo of you with it, what the lock screen shows. ${values.additionalProof?.length ?? 0}/500 characters`}>
+            <textarea rows={2} maxLength={500} {...fieldProps('additionalProof')} />
           </FormField>
 
           <FormField id="lostItemId" label="Did you file a lost report? (optional)" full
