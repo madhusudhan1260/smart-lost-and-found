@@ -57,6 +57,9 @@ const TEXT = {
 
 const REDIRECT_DELAY_MS = 2200;
 
+// One-tap answers for the most common colours
+const COMMON_COLOURS = ['Black', 'White', 'Blue', 'Silver', 'Brown', 'Red'];
+
 // Remove extra spaces from every text value before saving
 const trimValues = (values) =>
   Object.fromEntries(Object.entries(values).map(([key, value]) => [key, typeof value === 'string' ? value.trim() : value]));
@@ -191,6 +194,14 @@ export default function ItemForm({ type }) {
 
           <FormField id="color" label="Colour" required error={errors.color}>
             <input type="text" placeholder="e.g. Black" {...fieldProps('color')} />
+            <div className="date-chips" aria-label="Common colours">
+              {COMMON_COLOURS.map((colour) => (
+                <button key={colour} type="button" className={cx('chip chip--toggle', values.color === colour && 'is-active')}
+                  onClick={() => setValues((previous) => ({ ...previous, color: colour }))}>
+                  {colour}
+                </button>
+              ))}
+            </div>
           </FormField>
 
           <FormField id="description" label="Public description" required full error={errors.description}
