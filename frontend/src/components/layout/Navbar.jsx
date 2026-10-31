@@ -3,7 +3,7 @@
 // Used by: App.jsx
 
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useMode } from '../../context/ModeContext';
 import { useAuth } from '../../context/AuthContext';
 import { useNotification } from '../../context/NotificationContext';
@@ -73,6 +73,14 @@ export default function Navbar({ theme }) {
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
+
+  // Any navigation (links, keyboard shortcuts, back button) closes the mobile menu
+  const { pathname } = useLocation();
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    if (menuOpen) setMenuOpen(false);
+  }
 
   return (
     <header className={cx('navbar', scrolled && 'navbar--scrolled', isDoss && 'navbar--doss')}>
