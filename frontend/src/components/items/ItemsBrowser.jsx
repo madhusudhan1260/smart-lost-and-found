@@ -2,7 +2,7 @@
 // Purpose: Search + filters + results grid shared by the Lost and Found pages.
 // Used by: pages/public/FoundItems.jsx, pages/public/LostItems.jsx
 
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useItems } from '../../context/ItemContext';
 import { useMode } from '../../context/ModeContext';
@@ -18,6 +18,8 @@ import ActiveFilters from './ActiveFilters';
 import ItemCard from './ItemCard';
 import EmptyState from '../ui/EmptyState';
 import { SkeletonGrid } from '../ui/LoadingSpinner';
+
+const PAGE_SIZE = 12; // cards shown at first; "Show more" adds another page
 
 // Shared by the Lost Items and Found Items pages – only `type` changes.
 export default function ItemsBrowser({ type }) {
@@ -59,6 +61,13 @@ export default function ItemsBrowser({ type }) {
     () => applyFilters(itemsOfType, { search: debouncedSearch, category, location, dateRange, status, sortBy }),
     [itemsOfType, debouncedSearch, category, location, dateRange, status, sortBy],
   );
+
+  // Start again from the first page whenever the search or a filter changes
+  const filterKey = JSON.stringify([debouncedSearch, category, location, dateRange, status, sortBy]);
+  const [page, setPage] = useState({ key: filterKey, count: PAGE_SIZE });
+  const shownCount = page.key === filterKey ? page.count : PAGE_SIZE;
+  const shownItems = visibleItems.slice(0, shownCount);
+  const showMore = () => setPage({ key: filterKey, count: shownCount + PAGE_SIZE });
 
   const isSearching = filters.search !== debouncedSearch;
   const canClear = hasActiveFilters(filters);
@@ -129,9 +138,18 @@ export default function ItemsBrowser({ type }) {
           )}
         </EmptyState>
       ) : (
-        <div className={cx('item-grid', view === 'list' && 'item-grid--list')}>
-          {visibleItems.map((item, index) => <ItemCard key={item.id} item={item} index={index} highlight={debouncedSearch} />)}
-        </div>
+        <>
+          <div className={cx('item-grid', view === 'list' && 'item-grid--list')}>
+            {shownItems.map((item, index) => <ItemCard key={item.id} item={item} index={index % PAGE_SIZE} highlight={debouncedSearch} />)}
+          </div>
+          {shownItems.length < visibleItems.length && (
+            <div className="browser__more">
+              <button type="button" className="btn btn--outline" onClick={showMore}>
+                <Icon name="expand_more" /> Show more ({visibleItems.length - shownItems.length} left)
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
