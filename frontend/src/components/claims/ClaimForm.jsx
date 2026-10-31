@@ -29,13 +29,14 @@ const EMPTY_CLAIM = {
 };
 
 // Ideas shown under the "unique feature" box
+// Clicking an idea adds its sentence starter to the unique-feature box
 const VERIFICATION_IDEAS = [
-  'Describe any scratches or damage',
-  'A sticker, name or mark on it',
-  'Accessories that were with it',
-  'What was inside (bag / wallet)',
-  'The phone case or cover',
-  'Exactly where you lost it',
+  { label: 'Describe any scratches or damage', starter: 'Scratches / damage: ' },
+  { label: 'A sticker, name or mark on it', starter: 'Sticker or mark: ' },
+  { label: 'Accessories that were with it', starter: 'Accessories with it: ' },
+  { label: 'What was inside (bag / wallet)', starter: 'Inside it: ' },
+  { label: 'The phone case or cover', starter: 'Case / cover: ' },
+  { label: 'Exactly where you lost it', starter: 'Exact place: ' },
 ];
 
 // "This is my item" → the claimant must PROVE ownership. Nothing is approved automatically.
@@ -147,7 +148,18 @@ export default function ClaimForm({ item }) {
             <textarea rows={3} maxLength={300} placeholder="e.g. There are three small scratches on the bottom-right corner of the back case." {...fieldProps('uniqueFeature')} />
           </FormField>
           <div className="idea-chips form-field--full" aria-label="Ideas for verification details">
-            {VERIFICATION_IDEAS.map((idea) => <span key={idea} className="chip"><Icon name="lightbulb" /> {idea}</span>)}
+            {VERIFICATION_IDEAS.map(({ label, starter }) => (
+              <button key={label} type="button" className="chip chip--toggle"
+                onClick={() => {
+                  setValues((previous) => {
+                    const current = previous.uniqueFeature.trim();
+                    return { ...previous, uniqueFeature: current ? `${current}\n${starter}` : starter };
+                  });
+                  document.getElementById('uniqueFeature')?.focus();
+                }}>
+                <Icon name="lightbulb" /> {label}
+              </button>
+            ))}
           </div>
 
           <FormField id="lostLocation" label="Where did you lose the item?" required error={errors.lostLocation}>
