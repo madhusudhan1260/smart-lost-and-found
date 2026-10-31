@@ -148,6 +148,7 @@ export const ITEM_LOCATIONS_NOW = ['Handed over to DOSS Office', 'With the finde
 // so only small per-browser settings are kept here.
 export const STORAGE_KEYS = {
   TOKEN: 'lf_v2_token',
+  THEME: 'lf_v2_theme',
   MODE: 'lf_v2_mode',
   MY_CLAIMS: 'lf_v2_my_claims',
   DRAFT_PREFIX: 'lf_v2_draft_',

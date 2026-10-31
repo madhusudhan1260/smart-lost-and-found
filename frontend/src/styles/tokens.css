@@ -53,3 +53,50 @@
   --font: 'Google Sans', 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   color-scheme: light;
 }
+
+/* ---------- DARK THEME ----------
+   Follows the device setting, unless the user picked a theme with the
+   toggle in the navbar (<html data-theme="light|dark">). Google's dark
+   palette: tinted backgrounds become dark, inks become light. */
+:root[data-theme="dark"] {
+  --blue: #8ab4f8;
+  --blue-dark: #8ab4f8;
+  --blue-soft: rgba(138, 180, 248, 0.16);
+  --red: #f28b82;
+  --red-dark: #f28b82;
+  --red-soft: rgba(242, 139, 130, 0.16);
+  --yellow: #fdd663;
+  --yellow-dark: #fdd663;
+  --yellow-soft: rgba(253, 214, 99, 0.14);
+  --green: #81c995;
+  --green-dark: #81c995;
+  --green-soft: rgba(129, 201, 149, 0.16);
+  --grey-soft: #303134;
+
+  --text: #e8eaed;
+  --text-2: #9aa0a6;
+  --bg: #202124;
+  --bg-2: #171717;
+  --border: #3c4043;
+  --border-light: #303134;
+  --border-strong: #5f6368;
+
+  --blue-ink: #aecbfa;
+  --green-ink: #a8dab5;
+  --red-ink: #f6aea9;
+  --yellow-ink: #fde293;
+  --blue-line: rgba(138, 180, 248, 0.4);
+  --green-line: rgba(129, 201, 149, 0.4);
+  --yellow-line: rgba(253, 214, 99, 0.4);
+  --blue-soft-strong: rgba(138, 180, 248, 0.24);
+  --blue-hover: #aecbfa;
+  --green-hover: #a8dab5;
+  --red-hover: #f6aea9;
+  --on-accent: #202124;
+  --scrim: rgba(0, 0, 0, 0.6);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.6), 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 1px 3px rgba(0, 0, 0, 0.6), 0 4px 8px 3px rgba(0, 0, 0, 0.3);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
+  color-scheme: dark;
+}

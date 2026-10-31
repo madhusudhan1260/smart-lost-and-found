@@ -4,6 +4,7 @@ import { useMode } from './context/ModeContext';
 import { useItems } from './context/ItemContext';
 import useRipple from './hooks/useRipple';
 import useOnlineStatus from './hooks/useOnlineStatus';
+import useTheme from './hooks/useTheme';
 import Icon from './components/ui/Icon';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -36,6 +37,7 @@ export default function App() {
   const location = useLocation();
   const { isDoss } = useMode();
   useRipple(); // Material ripple on every button
+  useTheme(); // applies light / dark colours
   const online = useOnlineStatus();
   const { error: dataError, reload } = useItems();
 
