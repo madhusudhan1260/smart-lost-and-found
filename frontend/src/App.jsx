@@ -1,7 +1,8 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useMode } from './context/ModeContext';
 import { useItems } from './context/ItemContext';
+import { useNotification } from './context/NotificationContext';
 import useRipple from './hooks/useRipple';
 import useOnlineStatus from './hooks/useOnlineStatus';
 import useTheme from './hooks/useTheme';
@@ -40,6 +41,19 @@ export default function App() {
   const theme = useTheme(); // applies light / dark colours
   const online = useOnlineStatus();
   const { error: dataError, reload } = useItems();
+  const { notify } = useNotification();
+
+  // Back online after being offline → fetch the latest reports automatically
+  const wasOffline = useRef(!online);
+  useEffect(() => {
+    if (!online) {
+      wasOffline.current = true;
+    } else if (wasOffline.current) {
+      wasOffline.current = false;
+      notify('Back online – loading the latest reports', 'info', 2500);
+      reload();
+    }
+  }, [online, reload, notify]);
 
   // The sign-in page is a full-screen layout of its own (no navbar or footer)
   if (location.pathname === '/login') {
