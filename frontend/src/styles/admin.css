@@ -40,3 +40,9 @@
   .admin-users__search { max-width: none; }
   .account-actions { text-align: left; }
 }
+
+/* Sign-in details of the account that was just created (shown once) */
+.new-credentials { display: grid; gap: 6px; margin-bottom: 16px; padding: 12px 14px; border-radius: var(--radius); background: var(--green-soft); color: var(--green-ink); animation: fadeUp 0.25s var(--ease); }
+.new-credentials p { display: flex; align-items: center; gap: 6px; margin: 0; }
+.new-credentials code { justify-self: start; background: var(--bg); }
+.new-credentials__actions { display: flex; gap: 6px; }

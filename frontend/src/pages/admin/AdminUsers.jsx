@@ -11,7 +11,7 @@ import * as userService from '../../services/userService';
 import { ROLE_META, ROLES } from '../../data/constants';
 import { validateAccount } from '../../utils/authValidation';
 import { timeAgo } from '../../utils/dateUtils';
-import { cx } from '../../utils/helpers';
+import { copyToClipboard, cx } from '../../utils/helpers';
 import PageHeader from '../../components/layout/PageHeader';
 import StatCard from '../../components/ui/StatCard';
 import EmptyState from '../../components/ui/EmptyState';
@@ -48,6 +48,7 @@ export default function AdminUsers() {
   const [saving, setSaving] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const [busyId, setBusyId] = useState(null);
+  const [lastCreated, setLastCreated] = useState(null); // { email, password } to hand over once
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -110,6 +111,7 @@ export default function AdminUsers() {
       const created = await userService.createUser({ ...form, name: form.name.trim(), email: form.email.trim() });
       setUsers((current) => [created, ...current]);
       notify(`${ROLE_META[created.role].label} account created for ${created.email}`, 'success');
+      setLastCreated({ email: created.email, password: form.password });
       setForm(EMPTY_ACCOUNT);
     } catch (err) {
       if (err.details) setFormErrors(err.details);
@@ -260,6 +262,20 @@ export default function AdminUsers() {
           <aside className="card admin-create">
             <h2><Icon name="person_add" /> Add an account</h2>
             <p className="muted small">Share the password with the person privately. They can sign in straight away.</p>
+            {lastCreated && (
+              <div className="new-credentials" role="status">
+                <p><Icon name="key" /> <strong>Share these sign-in details privately</strong></p>
+                <code>{lastCreated.email}</code>
+                <code>{lastCreated.password}</code>
+                <div className="new-credentials__actions">
+                  <button type="button" className="btn btn--tonal btn--sm"
+                    onClick={async () => notify(await copyToClipboard(`Email: ${lastCreated.email}\nPassword: ${lastCreated.password}`) ? 'Sign-in details copied' : 'Could not copy', 'info', 2500)}>
+                    <Icon name="content_copy" /> Copy
+                  </button>
+                  <button type="button" className="btn btn--text btn--sm" onClick={() => setLastCreated(null)}>Done</button>
+                </div>
+              </div>
+            )}
             <form className="auth__form" onSubmit={handleCreate} noValidate>
               <div className="form-field">
                 <label htmlFor="new-role">Role</label>
