@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Modal from '../ui/Modal';
 
 // Single-key shortcuts → route to open
-const ROUTE_KEYS = { h: '/', l: '/lost', f: '/found', m: '/smart-match', d: '/dashboard' };
+const ROUTE_KEYS = { h: '/', l: '/lost', f: '/found', m: '/smart-match', d: '/dashboard', r: '/report-lost', c: '/my-claims' };
 
 const HELP = [
   ['/', 'Focus the search box'],
@@ -16,6 +16,8 @@ const HELP = [
   ['f', 'Found items'],
   ['m', 'Smart Match'],
   ['d', 'Dashboard'],
+  ['r', 'Report a lost item'],
+  ['c', 'My claims'],
   ['?', 'Show this help'],
 ];
 
