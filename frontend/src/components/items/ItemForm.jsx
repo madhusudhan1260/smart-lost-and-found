@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useItems } from '../../context/ItemContext';
 import { useNotification } from '../../context/NotificationContext';
+import { useAuth } from '../../context/AuthContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import useFormState from '../../hooks/useFormState';
 import { CATEGORIES, ITEM_LOCATIONS_NOW, LOCATIONS, STORAGE_KEYS } from '../../data/constants';
@@ -65,8 +66,12 @@ export default function ItemForm({ type }) {
   const navigate = useNavigate();
   const text = TEXT[type];
 
+  const { user } = useAuth();
+  // Signed-in users get their name and email filled in (they can still change them)
+  const startValues = () => ({ ...emptyValues(type), contactName: user?.name ?? '', contact: user?.email ?? '' });
+
   // The draft is auto-saved in localStorage, so a refresh does not lose what was typed
-  const [values, setValues, clearDraft] = useLocalStorage(`${STORAGE_KEYS.DRAFT_PREFIX}${type}`, emptyValues(type));
+  const [values, setValues, clearDraft] = useLocalStorage(`${STORAGE_KEYS.DRAFT_PREFIX}${type}`, startValues());
   const { errors, fieldProps, showAllErrors, resetValidation } = useFormState({
     values,
     setValues,
@@ -110,6 +115,7 @@ export default function ItemForm({ type }) {
 
   const handleReset = () => {
     clearDraft();
+    setValues(startValues());
     setImage(null);
     setImageError('');
     resetValidation();
