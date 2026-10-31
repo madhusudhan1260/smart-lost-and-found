@@ -79,6 +79,15 @@ export default function ItemDetails() {
   useDocumentTitle(item?.name ?? 'Item details');
 
   const matches = useMemo(() => (item ? findMatches(item, items) : []), [item, items]);
+
+  // Previous / next report of the same type, newest first (same order as the lists)
+  const [previousItem, nextItem] = useMemo(() => {
+    if (!item) return [null, null];
+    const sameType = items.filter((entry) => entry.type === item.type)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const index = sameType.findIndex((entry) => entry.id === item.id);
+    return [sameType[index - 1] ?? null, sameType[index + 1] ?? null];
+  }, [item, items]);
   const closeModal = useCallback(() => setModal(null), []);
 
   if (loading) return <div className="container page-body"><LoadingSpinner label="Loading report…" /></div>;
@@ -166,6 +175,18 @@ export default function ItemDetails() {
           { label: type === 'lost' ? 'Lost items' : 'Found items', to: `/${type}` },
           { label: name },
         ]} />
+        <div className="details__pager">
+          {previousItem && (
+            <Link to={`/items/${previousItem.id}`} className="btn btn--text btn--sm" title={previousItem.name}>
+              <Icon name="chevron_left" /> Newer
+            </Link>
+          )}
+          {nextItem && (
+            <Link to={`/items/${nextItem.id}`} className="btn btn--text btn--sm" title={nextItem.name}>
+              Older <Icon name="chevron_right" />
+            </Link>
+          )}
+        </div>
       </nav>
 
       <div className="details__grid">
