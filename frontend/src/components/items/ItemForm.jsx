@@ -16,6 +16,7 @@ import { cx } from '../../utils/helpers';
 import ImageUploader from './ImageUploader';
 import FormField from '../ui/FormField';
 import Icon from '../ui/Icon';
+import Modal from '../ui/Modal';
 
 const emptyValues = (type) => ({
   name: '',
@@ -82,6 +83,7 @@ export default function ItemForm({ type }) {
   const [imageError, setImageError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [savedItem, setSavedItem] = useState(null);
+  const [confirmReset, setConfirmReset] = useState(false);
   const redirectTimerRef = useRef(null);
 
   // Cancel the pending redirect if the user leaves the page first
@@ -113,7 +115,12 @@ export default function ItemForm({ type }) {
     }
   };
 
+  // Reset only asks first when something has actually been typed
+  const hasTyped = ['name', 'color', 'description', 'privateDetails', 'additionalInfo'].some((field) => values[field]?.trim());
+  const askReset = () => (hasTyped || image ? setConfirmReset(true) : handleReset());
+
   const handleReset = () => {
+    setConfirmReset(false);
     clearDraft();
     setValues(startValues());
     setImage(null);
@@ -256,11 +263,16 @@ export default function ItemForm({ type }) {
 
       <div className="form-actions">
         <p className="muted form-actions__note"><Icon name="cloud_done" /> Draft saved automatically</p>
-        <button type="button" className="btn btn--text" onClick={handleReset} disabled={submitting}>Reset</button>
+        <button type="button" className="btn btn--text" onClick={askReset} disabled={submitting}>Reset</button>
         <button type="submit" className={cx('btn', 'btn--primary')} disabled={submitting}>
           {submitting ? <><span className="spinner spinner--sm" aria-hidden="true" /> Saving…</> : text.submit}
         </button>
       </div>
+
+      <Modal isOpen={confirmReset} title="Clear this report?" tone="danger" confirmText="Clear form"
+        onConfirm={handleReset} onCancel={() => setConfirmReset(false)}>
+        <p>Everything you typed and the photo will be removed. This cannot be undone.</p>
+      </Modal>
     </form>
   );
 }
