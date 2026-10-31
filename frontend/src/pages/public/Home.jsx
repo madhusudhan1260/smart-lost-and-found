@@ -80,7 +80,7 @@ const greetingFor = (hour) => (hour < 12 ? 'Good morning' : hour < 17 ? 'Good af
 export default function Home() {
   useDocumentTitle('Home');
   const { items, claims, myClaims, loading } = useItems();
-  const [recentIds] = useLocalStorage(STORAGE_KEYS.RECENT, []);
+  const [recentIds, , clearRecent] = useLocalStorage(STORAGE_KEYS.RECENT, []);
   // IDs → items (skip any that were deleted)
   const recentlyViewed = recentIds.map((id) => items.find((item) => item.id === id)).filter(Boolean);
   const { isDoss } = useMode();
@@ -168,7 +168,10 @@ export default function Home() {
 
         {recentlyViewed.length > 0 && (
           <section className="section">
-            <div className="section__head"><h2><Icon name="history" /> Recently viewed</h2></div>
+            <div className="section__head">
+              <h2><Icon name="history" /> Recently viewed</h2>
+              <button type="button" className="btn btn--text btn--sm" onClick={clearRecent}>Clear history</button>
+            </div>
             <div className="recent-strip">
               {recentlyViewed.map((item) => (
                 <Link key={item.id} to={`/items/${item.id}`} className="recent-chip">
