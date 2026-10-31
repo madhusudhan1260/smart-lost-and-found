@@ -38,11 +38,12 @@ function CategoryTiles({ items }) {
       </div>
       <div className="category-tiles">
         {CATEGORIES.map((category, index) => (
-          <Link key={category} to={`/found?category=${encodeURIComponent(category)}`} className="category-tile"
+          <Link key={category} to={`/found?category=${encodeURIComponent(category)}`}
+            className={cx('category-tile', !waiting[category] && 'category-tile--empty')}
             style={{ '--accent': CATEGORY_META[category].color, '--delay': `${index * 30}ms` }}>
             <Icon name={CATEGORY_META[category].icon} />
             <span>{category}</span>
-            <small>{waiting[category] ?? 0} waiting</small>
+            <small>{waiting[category] ? `${waiting[category]} waiting` : 'None waiting'}</small>
           </Link>
         ))}
       </div>
