@@ -1,4 +1,4 @@
-// Purpose: One place that talks HTTP to the Express API.
+// Purpose : One place that talks HTTP to the Express API.
 // Every service function goes through request(), which adds the JSON headers and the
 // DOSS login token, and turns API errors into normal JavaScript Errors.
 import { STORAGE_KEYS } from '../data/constants';
@@ -36,7 +36,7 @@ export async function request(path, { method = 'GET', body } = {}) {
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch {
-    // fetch only rejects when the network request itself fails
+    // fetch only rejects when the network request itself failss
     throw new ApiError('Cannot reach the server. Is the API running? (npm run dev starts both)', 0);
   }
 
