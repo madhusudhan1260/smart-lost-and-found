@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useItems } from '../../context/ItemContext';
 import { useMode } from '../../context/ModeContext';
+import { useAuth } from '../../context/AuthContext';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { CATEGORIES, CATEGORY_META, STATUS, STORAGE_KEYS } from '../../data/constants';
@@ -69,6 +70,9 @@ function RecentSection({ title, icon, type, items, loading }) {
   );
 }
 
+// "Good morning" / "Good afternoon" / "Good evening" from the current hour
+const greetingFor = (hour) => (hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening');
+
 export default function Home() {
   useDocumentTitle('Home');
   const { items, claims, myClaims, loading } = useItems();
@@ -76,6 +80,7 @@ export default function Home() {
   // IDs → items (skip any that were deleted)
   const recentlyViewed = recentIds.map((id) => items.find((item) => item.id === id)).filter(Boolean);
   const { isDoss } = useMode();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [searchIn, setSearchIn] = useState('found');
@@ -103,6 +108,7 @@ export default function Home() {
             <span className="c-blue">Smart</span> <span className="c-red">Lost</span>{' '}
             <span className="c-yellow">&amp;</span> <span className="c-green">Found</span>
           </h1>
+          {user && <p className="hero__greeting">{greetingFor(new Date().getHours())}, {user.name.split(' ')[0]} 👋</p>}
           <p className="hero__subtitle">
             Lost something? Found something?<br />Let’s help return it to its owner.
           </p>
