@@ -2,7 +2,7 @@
 // Purpose: Photo picker with drag & drop, validation and preview.
 
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { compressImage } from '../../utils/imageUtils';
 import { validateImageFile } from '../../utils/validation';
 import { cx } from '../../utils/helpers';
@@ -43,6 +43,21 @@ export default function ImageUploader({ image, onChange, error, onError }) {
     }
   };
 
+  // Paste a screenshot or copied photo anywhere on the page (Ctrl+V / ⌘+V) while no photo is chosen
+  const handleFileRef = useRef(handleFile);
+  useEffect(() => { handleFileRef.current = handleFile; }); // always the latest handler
+  useEffect(() => {
+    if (image) return undefined;
+    const handlePaste = (event) => {
+      const file = [...(event.clipboardData?.files ?? [])].find((entry) => entry.type.startsWith('image/'));
+      if (!file) return; // pasting text into a field works as usual
+      event.preventDefault();
+      handleFileRef.current(file);
+    };
+    window.addEventListener('paste', handlePaste);
+    return () => window.removeEventListener('paste', handlePaste);
+  }, [image]);
+
   const handleDrop = (event) => {
     event.preventDefault();
     setDragging(false);
@@ -77,7 +92,7 @@ export default function ImageUploader({ image, onChange, error, onError }) {
         >
           <Icon name={processing ? 'progress_activity' : 'add_photo_alternate'} className={cx('dropzone__icon', processing && 'spin')} />
           <span className="dropzone__title">{processing ? 'Processing image…' : 'Click to upload or drag a photo here'}</span>
-          <span className="muted">PNG, JPG, WEBP or GIF · up to 5 MB · optional</span>
+          <span className="muted">PNG, JPG, WEBP or GIF · up to 5 MB · optional · or paste with Ctrl+V</span>
         </label>
       )}
       <input
