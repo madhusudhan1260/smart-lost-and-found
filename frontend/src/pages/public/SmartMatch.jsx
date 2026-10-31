@@ -6,7 +6,8 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useItems } from '../../context/ItemContext';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import { DEFAULT_MATCH_THRESHOLD, STATUS } from '../../data/constants';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { DEFAULT_MATCH_THRESHOLD, STATUS, STORAGE_KEYS } from '../../data/constants';
 import { MATCH_WEIGHTS, findMatches, isOpenForMatching } from '../../utils/matching';
 import { formatDate } from '../../utils/dateUtils';
 import { cx, pluralize } from '../../utils/helpers';
@@ -107,7 +108,8 @@ function MatchPicker({ items }) {
 export default function SmartMatch() {
   const { id } = useParams();
   const { items, loading, getItemById } = useItems();
-  const [minScore, setMinScore] = useState(DEFAULT_MATCH_THRESHOLD);
+  // The chosen minimum score is remembered, so it stays the same for the next item you check
+  const [minScore, setMinScore] = useLocalStorage(STORAGE_KEYS.MATCH_THRESHOLD, DEFAULT_MATCH_THRESHOLD);
 
   const sourceItem = id ? getItemById(id) : null;
   useDocumentTitle(sourceItem ? `Matches for ${sourceItem.name}` : 'Smart Match');
@@ -185,6 +187,11 @@ export default function SmartMatch() {
             <EmptyState icon="search_off" title="No matches above this score"
               message={`Try lowering the minimum score, or check again when new ${oppositeLabel} items are reported.`}>
               {minScore > 0 && <button type="button" className="btn btn--outline" onClick={() => setMinScore(0)}>Show all scores</button>}
+              {minScore !== DEFAULT_MATCH_THRESHOLD && (
+                <button type="button" className="btn btn--text" onClick={() => setMinScore(DEFAULT_MATCH_THRESHOLD)}>
+                  Reset to {DEFAULT_MATCH_THRESHOLD}%
+                </button>
+              )}
             </EmptyState>
           ) : (
             <div className="match-list">
