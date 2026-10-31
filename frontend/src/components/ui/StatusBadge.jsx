@@ -14,7 +14,7 @@ export default function StatusBadge({ status, size = 'md' }) {
   return (
     <span
       className={`status-badge status-badge--${meta.tone} status-badge--${size}`}
-      title={`Status: ${meta.label}`}
+      title={meta.hint ? `${meta.label} – ${meta.hint}` : `Status: ${meta.label}`}
       aria-label={`Status: ${meta.label}`}
     >
       <Icon name={meta.icon} />

@@ -124,16 +124,16 @@ export const STATUS = {
   RESOLVED: 'RESOLVED',
 };
 
-// How each status is shown: label, colour tone and icon
+// How each status is shown: label, colour tone, icon and a one-line explanation (tooltip)
 export const STATUS_META = {
-  LOST: { label: 'Lost', tone: 'blue', icon: 'search' },
-  FOUND: { label: 'Found', tone: 'green', icon: 'inventory_2' },
-  CLAIM_PENDING: { label: 'Claim pending', tone: 'yellow', icon: 'hourglass_top' },
-  CLAIM_ACCEPTED: { label: 'Claim accepted', tone: 'green', icon: 'verified' },
-  CLAIM_REJECTED: { label: 'Claim rejected', tone: 'red', icon: 'block' },
-  READY_FOR_COLLECTION: { label: 'Ready for collection', tone: 'blue', icon: 'storefront' },
-  COLLECTED: { label: 'Collected', tone: 'green', icon: 'handshake' },
-  RESOLVED: { label: 'Resolved', tone: 'green', icon: 'task_alt' },
+  LOST: { label: 'Lost', tone: 'blue', icon: 'search', hint: 'The owner is still looking for it' },
+  FOUND: { label: 'Found', tone: 'green', icon: 'inventory_2', hint: 'Waiting for its owner to claim it' },
+  CLAIM_PENDING: { label: 'Claim pending', tone: 'yellow', icon: 'hourglass_top', hint: 'The DOSS office is checking an ownership claim' },
+  CLAIM_ACCEPTED: { label: 'Claim accepted', tone: 'green', icon: 'verified', hint: 'Ownership was verified by DOSS' },
+  CLAIM_REJECTED: { label: 'Claim rejected', tone: 'red', icon: 'block', hint: 'DOSS could not verify ownership' },
+  READY_FOR_COLLECTION: { label: 'Ready for collection', tone: 'blue', icon: 'storefront', hint: 'The owner can pick it up at the DOSS office' },
+  COLLECTED: { label: 'Collected', tone: 'green', icon: 'handshake', hint: 'The owner has picked it up' },
+  RESOLVED: { label: 'Resolved', tone: 'green', icon: 'task_alt', hint: 'The case is closed' },
 };
 
 // Which statuses can appear in the filter dropdown of each list
