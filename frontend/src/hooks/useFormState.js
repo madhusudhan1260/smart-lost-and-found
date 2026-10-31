@@ -35,7 +35,10 @@ export default function useFormState({ values, setValues, validateOne }) {
     setErrors(formErrors);
     setTouched(Object.fromEntries(Object.keys(values).map((key) => [key, true])));
     const firstInvalid = Object.keys(values).find((key) => formErrors[key]);
-    fieldRefs.current[firstInvalid]?.focus();
+    // Bring the field to the middle of the screen (not hidden under the sticky navbar), then focus it
+    const field = fieldRefs.current[firstInvalid];
+    field?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    field?.focus({ preventScroll: true });
   };
 
   const resetValidation = () => {
