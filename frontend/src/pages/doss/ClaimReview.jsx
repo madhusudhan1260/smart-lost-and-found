@@ -18,6 +18,7 @@ import Modal from '../../components/ui/Modal';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import EmptyState from '../../components/ui/EmptyState';
 import Icon from '../../components/ui/Icon';
+import { cx } from '../../utils/helpers';
 
 const MIN_REASON_LENGTH = 5;
 
@@ -55,6 +56,12 @@ function ClaimReviewContent() {
   }
 
   const otherClaims = claims.filter((entry) => entry.itemId === claim.itemId && entry.id !== claim.id);
+
+  // The oldest claim still waiting (other than this one) – DOSS works through the queue in order
+  const waiting = claims
+    .filter((entry) => entry.status === STATUS.CLAIM_PENDING && entry.id !== claim.id)
+    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+  const nextPending = waiting[0] ?? null;
 
   // Map each modal to the context action + the toast message
   const ACTIONS = {
@@ -96,9 +103,17 @@ function ClaimReviewContent() {
       </PageHeader>
 
       <div className="container page-body">
-        <button type="button" className="btn btn--text back-btn" onClick={() => navigate(-1)}>
-          <Icon name="arrow_back" /> Back
-        </button>
+        <div className="review-topbar">
+          <button type="button" className="btn btn--text back-btn" onClick={() => navigate(-1)}>
+            <Icon name="arrow_back" /> Back
+          </button>
+          {nextPending && (
+            <Link to={`/doss/claims/${nextPending.id}`}
+              className={cx('btn btn--sm', claim.status === STATUS.CLAIM_PENDING ? 'btn--text' : 'btn--tonal')}>
+              Next pending claim ({waiting.length} waiting) <Icon name="arrow_forward" />
+            </Link>
+          )}
+        </div>
 
         {/* The action bar changes with the claim status */}
         <div className="action-bar card">
