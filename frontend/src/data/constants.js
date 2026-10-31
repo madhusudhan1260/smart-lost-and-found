@@ -176,6 +176,10 @@ export const DOSS_OFFICE = {
   place: 'DOSS Office, Ground Floor, Administration Block',
   hours: 'Monday – Saturday, 9:30 AM – 4:30 PM',
   phone: '080-2345 6789',
+  // Machine-readable opening hours for the "Open now" label (0 = Sunday)
+  openDays: [1, 2, 3, 4, 5, 6],
+  opensAt: 9.5, // 9:30 AM
+  closesAt: 16.5, // 4:30 PM
 };
 
 // Matches below this percentage are hidden by default

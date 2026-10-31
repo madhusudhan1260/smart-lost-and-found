@@ -8,6 +8,12 @@ import logo from '../../assets/logo.svg';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
+// Is the DOSS office open right now? (students collect items there)
+function isOfficeOpen(now = new Date()) {
+  const hour = now.getHours() + now.getMinutes() / 60;
+  return DOSS_OFFICE.openDays.includes(now.getDay()) && hour >= DOSS_OFFICE.opensAt && hour < DOSS_OFFICE.closesAt;
+}
+
 export default function Footer() {
   const year = CURRENT_YEAR;
 
@@ -22,7 +28,12 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer__office">
-          <p><strong>DOSS Office</strong></p>
+          <p>
+            <strong>DOSS Office</strong>{' '}
+            {isOfficeOpen()
+              ? <span className="office-status office-status--open">Open now</span>
+              : <span className="office-status">Closed now</span>}
+          </p>
           <p className="muted">{DOSS_OFFICE.place}</p>
           <p className="muted">{DOSS_OFFICE.hours}</p>
         </div>

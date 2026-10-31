@@ -39,6 +39,10 @@
 .footer__links a { color: var(--text-2); }
 .footer__copy { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-light); font-size: 0.8rem; }
 
+/* "Open now" / "Closed now" label for the DOSS office in the footer */
+.office-status { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: var(--radius-pill); font-size: 0.72rem; font-weight: 500; background: var(--grey-soft); color: var(--text-2); vertical-align: middle; }
+.office-status--open { background: var(--green-soft); color: var(--green-ink); }
+
 /* Page header */
 .page-header { background: var(--bg); border-bottom: 1px solid var(--border-light); padding: 28px 0 24px; }
 .page-header__inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
