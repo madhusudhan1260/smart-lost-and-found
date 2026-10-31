@@ -55,6 +55,22 @@ export default function App() {
     }
   }, [online, reload, notify]);
 
+  // While the server cannot be reached, try again on its own every 15 seconds
+  const RETRY_SECONDS = 15;
+  const [retryIn, setRetryIn] = useState(RETRY_SECONDS);
+  useEffect(() => {
+    if (!dataError) return undefined;
+    const timer = setTimeout(() => {
+      if (retryIn > 1) {
+        setRetryIn(retryIn - 1);
+      } else {
+        setRetryIn(RETRY_SECONDS);
+        reload();
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [dataError, retryIn, reload]);
+
   // The sign-in page is a full-screen layout of its own (no navbar or footer)
   if (location.pathname === '/login') {
     return (
@@ -80,7 +96,8 @@ export default function App() {
       {dataError && (
         <div className="server-banner" role="alert">
           <Icon name="dns" /> {dataError}
-          <button type="button" className="btn btn--sm btn--outline" onClick={reload}>Try again</button>
+          <span className="server-banner__retry">Retrying in {retryIn}s</span>
+          <button type="button" className="btn btn--sm btn--outline" onClick={() => { setRetryIn(RETRY_SECONDS); reload(); }}>Try again now</button>
         </div>
       )}
       {/* key on pathname replays the page-enter animation on every navigation */}
