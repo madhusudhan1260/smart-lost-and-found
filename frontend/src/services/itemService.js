@@ -4,11 +4,11 @@
 // Each function returns a Promise – the React code awaits them with async/await.
 import { request } from './apiClient';
 
- ---------- ITEMS  (/api/items) ----------
+// ---------- ITEMS  (/api/items) ----------
 
 export const getItems = () => request('/items');
 
-export const getItem = (id) => request(`/items/${encodeURIComponent(id)}`); 
+export const getItem = (id) => request(`/items/${encodeURIComponent(id)}`);
 
 export const addItem = (itemData) => request('/items', { method: 'POST', body: itemData });
 
@@ -21,7 +21,7 @@ export const markCollected = (itemId) => request(`/items/${encodeURIComponent(it
 
 export const markResolved = (itemId) => request(`/items/${encodeURIComponent(itemId)}/resolve`, { method: 'POST' });
 
- //---------- CLAIMS  (/api/claims) ----------
+// ---------- CLAIMS  (/api/claims) ----------
 
 export const getClaims = () => request('/claims');
 
@@ -32,14 +32,14 @@ export const acceptClaim = (claimId, reviewNote = '') =>
   request(`/claims/${encodeURIComponent(claimId)}/accept`, { method: 'POST', body: { reviewNote } });
 
 export const rejectClaim = (claimId, reviewNote) =>
-  request(`/claims/${encodeURIComponent(claimId)}/reject`, { method: 'POST', body: { reviewNote } }); 
+  request(`/claims/${encodeURIComponent(claimId)}/reject`, { method: 'POST', body: { reviewNote } });
 
 // ---------- OTHER ----------
 
 export const getStats = () => request('/stats');
 
 // DOSS only: put the sample data back into MongoDB
-export const resetAllData = () => request('/admin/reset', { method: 'POST' });  
+export const resetAllData = () => request('/admin/reset', { method: 'POST' });
 
 // A static file (not the API): campus tips from /public/data/campus-tips.json
 export async function getCampusTips() {
