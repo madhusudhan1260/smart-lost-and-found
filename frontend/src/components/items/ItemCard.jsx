@@ -9,7 +9,7 @@ import { useMode } from '../../context/ModeContext';
 import { STATUS } from '../../data/constants';
 import { canBeClaimed } from '../../utils/claimUtils';
 import { findMatches, isOpenForMatching } from '../../utils/matching';
-import { formatDate, isWithinHours, timeAgo } from '../../utils/dateUtils';
+import { formatDate, formatDateTime, isWithinHours, timeAgo } from '../../utils/dateUtils';
 import ItemImage from './ItemImage';
 import StatusBadge from '../ui/StatusBadge';
 import Icon from '../ui/Icon';
@@ -47,7 +47,7 @@ export default function ItemCard({ item, index = 0, highlight = '' }) {
         <ul className="item-card__meta">
           <li><Icon name="location_on" /> {location}</li>
           <li><Icon name="calendar_today" /> {type === 'lost' ? 'Lost' : 'Found'} {formatDate(date)}</li>
-          <li className="item-card__ago"><Icon name="schedule" /> Reported {timeAgo(createdAt)}</li>
+          <li className="item-card__ago" title={formatDateTime(createdAt)}><Icon name="schedule" /> Reported {timeAgo(createdAt)}</li>
         </ul>
         {matchCount > 0 && (
           <Link to={`/smart-match/${id}`} className="match-chip">
