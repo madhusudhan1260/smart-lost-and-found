@@ -3,6 +3,7 @@
 // Used by: App.jsx
 
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useItems } from '../../context/ItemContext';
 import useDebounce from '../../hooks/useDebounce';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
@@ -29,7 +30,10 @@ const TABS = [
 function DossClaimsContent() {
   useDocumentTitle('Claims');
   const { claims, loading } = useItems();
-  const [activeTab, setActiveTab] = useState('pending');
+  // The open tab lives in the URL (?tab=accepted), so Back returns to it and links can point at it
+  const [params, setParams] = useSearchParams();
+  const activeTab = TABS.some((entry) => entry.key === params.get('tab')) ? params.get('tab') : 'pending';
+  const setActiveTab = (key) => setParams(key === 'pending' ? {} : { tab: key }, { replace: true });
   const [query, setQuery] = useState('');
   const [newestFirst, setNewestFirst] = useState(true);
   const debouncedQuery = useDebounce(query, 300);
