@@ -87,6 +87,8 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
 .item-card { display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; animation: fadeUp 0.4s var(--ease) both; animation-delay: var(--delay, 0ms); transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s var(--ease); }
 .item-card:hover { box-shadow: var(--shadow-2); border-color: transparent; transform: translateY(-3px); }
+/* Keyboard users see which card they are on, like mouse users do on hover */
+.item-card:focus-within { box-shadow: var(--shadow-2); border-color: var(--blue-dark); }
 .item-card__media { display: block; aspect-ratio: 16 / 9; overflow: hidden; }
 .item-card__media .item-image { width: 100%; height: 100%; transition: transform 0.4s var(--ease); }
 .item-card:hover .item-card__media .item-image { transform: scale(1.04); }
