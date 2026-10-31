@@ -26,6 +26,8 @@ export default function useTheme() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    // The browser bar on phones follows the page background
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#202124' : '#ffffff');
   }, [theme]);
 
   return { theme, preference, setPreference };

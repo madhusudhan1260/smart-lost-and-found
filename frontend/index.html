@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Smart Lost & Found – report, search and match lost and found items on the college campus." />
     <meta name="theme-color" content="#ffffff" />
+    <script>
+      // Apply the saved theme before the page paints, so dark mode never flashes white
+      try {
+        var saved = JSON.parse(localStorage.getItem('lf_v2_theme') || '"system"');
+        var dark = saved === 'dark' || (saved === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch (error) { /* storage blocked – the app applies the theme after loading */ }
+    </script>
     <title>Smart Lost & Found College Campus</title>
   </head>
   <body>
