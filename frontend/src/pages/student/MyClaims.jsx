@@ -38,7 +38,9 @@ function MyClaimsContent() {
   // Follow a claim that was made on another device
   const handleTrack = (event) => {
     event.preventDefault();
-    const claimId = claimIdInput.trim().toUpperCase();
+    // Accept "cl-3001", "CL 3001" or just "3001" – all mean CL-3001
+    const typed = claimIdInput.trim().toUpperCase().replace(/\s+/g, '');
+    const claimId = /^\d+$/.test(typed) ? `CL-${typed}` : typed.replace(/^CL-?/, 'CL-');
 
     if (!CLAIM_ID_PATTERN.test(claimId)) {
       notify('Enter a valid claim ID, e.g. CL-3001', 'error');
@@ -60,7 +62,7 @@ function MyClaimsContent() {
         subtitle="Track the status of every ownership claim you have made from this device.">
         <form className="track-form" onSubmit={handleTrack} role="search" aria-label="Track an existing claim">
           <label htmlFor="track-claim" className="sr-only">Claim ID</label>
-          <input id="track-claim" value={claimIdInput} onChange={(event) => setClaimIdInput(event.target.value)} placeholder="Track by claim ID, e.g. CL-3001" />
+          <input id="track-claim" value={claimIdInput} onChange={(event) => setClaimIdInput(event.target.value)} placeholder="Track by claim ID, e.g. CL-3001 or 3001" />
           <button type="submit" className="btn btn--outline" aria-label="Track claim by ID">Track</button>
         </form>
       </PageHeader>
