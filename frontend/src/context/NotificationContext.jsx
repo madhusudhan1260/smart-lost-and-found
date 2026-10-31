@@ -10,6 +10,8 @@ import Notification from '../components/ui/Notification';
 // Toast messages ("Report saved!") that any page can trigger
 const NotificationContext = createContext(null);
 
+const MAX_TOASTS = 3; // older toasts make room so the screen never fills up
+
 export function NotificationProvider({ children }) {
   const [notifications, setNotifications] = useState([]);
 
@@ -22,7 +24,11 @@ export function NotificationProvider({ children }) {
       const id = `${Date.now()}-${Math.random()}`;
       // The toast removes itself when its countdown animation ends (see Notification.jsx),
       // so hovering over it pauses the countdown.
-      setNotifications((previous) => [...previous, { id, message, type, duration }]);
+      setNotifications((previous) => [
+        // the same message twice in a row (e.g. a double click) is shown once
+        ...previous.filter((note) => note.message !== message),
+        { id, message, type, duration },
+      ].slice(-MAX_TOASTS));
     },
     [],
   );
