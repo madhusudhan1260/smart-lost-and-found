@@ -26,8 +26,9 @@ export default function Modal({
   useEffect(() => {
     if (!isOpen) return undefined;
 
+    // Remember who opened the dialog BEFORE moving focus, so focus can go back there on close
+    const previouslyFocused = document.activeElement;
     confirmButtonRef.current?.focus(); // keyboard users land on the main action
-    const previouslyFocused = document.activeElement; // give focus back when the dialog closes
     const handleKey = (event) => {
       if (event.key === 'Escape' && !busy) onCancel();
 
