@@ -311,3 +311,7 @@
 /* Claim ID with a copy button on the "Claim submitted" screen */
 .claim-id-copy { display: inline-flex; align-items: center; gap: 8px; margin: 12px 0 4px; }
 .claim-id-copy code { font-size: 1.05rem; padding: 4px 10px; }
+
+/* "What happens next" hint on the item details page */
+.next-step { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 16px; padding: 10px 14px; border-radius: var(--radius-sm); background: var(--blue-soft); color: var(--blue-ink); font-size: 0.88rem; }
+.next-step .icon { font-size: 20px; margin-top: 1px; }

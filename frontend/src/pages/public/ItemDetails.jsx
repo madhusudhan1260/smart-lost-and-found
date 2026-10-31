@@ -39,6 +39,25 @@ function getDossAction(item) {
   }
 }
 
+// "What happens next" for students and guests, by type and status
+function nextStepFor(item) {
+  if (item.type === 'lost') {
+    return item.status === STATUS.LOST
+      ? { icon: 'travel_explore', text: 'The owner is still looking. If you found it, report it as found or hand it to the DOSS office.' }
+      : { icon: 'task_alt', text: 'This item has been returned to its owner.' };
+  }
+  switch (item.status) {
+    case STATUS.FOUND:
+      return { icon: 'front_hand', text: 'Is it yours? Press “This is my item” and describe something only the owner would know.' };
+    case STATUS.CLAIM_PENDING:
+      return { icon: 'hourglass_top', text: 'Someone has claimed this and DOSS is checking it. If it is really yours, you can still send a claim.' };
+    case STATUS.READY_FOR_COLLECTION:
+      return { icon: 'storefront', text: 'Ownership was verified. The owner can collect it at the DOSS office with their student ID.' };
+    default:
+      return { icon: 'task_alt', text: 'This item has been returned to its owner.' };
+  }
+}
+
 export default function ItemDetails() {
   const { id } = useParams(); // dynamic route: /items/:id
   const navigate = useNavigate();
@@ -170,6 +189,10 @@ export default function ItemDetails() {
           </div>
           <h1 className="details__title">{name}</h1>
           <p className="details__description">{description}</p>
+          {!isDoss && (() => {
+            const step = nextStepFor(item);
+            return <p className="next-step"><Icon name={step.icon} /> <span><strong>What happens next:</strong> {step.text}</span></p>;
+          })()}
 
           <dl className="detail-list">
             {details.map(({ label, value, icon }) => (
