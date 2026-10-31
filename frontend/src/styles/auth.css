@@ -93,6 +93,12 @@
 .strength--3 .strength__bar span { width: 75%; background: var(--blue); }
 .strength--4 .strength__bar span { width: 100%; background: var(--green); }
 
+/* Live password checklist on the sign-up form */
+.password-rules { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 0 0; padding: 0; font-size: 0.78rem; color: var(--text-2); }
+.password-rules li { display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s; }
+.password-rules .icon { font-size: 16px; }
+.password-rules .is-met { color: var(--green-ink); }
+
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 
 @media (max-width: 900px) {

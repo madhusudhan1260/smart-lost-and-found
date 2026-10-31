@@ -286,7 +286,21 @@ export default function Login() {
                           <span className="strength__label">{strength.label}</span>
                         </div>
                       )}
-                      {fieldError('password') || <p className="field-hint">At least 8 characters with a letter and a number.</p>}
+                      {fieldError('password') || (
+                        // Live checklist of the password rules (same rules as the API)
+                        <ul className="password-rules" aria-label="Password rules">
+                          {[
+                            ['At least 8 characters', signup.password.length >= 8],
+                            ['A letter', /[A-Za-z]/.test(signup.password)],
+                            ['A number', /\d/.test(signup.password)],
+                          ].map(([rule, met]) => (
+                            <li key={rule} className={cx(met && 'is-met')}>
+                              <Icon name={met ? 'check_circle' : 'radio_button_unchecked'} /> {rule}
+                              <span className="sr-only">{met ? ' – done' : ' – missing'}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                     <div className="form-field">
                       <label htmlFor="auth-confirmPassword">Confirm password</label>
