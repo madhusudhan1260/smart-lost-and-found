@@ -22,6 +22,25 @@
   --bg-2: #f8f9fa;
   --border: #dadce0;
   --border-light: #e8eaed;
+  --border-strong: #bdc1c6;
+
+  /* Text on a tinted background (badges, chips, notices) */
+  --blue-ink: #174ea6;
+  --green-ink: #0d652d;
+  --red-ink: #a50e0e;
+  --yellow-ink: #7a4100;
+  /* Outlines for tinted chips and boxes */
+  --blue-line: #aecbfa;
+  --green-line: #a8dab5;
+  --yellow-line: #fdd663;
+  --blue-soft-strong: #d2e3fc;
+  /* Hover shades of the solid buttons */
+  --blue-hover: #1765cc;
+  --green-hover: #137333;
+  --red-hover: #c5221f;
+  /* Text on solid coloured buttons, and the dimmed page behind dialogs */
+  --on-accent: #fff;
+  --scrim: rgba(32, 33, 36, 0.5);
 
   --radius-sm: 8px;
   --radius: 12px;
