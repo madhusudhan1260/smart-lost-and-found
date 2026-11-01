@@ -4,6 +4,7 @@
 
 import { CATEGORIES, DATE_RANGES, LOCATIONS, SORT_OPTIONS, STATUS_META, STATUS_OPTIONS_BY_TYPE } from '../../data/constants';
 import Icon from '../ui/Icon';
+import { DEFAULT_FILTERS } from '../../utils/searchUtils';
 
 // Turn a plain list of strings into { value, label } options with an "All" entry first
 const withAllOption = (list, allLabel, getLabel = (entry) => entry) => [
@@ -25,6 +26,8 @@ function SelectField({ id, label, value, options, onChange }) {
 }
 
 export default function FilterPanel({ type, filters, onFilterChange, onClear, canClear }) {
+  // How many filters are switched on (the search text and sort order do not count)
+  const activeCount = ['category', 'location', 'dateRange', 'status'].filter((key) => filters[key] !== DEFAULT_FILTERS[key]).length;
   const fields = [
     { name: 'category', label: 'Category', options: withAllOption(CATEGORIES, 'All categories') },
     { name: 'location', label: 'Location', options: withAllOption(LOCATIONS, 'All locations') },
@@ -51,7 +54,7 @@ export default function FilterPanel({ type, filters, onFilterChange, onClear, ca
       ))}
       
       <button type="button" className="btn btn--text filter-panel__clear" onClick={onClear} disabled={!canClear}>
-        <Icon name="filter_alt_off" /> Clear filters
+        <Icon name="filter_alt_off" /> Clear filters{activeCount > 0 && ` (${activeCount})`}
       </button>
     </div>
   );
