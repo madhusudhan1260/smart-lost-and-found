@@ -180,6 +180,7 @@ Items and claims each have their own status. `CLAIM_ACCEPTED` / `CLAIM_REJECTED`
 
 ## 7. Architecture
 
+
 ```mermaid
 flowchart LR
     A["React.js<br/>pages · components · context"] -- "fetch /api/... (JSON, JWT)" --> B["Node.js + Express.js<br/>routes · controllers · middleware"]
