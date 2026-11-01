@@ -68,6 +68,7 @@ export default function ItemDetails() {
   const [modal, setModal] = useState(null); // null | 'collect' | 'resolve' | 'delete'
   const [busy, setBusy] = useState(false);
   const [photoOpen, setPhotoOpen] = useState(false);
+  const [copied, setCopied] = useState(false); // "Copy ID" shows a tick for 2 seconds
 
   const item = getItemById(id);
   const [, setRecent] = useLocalStorage(STORAGE_KEYS.RECENT, []);
@@ -277,9 +278,13 @@ export default function ItemDetails() {
               type="button"
               className="btn btn--text"
               aria-label={`Copy Report ID ${id}`}
-              onClick={async () => notify(await copyToClipboard(id) ? `Report ID ${id} copied` : 'Could not copy – please copy it manually', 'info', 2500)}
+              onClick={async () => {
+                const ok = await copyToClipboard(id);
+                notify(ok ? `Report ID ${id} copied` : 'Could not copy – please copy it manually', 'info', 2500);
+                if (ok) { setCopied(true); setTimeout(() => setCopied(false), 2000); }
+              }}
             >
-              <Icon name="content_copy" /> Copy ID
+              <Icon name={copied ? 'check' : 'content_copy'} /> {copied ? 'Copied' : 'Copy ID'}
             </button>
             <button type="button" className="btn btn--text" onClick={handleShare} aria-label={`Share ${name}`}>
               <Icon name="share" /> Share
