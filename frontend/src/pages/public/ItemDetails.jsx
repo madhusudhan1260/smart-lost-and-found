@@ -167,7 +167,9 @@ export default function ItemDetails() {
   return (
     <div className="container page-body details">
       <nav className="details__topbar" aria-label="Details navigation">
-        <button type="button" className="btn btn--text back-btn" onClick={() => navigate(-1)}>
+        {/* Opened from a shared link (no earlier page in this app) → go to the list instead of leaving the site */}
+        <button type="button" className="btn btn--text back-btn"
+          onClick={() => (window.history.state?.idx > 0 ? navigate(-1) : navigate(`/${item.type}`))}>
           <Icon name="arrow_back" /> Back
         </button>
         <Breadcrumbs crumbs={[
