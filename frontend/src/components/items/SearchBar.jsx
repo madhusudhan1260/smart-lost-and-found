@@ -48,6 +48,7 @@ export default function SearchBar({
         onKeyDown={(event) => event.key === 'Escape' && onChange('')} // Esc clears the search
         placeholder={placeholder}
         autoComplete="off"
+        enterKeyHint="search" // phone keyboards show a "Search" key instead of "Return"
       />
       {value ? (
         <button
