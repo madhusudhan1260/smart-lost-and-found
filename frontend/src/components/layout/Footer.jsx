@@ -44,6 +44,8 @@ export default function Footer() {
           <Link to="/report-found">Report found</Link>
           <Link to="/smart-match">Smart Match</Link>
           <Link to="/resolved">Resolved cases</Link>
+          <Link to="/my-claims">My claims</Link>
+          <Link to="/login">Sign in</Link>
         </nav>
       </div>
       <p className="container footer__copy muted">© {year} B.Tech CSE Microproject · Built with React &amp; JavaScript · Press <kbd>?</kbd> for keyboard shortcuts</p>
