@@ -179,6 +179,7 @@ export default function SmartMatch() {
                 aria-valuetext={`${minScore}% minimum match score`}
                 onChange={(event) => setMinScore(Number(event.target.value))}
               />
+              <div className="range-scale" aria-hidden="true"><span>0%</span><span>Possible</span><span>Good</span><span>90%</span></div>
             </div>
             <p className="muted" aria-live="polite">{pluralize(matches.length, 'match', 'matches')} among open {oppositeLabel} reports</p>
           </div>

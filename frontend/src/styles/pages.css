@@ -320,3 +320,5 @@
 .review-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .ready-notice { margin-bottom: 16px; }
 .ready-notice p { margin: 2px 0 0; }
+/* Labels under the Smart Match score slider */
+.range-scale { display: flex; justify-content: space-between; margin-top: 2px; font-size: 0.72rem; color: var(--text-2); }
