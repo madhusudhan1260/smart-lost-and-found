@@ -74,6 +74,9 @@ function MyClaimsContent() {
           <EmptyState icon="assignment_ind" title="You have not claimed any items yet."
             message="Found your item in the list? Open it and click “This is my item”.">
             <Link to="/found" className="btn btn--primary">Browse found items</Link>
+            <button type="button" className="btn btn--outline" onClick={() => document.getElementById('track-claim')?.focus()}>
+              <Icon name="pin" /> I have a claim ID
+            </button>
           </EmptyState>
         ) : (
           <>
