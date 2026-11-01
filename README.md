@@ -286,6 +286,7 @@ lost_and_found/
 
 ## 9. Smart Match algorithm (`frontend/src/utils/matching.js`)
 
+
 `calculateMatchScore(lostItem, foundItem)` returns **0–100**. Each factor gives a ratio from 0 to 1, which is multiplied by its weight:
 
 | Factor | Weight | How the ratio is calculated |
