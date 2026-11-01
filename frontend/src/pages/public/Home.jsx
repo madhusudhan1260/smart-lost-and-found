@@ -51,12 +51,12 @@ function CategoryTiles({ items }) {
   );
 }
 
-function RecentSection({ title, icon, type, items, loading }) {
+function RecentSection({ title, icon, type, items, total, loading }) {
   return (
     <section className="section">
       <div className="section__head">
         <h2><Icon name={icon} className={`tone-text--${type === 'lost' ? 'blue' : 'green'}`} /> {title}</h2>
-        <Link to={`/${type}`} className="link-arrow">View all <Icon name="arrow_forward" /></Link>
+        <Link to={`/${type}`} className="link-arrow">View all{total ? ` ${total}` : ''} <Icon name="arrow_forward" /></Link>
       </div>
       {loading ? (
         <SkeletonGrid count={4} />
@@ -185,8 +185,8 @@ export default function Home() {
 
         <CategoryTiles items={items} />
 
-        <RecentSection title="Recent Lost Items" icon="search" type="lost" items={recentLost} loading={loading} />
-        <RecentSection title="Recent Found Items" icon="inventory_2" type="found" items={recentFound} loading={loading} />
+        <RecentSection title="Recent Lost Items" icon="search" type="lost" items={recentLost} total={itemStats.lost} loading={loading} />
+        <RecentSection title="Recent Found Items" icon="inventory_2" type="found" items={recentFound} total={itemStats.found} loading={loading} />
 
         <div className="two-col section">
           <DashboardCard title="Possible Matches" icon="join_inner" action="Smart Match" actionTo="/smart-match">
