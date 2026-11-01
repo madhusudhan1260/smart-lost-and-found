@@ -209,7 +209,7 @@ export default function ItemDetails() {
           <div className="details__badges">
             <TypeChip type={type} />
             <StatusBadge status={status} />
-            <span className="muted small">Reported {timeAgo(createdAt)}</span>
+            <span className="muted small" title={formatDateTime(createdAt)}>Reported {timeAgo(createdAt)}</span>
           </div>
           <h1 className="details__title">{name}</h1>
           <p className="details__description">{description}</p>
