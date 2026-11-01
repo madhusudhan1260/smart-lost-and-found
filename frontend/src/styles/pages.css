@@ -143,7 +143,7 @@
 .details__info { animation: fadeUp 0.4s var(--ease) 0.05s both; }
 .details__badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .details__title { font-size: clamp(1.8rem, 3vw, 2.4rem); margin-bottom: 8px; }
-.details__description { font-size: 1.05rem; color: var(--text-2); }
+.details__description { font-size: 1.05rem; color: var(--text-2); white-space: pre-line; } /* keep the reporter's line breaks */
 .detail-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin: 20px 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--bg); }
 .detail-list__row { padding: 12px 16px; border-bottom: 1px solid var(--border-light); }
 .detail-list__row:nth-child(odd) { border-right: 1px solid var(--border-light); }
