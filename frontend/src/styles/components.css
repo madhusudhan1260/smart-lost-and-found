@@ -95,7 +95,7 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .item-card__body { padding: 14px 16px 8px; flex: 1; }
 .item-card__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
 .item-card__category { font-size: 0.75rem; color: var(--text-2); font-weight: 500; }
-.item-card__title { font-size: 1.05rem; margin: 0 0 8px; }
+.item-card__title { font-size: 1.05rem; margin: 0 0 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; } /* long names stop at two lines */
 .item-card__title a { color: var(--text); }
 .item-card__meta { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 0.85rem; color: var(--text-2); }
 .item-card__meta li { display: flex; align-items: center; gap: 6px; }
