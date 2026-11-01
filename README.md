@@ -373,6 +373,7 @@ The **browser** keeps only small per-user settings with `useLocalStorage` (JSON 
 
 ## 12. JavaScript & React concepts
 
+
 - **[JAVASCRIPT_CONCEPTS.md](docs/concepts/JAVASCRIPT_CONCEPTS.md)**: every concept, with the file, why it is used, and a small example.
 - **[REACT_CONCEPTS.md](docs/concepts/REACT_CONCEPTS.md)**: every React concept and exactly where it is used.
 
