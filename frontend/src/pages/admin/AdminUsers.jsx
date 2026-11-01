@@ -310,7 +310,7 @@ export default function AdminUsers() {
               </AdminField>
               {form.role === ROLES.STUDENT && (
                 <AdminField id="new-roll" label="Roll number / USN" error={formErrors.rollNumber}>
-                  <input id="new-roll" value={form.rollNumber} onChange={setField('rollNumber')} className={cx(formErrors.rollNumber && 'has-error')} />
+                  <input id="new-roll" autoCapitalize="characters" spellCheck={false} value={form.rollNumber} onChange={setField('rollNumber')} className={cx(formErrors.rollNumber && 'has-error')} />
                 </AdminField>
               )}
               <AdminField id="new-password" label="Temporary password" error={formErrors.password}>

@@ -135,7 +135,7 @@ export default function ClaimForm({ item }) {
             <input type="text" autoComplete="name" placeholder="e.g. Rahul Sharma" {...fieldProps('claimantName')} />
           </FormField>
           <FormField id="rollNumber" label="Roll number / USN" required error={errors.rollNumber}>
-            <input type="text" placeholder="e.g. 22CSE045" {...fieldProps('rollNumber')} />
+            <input type="text" placeholder="e.g. 22CSE045" autoCapitalize="characters" spellCheck={false} {...fieldProps('rollNumber')} />
           </FormField>
           <FormField id="contact" label="Email or mobile" required error={errors.contact}>
             <input type="text" placeholder="name@college.edu" {...fieldProps('contact')} />

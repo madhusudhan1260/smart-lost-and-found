@@ -269,7 +269,7 @@ export default function Login({ theme }) {
                     <div className="auth__row">
                       <div className="form-field">
                         <label htmlFor="auth-rollNumber">Roll number / USN</label>
-                        <input {...bind(signup, setSignup, 'rollNumber')} autoComplete="off" placeholder="22CSE045" />
+                        <input {...bind(signup, setSignup, 'rollNumber')} autoComplete="off" autoCapitalize="characters" spellCheck={false} placeholder="22CSE045" />
                         {fieldError('rollNumber')}
                       </div>
                       <div className="form-field">
