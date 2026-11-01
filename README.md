@@ -37,6 +37,7 @@ A full-stack **React.js → Node.js/Express.js → MongoDB** project (3rd-year B
 
 The sample data is set up so you can show the whole workflow straight away:
 
+
 | Step | Mode | Do this | You should see |
 |---|---|---|---|
 | 1 | Student | **Found Items → Black iPhone → This is my item** | The claim form |
@@ -55,6 +56,7 @@ To start over: **DOSS Dashboard → Reset demo data**.
 
 ## 1. Problem statement
 
+
 Students lose phones, ID cards, wallets, keys, laptops and books on campus every day. Today this is handled through WhatsApp groups and notice boards:
 
 - Posts get buried, so owners never see that their item was found.
@@ -63,6 +65,7 @@ Students lose phones, ID cards, wallets, keys, laptops and books on campus every
 - The office that keeps found items (DOSS) has no record of who collected what, or when.
 
 ## 2. Objective
+
 
 Build a working web application where:
 
@@ -74,6 +77,7 @@ Build a working web application where:
 6. The student sees the result and **collection instructions**. DOSS marks the item **collected**, then **resolved**.
 
 ## 3. Features
+
 
 | Area | Features |
 |---|---|
