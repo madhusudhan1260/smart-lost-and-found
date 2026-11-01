@@ -4,6 +4,7 @@
 
 import { useRef, useState } from 'react';
 
+
 /**
  * Shared logic for the report form and the claim form:
  * controlled values, touched fields, errors, live validation and focusing
