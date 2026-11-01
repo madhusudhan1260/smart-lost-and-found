@@ -216,8 +216,14 @@ function ClaimReviewContent() {
         {(modal === 'accept' || modal === 'reject') && (
           <div className="form-field">
             <label htmlFor="review-note">{modal === 'reject' ? 'Reason for rejection *' : 'Note (optional)'}</label>
-            <textarea id="review-note" rows={3} value={note} onChange={(event) => setNote(event.target.value)}
+            <textarea id="review-note" rows={3} maxLength={500} value={note} onChange={(event) => setNote(event.target.value)}
               placeholder={modal === 'reject' ? 'e.g. The described marks do not match the item.' : 'e.g. Engraving verified.'} />
+            <p className="field-hint">
+              {modal === 'reject' && note.trim().length < MIN_REASON_LENGTH
+                ? `At least ${MIN_REASON_LENGTH} characters – the student sees this reason. `
+                : 'The student sees this note. '}
+              {note.length}/500
+            </p>
           </div>
         )}
         {modal === 'collect' && <p>Confirm that <strong>{claim.claimantName}</strong> showed their student ID and collected <strong>{foundItem.name}</strong>. The date and time will be recorded.</p>}
