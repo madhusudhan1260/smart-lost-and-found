@@ -55,6 +55,7 @@ export default function AdminUsers() {
   const [formErrors, setFormErrors] = useState({});
   const [saving, setSaving] = useState(false);
   const [toDelete, setToDelete] = useState(null);
+  const [toDisable, setToDisable] = useState(null); // disabling signs the person out of their work, so ask first
   const [busyId, setBusyId] = useState(null);
   const [lastCreated, setLastCreated] = useState(null); // { email, password } to hand over once
 
@@ -258,7 +259,7 @@ export default function AdminUsers() {
                           <td className="account-actions">
                             {!isMe && (
                               <>
-                                <button type="button" className="btn btn--sm btn--outline" disabled={busyId === account.id} onClick={() => toggleActive(account)}>
+                                <button type="button" className="btn btn--sm btn--outline" disabled={busyId === account.id} onClick={() => (account.active ? setToDisable(account) : toggleActive(account))}>
                                   {account.active ? 'Disable' : 'Enable'}
                                 </button>
                                 <button type="button" className="icon-btn" aria-label={`Delete ${account.email}`} onClick={() => setToDelete(account)}>
@@ -329,6 +330,12 @@ export default function AdminUsers() {
           </aside>
         </div>
       </div>
+
+      <Modal isOpen={Boolean(toDisable)} title="Disable this account?" tone="danger" confirmText="Disable account"
+        busy={busyId === toDisable?.id}
+        onConfirm={async () => { await toggleActive(toDisable); setToDisable(null); }} onCancel={() => setToDisable(null)}>
+        <p><strong>{toDisable?.name}</strong> ({toDisable?.email}) will not be able to sign in until you enable the account again.</p>
+      </Modal>
 
       <Modal isOpen={Boolean(toDelete)} title="Delete this account?" tone="danger" confirmText="Delete account"
         busy={busyId === toDelete?.id} onConfirm={confirmDelete} onCancel={() => setToDelete(null)}>
