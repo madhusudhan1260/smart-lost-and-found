@@ -8,7 +8,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 import Notification from '../components/ui/Notification';
 
 // Toast messages ("Report saved!") that any page can trigger
-const NotificationContext = createContext(null);
+const NotificationContext = createContext(null); 
 
 const MAX_TOASTS = 3; // older toasts make room so the screen never fills up
 
