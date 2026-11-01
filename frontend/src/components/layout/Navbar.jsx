@@ -92,7 +92,7 @@ export default function Navbar({ theme }) {
   return (
     <header className={cx('navbar', scrolled && 'navbar--scrolled', isDoss && 'navbar--doss')}>
       <nav className="navbar__inner container" aria-label="Main navigation">
-        <Link to="/" className="brand" onClick={closeMenu}>
+        <Link to="/" className="brand" onClick={closeMenu} aria-label="Smart Lost & Found – home">
           <img src={logo} alt="" className="brand__logo" width="34" height="34" />
           <span className="brand__text">
             Smart <strong>Lost &amp; Found</strong>
