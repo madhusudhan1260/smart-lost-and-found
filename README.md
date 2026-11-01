@@ -166,6 +166,7 @@ Items and claims each have their own status. `CLAIM_ACCEPTED` / `CLAIM_REJECTED`
 
 ## 6. Technology stack
 
+
 | Layer | Technology | Use |
 |---|---|---|
 | Frontend | **React 19**, React Router 7, Vite | Pages, components, hooks, routing, dev server |
