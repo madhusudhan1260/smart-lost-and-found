@@ -20,7 +20,7 @@ export function NotificationProvider({ children }) {
   }, []);
 
   const notify = useCallback(
-    (message, type = 'success', duration = 3500) => {
+    (message, type = 'success', duration = 3500) => { 
       const id = `${Date.now()}-${Math.random()}`;
       // The toast removes itself when its countdown animation ends (see Notification.jsx),
       // so hovering over it pauses the countdown.
