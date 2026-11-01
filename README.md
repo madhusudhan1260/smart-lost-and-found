@@ -444,6 +444,7 @@ Installing MongoDB on macOS: `brew tap mongodb/brew && brew install mongodb-comm
 
 ## 15. Future improvements
 
+
 - Deploy: API on Render/Railway, database on MongoDB Atlas, React on Vercel/Netlify (`VITE_API_URL`)
 - Store photos in object storage (e.g. Cloudinary) instead of inside documents
 - College SSO login with real roles (student / DOSS staff)
