@@ -435,6 +435,7 @@ Installing MongoDB on macOS: `brew tap mongodb/brew && brew install mongodb-comm
 
 ## 14. Limitations
 
+
 - Students have no accounts: "My Claims" is remembered per browser (claim IDs), with "track by claim ID" as a fallback.
 - One DOSS role only; there is no admin screen for managing staff accounts (they are created by the seed script).
 - Photos are stored inside MongoDB documents as compressed data URLs, which is fine for a campus demo but not for thousands of photos.
