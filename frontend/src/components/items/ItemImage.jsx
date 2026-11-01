@@ -22,7 +22,7 @@ export default function ItemImage({ item = {}, className }) {
         src={image}
         alt={`Photo of ${name}`}
         className={cx('item-image', className)}
-        loading="lazy"
+        loading="lazy" decoding="async"
         onError={() => setImgError(true)}
       />
     );
