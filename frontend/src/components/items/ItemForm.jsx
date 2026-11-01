@@ -145,6 +145,10 @@ export default function ItemForm({ type }) {
           <Link to={`/smart-match/${savedItem.id}`} className="btn btn--outline">
             <Icon name="join_inner" /> Find possible matches
           </Link>
+          <button type="button" className="btn btn--text"
+            onClick={() => { clearTimeout(redirectTimerRef.current); setSavedItem(null); handleReset(); }}>
+            <Icon name="add" /> Report another item
+          </button>
         </div>
       </div>
     );
