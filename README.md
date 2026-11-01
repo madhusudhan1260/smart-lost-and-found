@@ -342,6 +342,7 @@ It returns *Strong / Some / Weak evidence* with a percentage.
 
 ## 10. Data flow example: "Accept claim"
 
+
 1. `ClaimReview.jsx` shows a confirmation modal. On confirm it calls `acceptClaim(claimId, note)` from `ItemContext`.
 2. `itemService.acceptClaim()` sends `POST /api/claims/:id/accept` with the DOSS JWT (`apiClient.js`).
 3. Express runs `requireDoss` (checks the token), then `claimWorkflow.acceptClaim()`:
