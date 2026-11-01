@@ -3,7 +3,7 @@
 //          pages/auth/Login.jsx, pages/admin/AdminUsers.jsx, components/claims/ClaimForm.jsx
 
 // Three kinds of account: student, DOSS staff and super admin (see pages/auth/Login.jsx).
-// Browsing, reporting and claiming still work without logging in.
+// Browsing, reporting and claiming still work without logging in
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as authService from '../services/authService';
 import { SESSION_EXPIRED_EVENT } from '../services/apiClient';
