@@ -15,6 +15,7 @@ import { STATUS } from '../data/constants';
 // Updates the browser tab title for each page.
 // In DOSS mode the number of pending claims is shown first, like an unread count:
 // "(3) Claims · Smart Lost & Found"
+
 export default function useDocumentTitle(title) {
   const { isDoss } = useMode();
   const { claims } = useItems();
