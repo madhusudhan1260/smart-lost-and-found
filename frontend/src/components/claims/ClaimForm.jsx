@@ -11,11 +11,11 @@ import useFormState from '../../hooks/useFormState';
 import { LOCATIONS, STATUS } from '../../data/constants';
 import { isFormValid, validateClaimField, validateClaimForm } from '../../utils/validation';
 import { calculateMatchScore } from '../../utils/matching';
-import { formatDate, toISODate } from '../../utils/dateUtils';
+import { daysAgoISO, formatDate, toISODate } from '../../utils/dateUtils';
 import FormField from '../ui/FormField';
 import StatusBadge from '../ui/StatusBadge';
 import Icon from '../ui/Icon';
-import { copyToClipboard } from '../../utils/helpers';
+import { copyToClipboard, cx } from '../../utils/helpers';
 
 const EMPTY_CLAIM = {
   claimantName: '',
@@ -180,6 +180,14 @@ export default function ClaimForm({ item }) {
           <FormField id="lostDate" label="When did you lose it?" required error={errors.lostDate}
             hint={`This item was found on ${formatDate(item.date)}.`}>
             <input type="date" max={toISODate()} {...fieldProps('lostDate')} />
+            <div className="date-chips">
+              {[['Today', 0], ['Yesterday', 1], ['2 days ago', 2]].map(([label, days]) => (
+                <button key={label} type="button" className={cx('chip chip--toggle', values.lostDate === daysAgoISO(days) && 'is-active')}
+                  onClick={() => setValues((previous) => ({ ...previous, lostDate: daysAgoISO(days) }))}>
+                  {label}
+                </button>
+              ))}
+            </div>
           </FormField>
 
           <FormField id="additionalProof" label="Additional proof / details" full
