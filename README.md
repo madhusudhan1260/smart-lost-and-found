@@ -354,6 +354,7 @@ It returns *Strong / Some / Weak evidence* with a percentage.
 
 ## 11. Data storage
 
+
 **MongoDB** holds all shared data: reports, claims, DOSS accounts and ID counters. See **[docs/DATABASE.md](docs/DATABASE.md)** for the ER diagram, every field and every index. Refreshing the page or opening the app on another computer shows the same data.
 
 The **browser** keeps only small per-user settings with `useLocalStorage` (JSON in `localStorage` / `sessionStorage`):
