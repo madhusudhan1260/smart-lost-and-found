@@ -128,6 +128,7 @@ Try it with the sample data: open **Found Items → Black iPhone → This is my 
 
 ## 5. DOSS workflow
 
+
 1. Switch to **DOSS** mode and sign in on the DOSS tab (`doss@college.edu` / `Doss@123`). The dashboard shows *Pending claims: 3*.
 2. Open a claim → **Claim Review** page.
 3. Compare: found report (with the finder's private notes) · lost report (with the owner's private notes) · claimant's answers · verification helper.
