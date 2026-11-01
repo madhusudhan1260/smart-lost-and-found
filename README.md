@@ -457,6 +457,7 @@ Installing MongoDB on macOS: `brew tap mongodb/brew && brew install mongodb-comm
 
 ## 16. Viva questions
 
+
 **Q1. Is the Student/DOSS switch a login?**
 Students need no account. Switching to DOSS opens a login dialog; `POST /api/auth/login` checks the bcrypt hash and returns a JWT. DOSS-only routes (accept, reject, collect, resolve, delete) are protected on the server by the `requireDoss` middleware, so hiding buttons is not the only protection.
 
