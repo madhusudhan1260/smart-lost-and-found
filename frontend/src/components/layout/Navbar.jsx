@@ -106,7 +106,8 @@ export default function Navbar({ theme }) {
                 <Icon name={icon} className="nav-link__icon" />
                 {label}
                 {badge === 'pending' && pendingCount > 0 && (
-                  <span className="nav-badge" aria-label={`${pendingCount} pending`}>{pendingCount}</span>
+                  <span className="nav-badge" aria-label={`${pendingCount} pending`}
+                    title={`${pendingCount} claim${pendingCount === 1 ? '' : 's'} waiting for review`}>{pendingCount}</span>
                 )}
               </NavLink>
             </li>
