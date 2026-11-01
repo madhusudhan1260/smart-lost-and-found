@@ -208,6 +208,7 @@ These rules are enforced by the **server**: `privateDetails`, `contactName` and 
 
 ## 8. Folder structure
 
+
 Three folders – **frontend**, **backend** (with the database code) and **docs**:
 
 ```
