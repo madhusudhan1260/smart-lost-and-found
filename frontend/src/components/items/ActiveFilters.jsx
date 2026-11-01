@@ -19,6 +19,7 @@ export default function ActiveFilters({ filters, onRemove }) {
   const active = Object.entries(filters).filter(
     ([key, value]) => key in LABELS && value && value !== DEFAULT_FILTERS[key],
   );
+  
   if (active.length === 0) return null;
 
   return (
