@@ -68,3 +68,6 @@ label { display: block; margin-bottom: 6px; font-size: 0.85rem; font-weight: 500
 .field-error { display: flex; align-items: flex-start; gap: 4px; margin: 6px 0 0; font-size: 0.8rem; color: var(--red-dark); animation: fadeUp 0.2s var(--ease); }
 .field-error::before { content: 'error'; font-family: 'Material Symbols Outlined'; font-size: 16px; line-height: 1.2; }
 .field-hint { margin: 6px 0 0; font-size: 0.8rem; color: var(--text-2); }
+
+/* Placeholder text: readable in both themes, but clearly lighter than typed text */
+::placeholder { color: var(--text-2); opacity: 0.75; }
