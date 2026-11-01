@@ -104,7 +104,8 @@ function ClaimReviewContent() {
 
       <div className="container page-body">
         <div className="review-topbar">
-          <button type="button" className="btn btn--text back-btn" onClick={() => navigate(-1)}>
+          <button type="button" className="btn btn--text back-btn"
+            onClick={() => (window.history.state?.idx > 0 ? navigate(-1) : navigate('/doss/claims'))}>
             <Icon name="arrow_back" /> Back
           </button>
           {nextPending && (
