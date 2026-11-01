@@ -16,6 +16,7 @@ import {
   isoDaysAgo,
 } from '../src/utils/dateUtils.js';
 
+
 test('toISODate converts Date object to YYYY-MM-DD', () => {
   const d = new Date(2026, 2, 15); // March 15, 2026
   assert.equal(toISODate(d), '2026-03-15');
