@@ -101,7 +101,8 @@ export default function App() {
         </div>
       )}
       {/* key on pathname replays the page-enter animation on every navigation */}
-      <main id="main" className="page" key={location.pathname}>
+      {/* tabIndex -1: the "Skip to content" link can move keyboard focus here */}
+      <main id="main" className="page" key={location.pathname} tabIndex={-1}>
         <Suspense fallback={<LoadingSpinner label="Loading page…" />}>
         <Routes>
           {/* shared */}

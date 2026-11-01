@@ -61,3 +61,4 @@ kbd { font-family: inherit; }
 
 /* Set by the mobile menu and dialogs so the page behind them stays still */
 body.no-scroll { overflow: hidden; }
+main:focus { outline: none; } /* focus moved here by the skip link should not draw a box around the page */
