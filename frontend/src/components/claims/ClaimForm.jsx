@@ -138,7 +138,7 @@ export default function ClaimForm({ item }) {
             <input type="text" placeholder="e.g. 22CSE045" autoCapitalize="characters" spellCheck={false} {...fieldProps('rollNumber')} />
           </FormField>
           <FormField id="contact" label="Email or mobile" required error={errors.contact}>
-            <input type="text" placeholder="name@college.edu" {...fieldProps('contact')} />
+            <input type="text" placeholder="name@college.edu" autoComplete="email" spellCheck={false} {...fieldProps('contact')} />
           </FormField>
         </div>
       </fieldset>

@@ -271,7 +271,7 @@ export default function ItemForm({ type }) {
             <input type="text" placeholder="e.g. Rahul Sharma" autoComplete="name" {...fieldProps('contactName')} />
           </FormField>
           <FormField id="contact" label="Email or mobile" required error={errors.contact}>
-            <input type="text" placeholder="name@college.edu or 9876543210" {...fieldProps('contact')} />
+            <input type="text" placeholder="name@college.edu or 9876543210" autoComplete="email" spellCheck={false} {...fieldProps('contact')} />
           </FormField>
           <FormField id="additionalInfo" label="Additional information" full hint={`Optional, public. ${extraLength}/500 characters`}>
             <textarea rows={2} maxLength={500} placeholder="Anything else that could help" {...fieldProps('additionalInfo')} />
