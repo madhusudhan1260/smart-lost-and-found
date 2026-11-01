@@ -49,6 +49,7 @@ export default function FilterPanel({ type, filters, onFilterChange, onClear, ca
           onChange={(value) => onFilterChange(name, value)}
         />
       ))}
+      
       <button type="button" className="btn btn--text filter-panel__clear" onClick={onClear} disabled={!canClear}>
         <Icon name="filter_alt_off" /> Clear filters
       </button>
